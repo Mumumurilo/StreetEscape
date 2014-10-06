@@ -47,10 +47,10 @@ public class Calculos {
 	}
 	
 	protected boolean checaProxRect(Rectangle enemy, Rectangle trans){
-		if((((enemy.x + (jogo.persowidth/2 + 200) >= trans.x - (jogo.persowidth/2 - 200))
-				&& (enemy.x - (jogo.persowidth/2 - 200) <= trans.x + (jogo.persowidth/2 + 200))))
-				&& ((enemy.y + (jogo.persoheight/2 + 200) >= trans.y - (jogo.persoheight/2 - 200))
-				&& (enemy.y - (jogo.persoheight/2 - 200) <= trans.y + (jogo.persoheight/2 + 200)))){
+		if((((enemy.x + (jogo.persowidth/2 + 100) >= trans.x - (jogo.persowidth/2 - 100))
+				&& (enemy.x - (jogo.persowidth/2 - 100) <= trans.x + (jogo.persowidth/2 + 100))))
+				&& ((enemy.y + (jogo.persoheight/2 + 100) >= trans.y - (jogo.persoheight/2 - 100))
+				&& (enemy.y - (jogo.persoheight/2 - 100) <= trans.y + (jogo.persoheight/2 + 100)))){
 			return true;
 		}
 		return false;

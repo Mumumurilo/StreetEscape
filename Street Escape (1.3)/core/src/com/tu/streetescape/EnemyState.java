@@ -9,16 +9,20 @@ public enum EnemyState implements State<Enemy>{
 		public void update(Enemy entity) {
 			if(entity.estaLonge()){
 				entity.movEnemy();
+				System.out.println("Tô andando!");
 			}else{
-				System.out.println("Transeunte tá perto, tô parado!");
+				entity.machine.changeState(ATACAR);
 			}
 		}
 	},
 	ATACAR(){
 		@Override
 		public void update(Enemy entity) {
-			// TODO Auto-generated method stub
-			
+			if(entity.estaLonge()){
+				entity.machine.changeState(ANDAR);
+			}else{
+				System.out.println("Transeunte tá perto, tô parado!");
+			}
 		}
 	},
 	TOMA_DANO(){
@@ -50,7 +54,7 @@ public enum EnemyState implements State<Enemy>{
 	}
 
 	@Override
-	public boolean onMessage(Telegram telegram) {
+	public boolean onMessage(Enemy entity, Telegram telegram) {
 		// TODO Auto-generated method stub
 		return false;
 	}

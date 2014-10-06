@@ -34,7 +34,10 @@ public class Enemy extends Calculos{
 		return true;
 	}
 
-	public void movEnemy(){	
+	public void movEnemy(){
+		
+		
+		
 		if(contmov >= randtimemov){
 			if(contstopmov < randstopmov){
 				contstopmov += Gdx.graphics.getDeltaTime();
