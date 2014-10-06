@@ -22,9 +22,8 @@ public class TelaJogo extends Calculos implements Screen{
 	private Array<Rectangle> bordas;
 	
 	private int numEnemy, i = 1, j = 0;
-	private Array<Rectangle> inimigo;
 	private Array<Enemy> enemy;
-	private Array<Rectangle> atk;
+	//private Array<Rectangle> atk;
 	private Rectangle temprect;
 	private Enemy tempenemy;
 	
@@ -44,10 +43,7 @@ public class TelaJogo extends Calculos implements Screen{
 		settings = new Settings(jogo);
 		
 		enemy = new Array<Enemy>();
-		inimigo = new Array<Rectangle>();
-		atk = new Array<Rectangle>();
-		temprect = new Rectangle();
-		tempenemy = new Enemy(jogo);
+		//atk = new Array<Rectangle>();
 		
 		bordas = new Array<Rectangle>();
 		
@@ -173,20 +169,20 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		//Atividade do inimigo
 		GeraEnemy();
-		if(settings.debug = true){
-			for(Rectangle mau : inimigo){
-				jogo.renderer.begin(ShapeType.Filled);
-				jogo.renderer.setColor(Color.BLUE);
-				jogo.renderer.rect(mau.getX(), mau.getY(), jogo.persowidth, jogo.persoheight);
-				jogo.renderer.end();
-			}
-		}
 		
 		while(j < numEnemy){
 			tempenemy = enemy.get(j);
-			temprect = inimigo.get(j);
+			temprect = tempenemy.enemy;
 			
-			tempenemy.movEnemy(temprect);
+			tempenemy.machine.update();
+			
+			if(settings.debug = true){
+				jogo.renderer.begin(ShapeType.Filled);
+				jogo.renderer.setColor(Color.BLUE);
+				jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
+				jogo.renderer.end();
+			}
+			
 			j++;
 		}
 		if(j >= numEnemy){
@@ -206,19 +202,24 @@ public class TelaJogo extends Calculos implements Screen{
 				proximidadetrans = checaProxRect(mau, transeunte);
 			}
 			if(i >= 2){
-				boolean proximidadeOtherEnemy = checaProxRect(mau, inimigo.get(i - 2));
+				Enemy mal = enemy.get(i - 2);
+				boolean proximidadeOtherEnemy = checaProxRect(mau, mal.enemy);
 				while(proximidadeOtherEnemy == true){
 					mau.x = MathUtils.random(jogo.WIDTH - 750, jogo.WIDTH - 50);
 					mau.y = MathUtils.random(jogo.HEIGHT - 430, jogo.HEIGHT - 50);
-					proximidadeOtherEnemy = checaProxRect(mau, inimigo.get(i - 2));
+					proximidadeOtherEnemy = checaProxRect(mau, mal.enemy);
 				}
 			}
 			
-			Enemy mal = new Enemy(jogo);
-			inimigo.add(mau);
+			Enemy mal = new Enemy(jogo, mau);
 			enemy.add(mal);
+			
 			i++;
 		}
+	}
+	
+	public Rectangle getTrans(){
+		return transeunte;
 	}
 
 	@Override

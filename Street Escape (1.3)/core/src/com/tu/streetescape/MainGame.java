@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public class MainGame extends Game {
 	//Declaração de telas do jogo
@@ -22,6 +23,8 @@ public class MainGame extends Game {
 	public final int HEIGHT = 480;	
 	public final int persowidth = 70;
 	public final int persoheight = 80;
+	
+	private Rectangle unitrans;
 	
 	@Override
 	public void create() { //Método aonde tudo é instanciado
@@ -75,5 +78,11 @@ public class MainGame extends Game {
 
 	@Override
 	public void resume() { //Tudo o que é feito quando o jogo é retomado
+	}
+	
+	public Rectangle getTrans(){ /*Pilantragem que criei (Murilo) pra conseguir pegar o retângulo do transeunte da classe TelaJogo e passar pra Enemy,
+	sem precisar referenciar a TelaJogo na Enemy (que ficaria muito porco). */
+		unitrans = telajogo.getTrans();
+		return unitrans;
 	}
 }

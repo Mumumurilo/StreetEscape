@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 public class Calculos {
-	private final MainGame jogo;
+	protected final MainGame jogo;
 	
 	public Calculos(final MainGame jogo){
 		this.jogo = jogo;
@@ -47,8 +47,8 @@ public class Calculos {
 	}
 	
 	protected boolean checaProxRect(Rectangle enemy, Rectangle trans){
-		if(((enemy.x + (jogo.persowidth/2 + 50) <= trans.x) && (enemy.x >= trans.x - (jogo.persowidth/2 + 50)))
-				&& ((enemy.y + (jogo.persowidth/2 + 50) <= trans.y) && (enemy.y >= trans.y - (jogo.persowidth/2 + 50)))){
+		if((((enemy.x + (jogo.persowidth/2 + 200) >= trans.x - (jogo.persowidth/2 - 200)) || (enemy.x - (jogo.persowidth/2 - 200) <= trans.x + (jogo.persowidth/2 + 200))))
+				&& ((enemy.y + (jogo.persoheight/2 + 200) >= trans.y - (jogo.persoheight/2 - 200)) || (enemy.y - (jogo.persoheight/2 - 200) <= trans.y + (jogo.persoheight/2 + 200)))){
 			return true;
 		}
 		return false;
@@ -62,10 +62,10 @@ public class Calculos {
 		if((enemy.x >= trans.x) && ((enemy.y + (jogo.persoheight/2) >= trans.y) && (enemy.y - (jogo.persoheight/2) <= trans.y))){
 			return 2;
 		}
-		if((enemy.y >= trans.y) && ((enemy.x + (jogo.persoheight/2) >= trans.x) && (enemy.x - (jogo.persoheight/2) <= trans.x))){
+		if((enemy.y >= trans.y) && ((enemy.x + (jogo.persowidth/2) >= trans.x) && (enemy.x - (jogo.persowidth/2) <= trans.x))){
 			return 3;
 		}
-		if((enemy.y <= trans.y) && ((enemy.x + (jogo.persoheight/2) >= trans.x) && (enemy.x - (jogo.persoheight/2) <= trans.x))){
+		if((enemy.y <= trans.y) && ((enemy.x + (jogo.persowidth/2) >= trans.x) && (enemy.x - (jogo.persowidth/2) <= trans.x))){
 			return 4;
 		}
 		return 0;

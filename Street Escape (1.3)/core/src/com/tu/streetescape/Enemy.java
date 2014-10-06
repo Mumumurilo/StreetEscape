@@ -1,6 +1,8 @@
 package com.tu.streetescape;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -9,15 +11,30 @@ public class Enemy extends Calculos{
 
 	private int randirectmov; 
 	private float randtimemov = 0, contmov = 0, randstopmov = 0, contstopmov = 0;
+	public Rectangle enemy;
+	private Rectangle trans;
+	
+	public StateMachine<Enemy> machine;
 	
 	public int movx, movy;
 	
-	public Enemy(MainGame jogo) {
+	public Enemy(MainGame jogo, Rectangle enemy) {
 		super(jogo);
-		// TODO Auto-generated constructor stub
+		this.enemy = enemy;
+		machine = new DefaultStateMachine<Enemy>(this, EnemyState.ANDAR);
+	}
+	
+	public boolean estaLonge(){
+		trans = jogo.getTrans();
+		boolean dist = checaProxRect(enemy, trans);
+		
+		if(dist){ //Traduzindo: if(dist == true){ return false;}
+			return !dist;
+		}
+		return true;
 	}
 
-	public void movEnemy(Rectangle enemy){	
+	public void movEnemy(){	
 		if(contmov >= randtimemov){
 			if(contstopmov < randstopmov){
 				contstopmov += Gdx.graphics.getDeltaTime();
@@ -36,7 +53,7 @@ public class Enemy extends Calculos{
 		if(contmov < randtimemov){
 			contmov += Gdx.graphics.getDeltaTime();
 			
-			if(randirectmov == 1){
+			if(randirectmov== 1){
 				enemy.y += 100 * Gdx.graphics.getDeltaTime();
 			}
 			if(randirectmov == 2){
