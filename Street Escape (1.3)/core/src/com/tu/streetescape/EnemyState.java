@@ -9,7 +9,6 @@ public enum EnemyState implements State<Enemy>{
 		public void update(Enemy entity) {
 			if(entity.estaLonge()){
 				entity.movEnemy();
-				System.out.println("Tô andando!");
 			}else{
 				entity.machine.changeState(ATACAR);
 			}
@@ -21,7 +20,7 @@ public enum EnemyState implements State<Enemy>{
 			if(entity.estaLonge()){
 				entity.machine.changeState(ANDAR);
 			}else{
-				System.out.println("Transeunte tá perto, tô parado!");
+				
 			}
 		}
 	},

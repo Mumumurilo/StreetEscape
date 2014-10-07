@@ -16,6 +16,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private Arte artes;
 	
 	private boolean passou = false;
+	private int lado = 0;
 	private int idsala = 0;
 	private Rectangle sup1, sup2, down1, down2, left1, left2, right1, right2;
 	private Rectangle exitN, exitS, exitO, exitL;
@@ -46,29 +47,11 @@ public class TelaJogo extends Calculos implements Screen{
 		//atk = new Array<Rectangle>();
 		
 		bordas = new Array<Rectangle>();
-		
-		sup1 = new Rectangle(-1, 479, 267, 1);
-		sup2 = new Rectangle(536, 479, 267, 1);
-		down1 = new Rectangle(0, 1, 267, 1);
-		down2 = new Rectangle(536, 1, 267, 1);
-		left1 = new Rectangle(1, 370, 1, 110);
-		left2 = new Rectangle(1, 0, 1, 110);
-		right1 = new Rectangle(799, 0, 1, 110);
-		right2 = new Rectangle(799, 370, 1, 110);
 
-		exitN = new Rectangle(270, jogo.HEIGHT + jogo.persoheight, jogo.WIDTH, 1);
-		exitS = new Rectangle(270, 0 - jogo.persoheight, jogo.WIDTH, 1);
-		exitL = new Rectangle(jogo.WIDTH + jogo.persowidth, 189, 1, jogo.HEIGHT);
-		exitO = new Rectangle(0 - jogo.persowidth, 189, 1, jogo.HEIGHT);
-		
-		bordas.add(sup1);
-		bordas.add(sup2);
-		bordas.add(down1);
-		bordas.add(down2);
-		bordas.add(left1);
-		bordas.add(left2);
-		bordas.add(right1);
-		bordas.add(right2);
+		exitN = new Rectangle(264, jogo.HEIGHT - 1, 533 - 264, 5);
+		exitS = new Rectangle(264, 1, 533 - 264, 5);
+		exitL = new Rectangle(jogo.WIDTH - 1, 107, 5, 370 - 107);
+		exitO = new Rectangle(1, 107, 5, 370 - 107);
 		
 		transeunte = new Rectangle(380, 200, jogo.persowidth, jogo.persoheight);
 		
@@ -95,41 +78,22 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.renderer.rect(transeunte.getX(), transeunte.getY(), jogo.persowidth, jogo.persoheight);
 			jogo.renderer.end();
 		}
-		for(int i = 0; i < bordas.size; i++){
-			if(transeunte.overlaps(bordas.get(i))){
-				passou = true;
-			}
+		
+		if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
+			transeunte.y += 150 * Gdx.graphics.getDeltaTime();
 		}
-		if(passou == false){
-			if(Gdx.input.isKeyPressed(Keys.W)){
-				transeunte.y += 150 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.S)){
-				transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.A)){
-				transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.D)){
-				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
-			}
-		}else{
-			if(Gdx.input.isKeyPressed(Keys.W)){
-				transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.S)){
-				transeunte.y += 150 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.A)){
-				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.D)){
-				transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
-			}
+		if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
+			transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
+			transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
+			transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 		}
 		
 		if(transeunte.overlaps(exitS)){
-			transeunte.y = 400;
+			transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
 			if(idsala == 0){
 				idsala = 1;
 			}
@@ -156,7 +120,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		if(transeunte.overlaps(exitO)){
-			transeunte.x = 700;
+			transeunte.x = jogo.WIDTH - jogo.persowidth - 10;
 			if(idsala == 0){
 				idsala = 4;
 			}
@@ -164,8 +128,16 @@ public class TelaJogo extends Calculos implements Screen{
 				idsala = 0;
 			}
 		}
-		passou = false;
 		
+		if(settings.debug == true){
+			jogo.renderer.begin(ShapeType.Filled);
+			jogo.renderer.setColor(Color.GREEN);
+			jogo.renderer.rect(exitN.x, exitN.y, exitN.width, exitN.height);
+			jogo.renderer.rect(exitS.x, exitS.y, exitS.width, exitS.height);
+			jogo.renderer.rect(exitL.x, exitL.y, exitL.width, exitL.height);
+			jogo.renderer.rect(exitO.x, exitO.y, exitO.width, exitO.height);
+			jogo.renderer.end();
+		}
 		
 		//Atividade do inimigo
 		GeraEnemy();

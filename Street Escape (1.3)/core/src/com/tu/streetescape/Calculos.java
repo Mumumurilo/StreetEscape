@@ -84,29 +84,4 @@ public class Calculos {
 		Rectangle tiro = new Rectangle(10, 10, enemy.x, enemy.y);
 		tiros.add(tiro);
 	}
-	
-	protected void Colisao(Rectangle trans, Rectangle parede){
-		if(trans.overlaps(parede)){
-			if(trans.x >= (jogo.HEIGHT - jogo.persoheight)){
-				if(Gdx.input.isKeyPressed(Keys.W)){
-					trans.x = trans.x;
-				}
-			}
-			if(trans.x <= jogo.persoheight){
-				if(Gdx.input.isKeyPressed(Keys.S)){
-					trans.x = trans.x;
-				}
-			}
-			if(trans.y >= (jogo.WIDTH - jogo.persowidth)){
-				if(Gdx.input.isKeyPressed(Keys.A)){
-					trans.y = trans.y;
-				}
-			}
-			if(trans.y <= jogo.persowidth){
-				if(Gdx.input.isKeyPressed(Keys.D)){
-					trans.y = trans.y;
-				}
-			}
-		}
-	}
 }
