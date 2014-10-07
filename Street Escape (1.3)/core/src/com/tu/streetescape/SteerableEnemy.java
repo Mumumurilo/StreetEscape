@@ -1,59 +1,57 @@
+package com.tu.streetescape;
+
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.Vector2;
 
 public class SteerableEnemy implements Steerable<Vector2>{
-
+	
+	private float maxLinearSpeed;
+	private float maxLinearAcceleration;
+	private float maxAngularSpeed;
+	private float maxAngularAcceleration;
+	
 	@Override
 	public float getMaxLinearSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+		return maxLinearSpeed;
 	}
 
 	@Override
 	public void setMaxLinearSpeed(float maxLinearSpeed) {
-		// TODO Auto-generated method stub
-		
+		this.maxLinearSpeed = maxLinearSpeed;
 	}
 
 	@Override
 	public float getMaxLinearAcceleration() {
-		// TODO Auto-generated method stub
-		return 0;
+		return maxLinearAcceleration;
 	}
 
 	@Override
 	public void setMaxLinearAcceleration(float maxLinearAcceleration) {
-		// TODO Auto-generated method stub
-		
+		this.maxLinearAcceleration = maxLinearAcceleration;		
 	}
 
 	@Override
 	public float getMaxAngularSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+		return maxAngularSpeed;
 	}
 
 	@Override
 	public void setMaxAngularSpeed(float maxAngularSpeed) {
-		// TODO Auto-generated method stub
-		
+		this.maxAngularSpeed = maxAngularSpeed;
 	}
 
 	@Override
 	public float getMaxAngularAcceleration() {
-		// TODO Auto-generated method stub
-		return 0;
+		return maxAngularAcceleration;
 	}
 
 	@Override
 	public void setMaxAngularAcceleration(float maxAngularAcceleration) {
-		// TODO Auto-generated method stub
-		
+		this.maxAngularAcceleration = maxAngularAcceleration;
 	}
 
 	@Override
 	public Vector2 getPosition() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

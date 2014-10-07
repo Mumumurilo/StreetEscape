@@ -47,10 +47,17 @@ public class Calculos {
 	}
 	
 	protected boolean checaProxRect(Rectangle enemy, Rectangle trans){
-		if((((enemy.x + (jogo.persowidth/2 + 100) >= trans.x - (jogo.persowidth/2 - 100))
-				&& (enemy.x - (jogo.persowidth/2 - 100) <= trans.x + (jogo.persowidth/2 + 100))))
-				&& ((enemy.y + (jogo.persoheight/2 + 100) >= trans.y - (jogo.persoheight/2 - 100))
-				&& (enemy.y - (jogo.persoheight/2 - 100) <= trans.y + (jogo.persoheight/2 + 100)))){
+		float enemX = enemy.x + (jogo.persowidth/2);
+		float enemY = enemy.y + (jogo.persoheight/2);
+		float transX = trans.x + (jogo.persowidth/2);
+		float transY = trans.y + (jogo.persoheight/2);
+		
+		double distance = Math.sqrt((enemX - transX)*(enemX - transX) + (enemY - transY)*(enemY - transY));
+		double angle = Math.atan2(enemX - transX, enemY - transY);
+		double distx = Math.cos(angle)*distance;
+		double disty = Math.sin(angle)*distance;
+		
+		if(distx <= 220 && disty <= 220 && distx >= -220 && disty >= -220){
 			return true;
 		}
 		return false;

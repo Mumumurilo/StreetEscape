@@ -35,9 +35,6 @@ public class Enemy extends Calculos{
 	}
 
 	public void movEnemy(){
-		
-		
-		
 		if(contmov >= randtimemov){
 			if(contstopmov < randstopmov){
 				contstopmov += Gdx.graphics.getDeltaTime();
@@ -49,24 +46,40 @@ public class Enemy extends Calculos{
 				contmov = 0;
 				randtimemov = MathUtils.random(3);
 				//1 = up, 2 = down, 3 = left, 4 = right
-				randirectmov = MathUtils.random(1, 4);
+				randirectmov = MathUtils.random(1, 8);
 			}
 		}
 			
 		if(contmov < randtimemov){
 			contmov += Gdx.graphics.getDeltaTime();
 			
-			if(randirectmov== 1){
+			if(randirectmov == 1){ //up
 				enemy.y += 100 * Gdx.graphics.getDeltaTime();
 			}
-			if(randirectmov == 2){
+			if(randirectmov == 2){ //down
 				enemy.y -= 100 * Gdx.graphics.getDeltaTime();
 			}
-			if(randirectmov == 3){
+			if(randirectmov == 3){ //left
 				enemy.x -= 100 * Gdx.graphics.getDeltaTime();
 			}
-			if(randirectmov == 4){
+			if(randirectmov == 4){ //right
 				enemy.x += 100 * Gdx.graphics.getDeltaTime();
+			}
+			if(randirectmov == 5){ //up and right
+				enemy.y += 100 * Gdx.graphics.getDeltaTime();
+				enemy.x += 100 * Gdx.graphics.getDeltaTime();
+			}
+			if(randirectmov == 6){ //up and left
+				enemy.y += 100 * Gdx.graphics.getDeltaTime();
+				enemy.x -= 100 * Gdx.graphics.getDeltaTime();
+			}
+			if(randirectmov == 7){ //down and right
+				enemy.y -= 100 * Gdx.graphics.getDeltaTime();
+				enemy.x += 100 * Gdx.graphics.getDeltaTime();
+			}
+			if(randirectmov == 8){ //down and left
+				enemy.y -= 100 * Gdx.graphics.getDeltaTime();
+				enemy.x -= 100 * Gdx.graphics.getDeltaTime();
 			}
 		}
 		

@@ -40,7 +40,7 @@ public enum EnemyState implements State<Enemy>{
 		}
 	}
 	;
-
+	
 	@Override
 	public void enter(Enemy entity) {
 		// TODO Auto-generated method stub
