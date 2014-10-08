@@ -1,27 +1,36 @@
 package com.tu.streetescape;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class Enemy extends Calculos{
 
 	private int randirectmov; 
 	private float randtimemov = 0, contmov = 0, randstopmov = 0, contstopmov = 0;
+	public int movx, movy;
 	public Rectangle enemy;
 	private Rectangle trans;
 	
+	public int type;
+	public float lastAtkTime;
+	
 	public StateMachine<Enemy> machine;
+	public Array<Rectangle> atk;
 	
-	public int movx, movy;
-	
-	public Enemy(MainGame jogo, Rectangle enemy) {
+	public Enemy(MainGame jogo, Rectangle enemy, int type) {
 		super(jogo);
 		this.enemy = enemy;
+		this.type = type;
+		
 		machine = new DefaultStateMachine<Enemy>(this, EnemyState.ANDAR);
+		atk = new Array<Rectangle>();
 	}
 	
 	public boolean estaLonge(){
@@ -101,19 +110,39 @@ public class Enemy extends Calculos{
 			}
 		}
 	}
-
 	
-	public void ataqueEnemy(Rectangle enemy, Rectangle trans, Array<Rectangle>obj, int type){
+	public void atacar(){
+		trans = jogo.getTrans();
+		
+		float randAtk = MathUtils.random(5000, 30000);
+		
 		//1 = manifestantes, 2 = policiais, 3 = Nontendistas
+		if(TimeUtils.nanoTime() - lastAtkTime > randAtk){
+			if(type == 1){ //Bombas de vinagre
+				Rectangle rect = new Rectangle(enemy.x, enemy.y, jogo.persowidth/3, jogo.persoheight/3);
+				atk.add(rect);
+			}else if(type == 2){
+				//Policial não atira nada! Ma oeeeeee
+			}else if(type == 3){ //Consoles de mesa
+				Rectangle rect = new Rectangle(enemy.x, enemy.y, jogo.persowidth/2, jogo.persoheight/2);
+				atk.add(rect);
+			}
+			lastAtkTime = TimeUtils.nanoTime();
+		}
 		
-		
-		
-		if(type == 1){
-		
-		}else if(type == 2){
+		Iterator<Rectangle> iter = atk.iterator();
+		while(iter.hasNext()){
+			Rectangle recta = iter.next();
+			recta.x = (float) (recta.x + Math.cos(super.getAngleDaReta(enemy, trans)));
+			recta.y = (float) (recta.y + Math.sin(super.getAngleDaReta(enemy, trans)));
 			
-		}else if(type == 3){
-			
+			if(recta.overlaps(trans)){
+				//Definir um set com "true" pra dano do trans
+				iter.remove();
+			}
+			if(recta.x >= jogo.WIDTH || recta.x <= 0 || recta.y >= jogo.HEIGHT || recta.y <= 0){
+				iter.remove();
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@ package com.tu.streetescape;
 
 //Essa classe serve apenas para ativar e desativar as coisas. NÃO ESQUECER DE ADICIONAR CONDIÇÕES
 public class Settings extends MainGame{
+	@SuppressWarnings("unused")
 	private final MainGame jogo;
 	
 	public Settings(final MainGame jogo){

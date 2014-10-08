@@ -1,8 +1,7 @@
 package com.tu.streetescape;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Calculos {
@@ -63,21 +62,25 @@ public class Calculos {
 		return false;
 	}
 	
-	protected int checaProxRectDir(Rectangle enemy, Rectangle trans){
+	protected double getAngleDaReta(Rectangle enemy, Rectangle trans){
 		//1 = Próximo esq, 2 = próximo dir, 3 = próximo cima, 4 = próximo baixo
-		if((enemy.x <= trans.x) && ((enemy.y + (jogo.persoheight/2) >= trans.y) && (enemy.y - (jogo.persoheight/2) <= trans.y))){
-			return 1;
-		}
-		if((enemy.x >= trans.x) && ((enemy.y + (jogo.persoheight/2) >= trans.y) && (enemy.y - (jogo.persoheight/2) <= trans.y))){
-			return 2;
-		}
-		if((enemy.y >= trans.y) && ((enemy.x + (jogo.persowidth/2) >= trans.x) && (enemy.x - (jogo.persowidth/2) <= trans.x))){
-			return 3;
-		}
-		if((enemy.y <= trans.y) && ((enemy.x + (jogo.persowidth/2) >= trans.x) && (enemy.x - (jogo.persowidth/2) <= trans.x))){
-			return 4;
-		}
-		return 0;
+		float enemX = enemy.x + (jogo.persowidth/2);
+		float enemY = enemy.y + (jogo.persoheight/2);
+		float transX = trans.x + (jogo.persowidth/2);
+		float transY = trans.y + (jogo.persoheight/2);
+		
+		//double distance = Math.sqrt((enemX - transX)*(enemX - transX) + (enemY - transY)*(enemY - transY));
+		double angle = Math.atan2(enemX - transX, enemY - transY);
+		
+		return angle;
+		/*double distx = Math.cos(angle)*distance;
+		double disty = Math.sin(angle)*distance;
+		
+		Vector2 vect = new Vector2();
+		vect.x = (float) distx;
+		vect.y = (float) disty;
+		
+		return vect;*/
 	}
 	
 	protected void geraTiro(Array<Rectangle>tiros, Rectangle enemy){

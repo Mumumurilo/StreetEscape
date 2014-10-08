@@ -15,12 +15,8 @@ public class TelaJogo extends Calculos implements Screen{
 	private Settings settings;
 	private Arte artes;
 	
-	private boolean passou = false;
-	private int lado = 0;
 	private int idsala = 0;
-	private Rectangle sup1, sup2, down1, down2, left1, left2, right1, right2;
 	private Rectangle exitN, exitS, exitO, exitL;
-	private Array<Rectangle> bordas;
 	
 	private int numEnemy, i = 1, j = 0;
 	private Array<Enemy> enemy;
@@ -45,8 +41,6 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		enemy = new Array<Enemy>();
 		//atk = new Array<Rectangle>();
-		
-		bordas = new Array<Rectangle>();
 
 		exitN = new Rectangle(264, jogo.HEIGHT - 1, 533 - 264, 5);
 		exitS = new Rectangle(264, 1, 533 - 264, 5);
@@ -152,6 +146,11 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.renderer.begin(ShapeType.Filled);
 				jogo.renderer.setColor(Color.BLUE);
 				jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
+				
+				jogo.renderer.setColor(Color.PURPLE);
+				for(Rectangle recta : tempenemy.atk){
+					jogo.renderer.rect(recta.x, recta.y, recta.width, recta.height);
+				}
 				jogo.renderer.end();
 			}
 			
@@ -183,13 +182,18 @@ public class TelaJogo extends Calculos implements Screen{
 				}
 			}
 			
-			Enemy mal = new Enemy(jogo, mau);
+			/*
+			 * ATENÇÃO: A terceira referência do construtor de Enemy é o tipo de inimigo. Acredito que teríamos que criar algo que modificasse 
+			 * o tipo dependendo da variação das salas. Temos que discutir isso! Por default, estou deixando 1 (manifestantes).
+			 */
+			Enemy mal = new Enemy(jogo, mau, 1);
 			enemy.add(mal);
 			
 			i++;
 		}
 	}
 	
+	//Outros métodos
 	public Rectangle getTrans(){
 		return transeunte;
 	}
