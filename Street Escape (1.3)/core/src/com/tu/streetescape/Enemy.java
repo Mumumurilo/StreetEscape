@@ -8,6 +8,8 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
+import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Enemy extends Calculos{
@@ -19,10 +21,11 @@ public class Enemy extends Calculos{
 	
 	private int type;
 	private float lastAtkTime;
-	private double anguloDoTiro;
+	private double anguloParaSeguirTrans;
 	
 	public StateMachine<Enemy> machine;
 	public Array<Rectangle> atk;
+	private Array<Double> angles;
 	
 	public Enemy(MainGame jogo, Rectangle enemy, int type) {
 		super(jogo);
@@ -31,6 +34,7 @@ public class Enemy extends Calculos{
 		
 		machine = new DefaultStateMachine<Enemy>(this, EnemyState.ANDAR);
 		atk = new Array<Rectangle>();
+		angles = new Array<Double>();
 	}
 	
 	public boolean estaLonge(){
@@ -121,31 +125,44 @@ public class Enemy extends Calculos{
 			if(type == 1){ //Bombas de vinagre
 				Rectangle rect = new Rectangle(enemy.x + jogo.persowidth/2, enemy.y + jogo.persoheight/2, jogo.persowidth/3, jogo.persoheight/3);
 				atk.add(rect);
+								
 			}else if(type == 2){
 				//Policial não atira nada! Ma oeeeeee
+				
 			}else if(type == 3){ //Consoles de mesa
 				Rectangle rect = new Rectangle(enemy.x + jogo.persowidth/2, enemy.y + jogo.persoheight/2, jogo.persowidth/2, jogo.persoheight/2);
 				atk.add(rect);
 			}
 			lastAtkTime = TimeUtils.nanoTime();
-			anguloDoTiro = super.getAngleDaReta(enemy, trans);
+			
+			double ang = super.getAngleDaReta(enemy, trans);
+			angles.add(ang);
 		}
 	}
 	
 	public void movAtk(){
-		Iterator<Rectangle> iter = atk.iterator();
+		anguloParaSeguirTrans = super.getAngleDaReta(enemy, trans);
 		
-		while(iter.hasNext()){
+		//enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
+		//enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
+				
+		Iterator<Rectangle> iter = atk.iterator();
+		Iterator<Double> ite = angles.iterator();
+		
+		while(iter.hasNext() && ite.hasNext()){
 			Rectangle recta = iter.next();
-			recta.x = (float) (recta.x - 3 * Math.sin(anguloDoTiro));
-			recta.y = (float) (recta.y - 3 * Math.cos(anguloDoTiro));
+			double anguloDoTiro = ite.next();
+			recta.x -= (float) (3 * Math.sin(anguloDoTiro));
+			recta.y -= (float) (3 * Math.cos(anguloDoTiro));
 			
 			if(recta.overlaps(trans)){
 				//Definir um set com "true" pra dano do trans
 				iter.remove();
+				ite.remove();
 			}
 			if(recta.x >= jogo.WIDTH || recta.x <= 0 || recta.y >= jogo.HEIGHT || recta.y <= 0){
 				iter.remove();
+				ite.remove();
 			}
 		}
 	}
