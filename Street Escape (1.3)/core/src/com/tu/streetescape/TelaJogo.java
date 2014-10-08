@@ -141,19 +141,20 @@ public class TelaJogo extends Calculos implements Screen{
 			temprect = tempenemy.enemy;
 			
 			tempenemy.machine.update();
+			tempenemy.movAtk();
 			
 			if(settings.debug = true){
 				jogo.renderer.begin(ShapeType.Filled);
-				jogo.renderer.setColor(Color.BLUE);
-				jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
 				
 				jogo.renderer.setColor(Color.PURPLE);
 				for(Rectangle recta : tempenemy.atk){
 					jogo.renderer.rect(recta.x, recta.y, recta.width, recta.height);
 				}
+				
+				jogo.renderer.setColor(Color.BLUE);
+				jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
 				jogo.renderer.end();
 			}
-			
 			j++;
 		}
 		if(j >= numEnemy){

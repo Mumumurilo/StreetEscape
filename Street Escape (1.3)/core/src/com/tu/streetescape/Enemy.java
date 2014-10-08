@@ -14,12 +14,12 @@ public class Enemy extends Calculos{
 
 	private int randirectmov; 
 	private float randtimemov = 0, contmov = 0, randstopmov = 0, contstopmov = 0;
-	public int movx, movy;
 	public Rectangle enemy;
 	private Rectangle trans;
 	
-	public int type;
-	public float lastAtkTime;
+	private int type;
+	private float lastAtkTime;
+	private double anguloDoTiro;
 	
 	public StateMachine<Enemy> machine;
 	public Array<Rectangle> atk;
@@ -114,27 +114,31 @@ public class Enemy extends Calculos{
 	public void atacar(){
 		trans = jogo.getTrans();
 		
-		float randAtk = MathUtils.random(5000, 30000);
+		float randAtk = MathUtils.random(1000000000f, 3000000000f);
 		
 		//1 = manifestantes, 2 = policiais, 3 = Nontendistas
 		if(TimeUtils.nanoTime() - lastAtkTime > randAtk){
 			if(type == 1){ //Bombas de vinagre
-				Rectangle rect = new Rectangle(enemy.x, enemy.y, jogo.persowidth/3, jogo.persoheight/3);
+				Rectangle rect = new Rectangle(enemy.x + jogo.persowidth/2, enemy.y + jogo.persoheight/2, jogo.persowidth/3, jogo.persoheight/3);
 				atk.add(rect);
 			}else if(type == 2){
 				//Policial não atira nada! Ma oeeeeee
 			}else if(type == 3){ //Consoles de mesa
-				Rectangle rect = new Rectangle(enemy.x, enemy.y, jogo.persowidth/2, jogo.persoheight/2);
+				Rectangle rect = new Rectangle(enemy.x + jogo.persowidth/2, enemy.y + jogo.persoheight/2, jogo.persowidth/2, jogo.persoheight/2);
 				atk.add(rect);
 			}
 			lastAtkTime = TimeUtils.nanoTime();
+			anguloDoTiro = super.getAngleDaReta(enemy, trans);
 		}
-		
+	}
+	
+	public void movAtk(){
 		Iterator<Rectangle> iter = atk.iterator();
+		
 		while(iter.hasNext()){
 			Rectangle recta = iter.next();
-			recta.x = (float) (recta.x + Math.cos(super.getAngleDaReta(enemy, trans)));
-			recta.y = (float) (recta.y + Math.sin(super.getAngleDaReta(enemy, trans)));
+			recta.x = (float) (recta.x - 3 * Math.sin(anguloDoTiro));
+			recta.y = (float) (recta.y - 3 * Math.cos(anguloDoTiro));
 			
 			if(recta.overlaps(trans)){
 				//Definir um set com "true" pra dano do trans
