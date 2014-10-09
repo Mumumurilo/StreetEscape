@@ -21,6 +21,7 @@ public enum EnemyState implements State<Enemy>{
 				entity.machine.changeState(ANDAR);
 			}else{
 				entity.atacar();
+				entity.segueTrans();
 			}
 		}
 	},

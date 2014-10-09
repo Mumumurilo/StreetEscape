@@ -140,12 +140,7 @@ public class Enemy extends Calculos{
 		}
 	}
 	
-	public void movAtk(){
-		anguloParaSeguirTrans = super.getAngleDaReta(enemy, trans);
-		
-		//enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
-		//enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
-				
+	public void movAtk(){						
 		Iterator<Rectangle> iter = atk.iterator();
 		Iterator<Double> ite = angles.iterator();
 		
@@ -165,5 +160,11 @@ public class Enemy extends Calculos{
 				ite.remove();
 			}
 		}
+	}
+	
+	public void segueTrans(){
+		anguloParaSeguirTrans = super.getAngleDaReta(enemy, trans);
+		enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
+		enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
 	}
 }
