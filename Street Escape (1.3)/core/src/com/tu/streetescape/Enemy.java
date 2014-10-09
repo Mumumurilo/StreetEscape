@@ -8,8 +8,6 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.FloatArray;
-import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Enemy extends Calculos{
@@ -22,6 +20,8 @@ public class Enemy extends Calculos{
 	private int type;
 	private float lastAtkTime;
 	private double anguloParaSeguirTrans;
+	
+	private int life = 2;
 	
 	public StateMachine<Enemy> machine;
 	public Array<Rectangle> atk;

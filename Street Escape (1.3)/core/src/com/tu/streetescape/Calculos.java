@@ -1,7 +1,6 @@
 package com.tu.streetescape;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Calculos {
@@ -73,8 +72,13 @@ public class Calculos {
 		return angle;
 	}
 	
-	protected void geraTiro(Array<Rectangle>tiros, Rectangle enemy){
-		Rectangle tiro = new Rectangle(10, 10, enemy.x, enemy.y);
-		tiros.add(tiro);
+	protected void geraTiro(Array<Rectangle>tiros){
+		Rectangle tiro1 = new Rectangle(jogo.getTrans().x, jogo.getTrans().y, jogo.persowidth/4, jogo.persoheight/4);
+		Rectangle tiro2 = new Rectangle(jogo.getTrans().x, jogo.getTrans().y, jogo.persowidth/3, jogo.persoheight/3);
+		Rectangle tiro3 = new Rectangle(jogo.getTrans().x, jogo.getTrans().y, jogo.persowidth/2, jogo.persoheight/2);
+		
+		tiros.add(tiro1);
+		tiros.add(tiro2);
+		tiros.add(tiro3);
 	}
 }
