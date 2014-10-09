@@ -16,6 +16,7 @@ public class MainGame extends Game {
 	public SpriteBatch batch;
 	public OrthographicCamera camera;
 	public ShapeRenderer renderer;
+	public Transeunte transeunte;
 	public boolean debug;
 	public boolean music;
 	public boolean sound;
@@ -32,6 +33,7 @@ public class MainGame extends Game {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		renderer = new ShapeRenderer();
+		transeunte = new Transeunte(this);
 		
 		//Telas
 		telainicio = new Inicio(this);
@@ -41,6 +43,7 @@ public class MainGame extends Game {
 		this.setScreen(telainicio);			
 	}
 	
+	//Getters and Setters de debug
 	public void setDebug(boolean debug){
 		debug = this.debug;
 	}
@@ -84,5 +87,13 @@ public class MainGame extends Game {
 	sem precisar referenciar a TelaJogo na Enemy (que ficaria muito porco). */
 		unitrans = telajogo.getTrans();
 		return unitrans;
+	}
+	
+	public double getTransLife(){
+		return transeunte.getLife();
+	}
+	
+	public void setTransLife(double life){
+		transeunte.setLife(life);
 	}
 }

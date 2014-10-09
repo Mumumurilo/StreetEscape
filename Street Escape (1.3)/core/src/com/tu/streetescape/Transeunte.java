@@ -6,8 +6,9 @@ import com.badlogic.gdx.utils.Array;
 
 public class Transeunte extends Calculos{
 	
-	private float life = 3;
+	private double life = 3;
 	private Array<Rectangle> tipoTiros;
+	private Array<Rectangle> tiros;
 	
 	private boolean firstshot = true;
 	
@@ -15,6 +16,7 @@ public class Transeunte extends Calculos{
 		super(jogo);
 		
 		tipoTiros = new Array<Rectangle>();
+		tiros = new Array<Rectangle>();
 	}
 	
 	public void atirar(){
@@ -26,19 +28,19 @@ public class Transeunte extends Calculos{
 		int randShotType = MathUtils.random(1, 60);
 		
 		if(randShotType >= 1 && randShotType < 10){
-			
+			tiros.add(tipoTiros.get(0));
 		}else if(randShotType >= 10 && randShotType < 30){
-			
+			tiros.add(tipoTiros.get(1));
 		}else{
-			
+			tiros.add(tipoTiros.get(2));
 		}
 	}
 	
-	public float getLife(){
+	public double getLife(){
 		return life;
 	}
 	
-	public void setLife(float life){
+	public void setLife(double life){
 		this.life = life;
 	}
 

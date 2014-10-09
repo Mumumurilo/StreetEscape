@@ -7,10 +7,15 @@ public enum EnemyState implements State<Enemy>{
 	ANDAR(){
 		@Override
 		public void update(Enemy entity) {
-			if(entity.estaLonge()){
+			if(entity.estaLonge() && entity.life > 0){
 				entity.movEnemy();
-			}else{
+				
+			}else if(!entity.estaLonge()){
 				entity.machine.changeState(ATACAR);
+				
+			}else if(entity.life <= 0){
+				
+				entity.machine.changeState(MORRER);
 			}
 		}
 	},
@@ -19,6 +24,7 @@ public enum EnemyState implements State<Enemy>{
 		public void update(Enemy entity) {
 			if(entity.estaLonge()){
 				entity.machine.changeState(ANDAR);
+				
 			}else{
 				entity.atacar();
 				entity.segueTrans();

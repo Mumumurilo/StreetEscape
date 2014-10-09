@@ -21,7 +21,7 @@ public class Enemy extends Calculos{
 	private float lastAtkTime;
 	private double anguloParaSeguirTrans;
 	
-	private int life = 2;
+	public double life = 2;
 	
 	public StateMachine<Enemy> machine;
 	public Array<Rectangle> atk;
@@ -154,6 +154,8 @@ public class Enemy extends Calculos{
 				//Definir um set com "true" pra dano do trans
 				iter.remove();
 				ite.remove();
+				double translife = jogo.getTransLife() - 0.5;
+				jogo.setTransLife(translife);
 			}
 			if(recta.x >= jogo.WIDTH || recta.x <= 0 || recta.y >= jogo.HEIGHT || recta.y <= 0){
 				iter.remove();

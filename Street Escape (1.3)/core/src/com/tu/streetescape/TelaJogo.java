@@ -67,23 +67,25 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.renderer.setColor(Color.RED);
 		
 		//Atividade do personagem
-		if(settings.debug = true){
+		if(settings.debug = true && jogo.getTransLife() > 0){
 			jogo.renderer.begin(ShapeType.Filled);
 			jogo.renderer.rect(transeunte.getX(), transeunte.getY(), jogo.persowidth, jogo.persoheight);
 			jogo.renderer.end();
 		}
 		
-		if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
-			transeunte.y += 150 * Gdx.graphics.getDeltaTime();
-		}
-		if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
-			transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
-		}
-		if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
-			transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
-		}
-		if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
-			transeunte.x += 150 * Gdx.graphics.getDeltaTime();
+		if(jogo.getTransLife() > 0){
+			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
+				transeunte.y += 150 * Gdx.graphics.getDeltaTime();
+			}
+			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
+				transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
+			}
+			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
+				transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
+			}
+			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
+				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
+			}
 		}
 		
 		if(transeunte.overlaps(exitS)){
@@ -131,6 +133,10 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.renderer.rect(exitL.x, exitL.y, exitL.width, exitL.height);
 			jogo.renderer.rect(exitO.x, exitO.y, exitO.width, exitO.height);
 			jogo.renderer.end();
+		}
+		
+		if(jogo.getTransLife() <= 0){
+			transeunte.setPosition(810, 490); //Temporário. Penso que teremos uma animação de morte, correto? Vamos perguntar pra Ana
 		}
 		
 		//Atividade do inimigo
