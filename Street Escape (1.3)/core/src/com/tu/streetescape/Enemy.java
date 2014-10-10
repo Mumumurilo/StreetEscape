@@ -151,7 +151,6 @@ public class Enemy extends Calculos{
 			recta.y -= (float) (3 * Math.cos(anguloDoTiro));
 			
 			if(recta.overlaps(trans)){
-				//Definir um set com "true" pra dano do trans
 				iter.remove();
 				ite.remove();
 				double translife = jogo.getTransLife() - 0.5;

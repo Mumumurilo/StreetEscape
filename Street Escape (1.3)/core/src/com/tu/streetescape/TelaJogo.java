@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class TelaJogo extends Calculos implements Screen{
 	private final MainGame jogo;
@@ -20,11 +21,11 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	private int numEnemy, i = 1, j = 0;
 	private Array<Enemy> enemy;
-	//private Array<Rectangle> atk;
 	private Rectangle temprect;
 	private Enemy tempenemy;
 	
 	private Rectangle transeunte;
+	private Transeunte trans;
 		
 	public TelaJogo(final MainGame jogo){
 		super(jogo);
@@ -38,9 +39,9 @@ public class TelaJogo extends Calculos implements Screen{
 		//Declaração de elementos
 		artes = new Arte(jogo);
 		settings = new Settings(jogo);
+		trans = new Transeunte(jogo);
 		
 		enemy = new Array<Enemy>();
-		//atk = new Array<Rectangle>();
 
 		exitN = new Rectangle(264, jogo.HEIGHT - 1, 533 - 264, 5);
 		exitS = new Rectangle(264, 1, 533 - 264, 5);
@@ -62,10 +63,6 @@ public class TelaJogo extends Calculos implements Screen{
 		
 			//Fundo das salas
 		jogo.batch.draw(artes.salas.get(idsala), 0, 0, jogo.WIDTH, jogo.HEIGHT);
-		
-			//Fonte da GUI
-		jogo.GUIFont.setColor(Color.WHITE);
-		jogo.GUIFont.draw(jogo.batch, "Life: " + jogo.getTransLife(), 10, 460);
 		
 		jogo.batch.end();
 		
@@ -93,8 +90,43 @@ public class TelaJogo extends Calculos implements Screen{
 			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
 				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 			}
+			
+			if(TimeUtils.nanoTime() - trans.lastShotTime > 3000000000f){
+				if(Gdx.input.isKeyPressed(Keys.UP)){
+					trans.atirar();
+					trans.direcTiros.add(1);
+				}
+				if(Gdx.input.isKeyPressed(Keys.DOWN)){
+					trans.atirar();
+					trans.direcTiros.add(2);
+				}
+				if(Gdx.input.isKeyPressed(Keys.LEFT)){
+					trans.atirar();
+					trans.direcTiros.add(3);
+				}
+				if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+					trans.atirar();
+					trans.direcTiros.add(4);
+				}
+				if(Gdx.input.isKeyPressed(Keys.UP) && Gdx.input.isKeyPressed(Keys.LEFT)){
+					trans.atirar();
+					trans.direcTiros.add(5);
+				}
+				if(Gdx.input.isKeyPressed(Keys.UP) && Gdx.input.isKeyPressed(Keys.RIGHT)){
+					trans.atirar();
+					trans.direcTiros.add(6);
+				}
+				if(Gdx.input.isKeyPressed(Keys.DOWN) && Gdx.input.isKeyPressed(Keys.LEFT)){
+					trans.atirar();
+					trans.direcTiros.add(7);
+				}
+				if(Gdx.input.isKeyPressed(Keys.DOWN) && Gdx.input.isKeyPressed(Keys.RIGHT)){
+					trans.atirar();
+					trans.direcTiros.add(8);
+				}
+			}
 		}
-		
+				
 		if(transeunte.overlaps(exitS)){
 			transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
 			if(idsala == 0){
@@ -155,6 +187,7 @@ public class TelaJogo extends Calculos implements Screen{
 			
 			tempenemy.machine.update();
 			tempenemy.movAtk();
+			trans.movAtk(temprect);
 			
 			if(settings.debug = true){
 				jogo.renderer.begin(ShapeType.Filled);
@@ -162,6 +195,11 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.renderer.setColor(Color.PURPLE);
 				for(Rectangle recta : tempenemy.atk){
 					jogo.renderer.rect(recta.x, recta.y, recta.width, recta.height);
+				}
+				
+				jogo.renderer.setColor(Color.PINK);
+				for(Rectangle rect : trans.tiros){
+					jogo.renderer.rect(rect.x, rect.y, rect.width, rect.height);
 				}
 				
 				jogo.renderer.setColor(Color.BLUE);
@@ -173,6 +211,12 @@ public class TelaJogo extends Calculos implements Screen{
 		if(j >= numEnemy){
 			j = 0;
 		}
+		
+		//Fonte da GUI (tudo o que for GUI deve ficar aqui em baixo para que nenhum desenho se sobreponha à ela)
+		jogo.batch.begin();
+		jogo.GUIFont.setColor(Color.WHITE);
+		jogo.GUIFont.draw(jogo.batch, "Life: " + jogo.getTransLife(), 10, 460);
+		jogo.batch.end();
 	}
 	
 	private void GeraEnemy(){
