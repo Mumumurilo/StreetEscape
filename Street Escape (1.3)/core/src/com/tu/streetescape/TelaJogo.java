@@ -59,7 +59,14 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		//Desenhos
 		jogo.batch.begin();
+		
+			//Fundo das salas
 		jogo.batch.draw(artes.salas.get(idsala), 0, 0, jogo.WIDTH, jogo.HEIGHT);
+		
+			//Fonte da GUI
+		jogo.GUIFont.setColor(Color.WHITE);
+		jogo.GUIFont.draw(jogo.batch, "Life: " + jogo.getTransLife(), 10, 460);
+		
 		jogo.batch.end();
 		
 		//Atualização da câmera e renderer (para debug)
@@ -136,7 +143,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		if(jogo.getTransLife() <= 0){
-			transeunte.setPosition(810, 490); //Temporário. Penso que teremos uma animação de morte, correto? Vamos perguntar pra Ana
+			transeunte.setPosition(1000, 680); //Temporário. Penso que teremos uma animação de morte, correto? Vamos perguntar pra Ana
 		}
 		
 		//Atividade do inimigo

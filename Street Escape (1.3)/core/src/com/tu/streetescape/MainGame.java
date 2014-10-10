@@ -2,7 +2,9 @@ package com.tu.streetescape;
 
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,6 +19,7 @@ public class MainGame extends Game {
 	public OrthographicCamera camera;
 	public ShapeRenderer renderer;
 	public Transeunte transeunte;
+	public BitmapFont gameoverfont, GUIFont;
 	public boolean debug;
 	public boolean music;
 	public boolean sound;
@@ -34,6 +37,7 @@ public class MainGame extends Game {
 		camera = new OrthographicCamera();
 		renderer = new ShapeRenderer();
 		transeunte = new Transeunte(this);
+		GUIFont = new BitmapFont(Gdx.files.internal("Fontes/GUIFont.fnt"));
 		
 		//Telas
 		telainicio = new Inicio(this);
@@ -61,6 +65,7 @@ public class MainGame extends Game {
 		//Elementos globais
 		batch.dispose();
 		renderer.dispose();
+		GUIFont.dispose();
 		
 		//Telas
 		telainicio.dispose();
