@@ -17,8 +17,6 @@ public class Transeunte extends Calculos{
 	public Array<Rectangle> tiros;
 	public Array<Integer> direcTiros;
 	
-	private boolean firstshot = true;
-	
 	public Transeunte(MainGame jogo) {
 		super(jogo);
 		
@@ -28,10 +26,7 @@ public class Transeunte extends Calculos{
 	}
 	
 	public void atirar(){
-		if(firstshot){
-			super.geraTiro(tipoTiros);
-			firstshot = false;
-		}
+		super.geraTiro(tipoTiros);
 		
 		int randShotType = MathUtils.random(1, 60);
 		
@@ -42,6 +37,8 @@ public class Transeunte extends Calculos{
 		}else{
 			tiros.add(tipoTiros.get(2));
 		}
+		
+		tipoTiros.removeRange(0, 2);
 	}
 	
 	public void movAtk(Rectangle enemy){
@@ -53,34 +50,18 @@ public class Transeunte extends Calculos{
 			int direcao = iterint.next();
 			
 			if(direcao == 1){ //Up
-				rect.y += 3 * Gdx.graphics.getDeltaTime();
+				rect.y += 150 * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 2){ //Down
-				rect.y -= 3 * Gdx.graphics.getDeltaTime();
+				rect.y -= 150 * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 3){ //Left
-				rect.x -= 3 * Gdx.graphics.getDeltaTime();
+				rect.x -= 150 * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 4){ //Right
-				rect.x += 3 * Gdx.graphics.getDeltaTime();
+				rect.x += 150 * Gdx.graphics.getDeltaTime();
 			}
-			if(direcao == 5){ //Up and Left
-				rect.y += 3 * Gdx.graphics.getDeltaTime();
-				rect.x -= 3 * Gdx.graphics.getDeltaTime();
-			}
-			if(direcao == 6){ //Up and Right
-				rect.y += 3 * Gdx.graphics.getDeltaTime();
-				rect.x += 3 * Gdx.graphics.getDeltaTime();
-			}
-			if(direcao == 7){ //Down and Left
-				rect.y -= 3 * Gdx.graphics.getDeltaTime();
-				rect.x -= 3 * Gdx.graphics.getDeltaTime();
-			}
-			if(direcao == 8){ //Down and Right
-				rect.y -= 3 * Gdx.graphics.getDeltaTime();
-				rect.x += 3 * Gdx.graphics.getDeltaTime();
-			}
-			
+						
 			if(rect.overlaps(enemy)){
 				iter.remove();
 				iterint.remove();

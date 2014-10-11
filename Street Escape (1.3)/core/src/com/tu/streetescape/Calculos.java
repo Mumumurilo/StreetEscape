@@ -73,9 +73,12 @@ public class Calculos {
 	}
 	
 	protected void geraTiro(Array<Rectangle>tiros){
-		Rectangle tiro1 = new Rectangle(jogo.getTrans().x, jogo.getTrans().y, jogo.persowidth/4, jogo.persoheight/4);
-		Rectangle tiro2 = new Rectangle(jogo.getTrans().x, jogo.getTrans().y, jogo.persowidth/3, jogo.persoheight/3);
-		Rectangle tiro3 = new Rectangle(jogo.getTrans().x, jogo.getTrans().y, jogo.persowidth/2, jogo.persoheight/2);
+		Rectangle tiro1 = new Rectangle(jogo.getTrans().x + jogo.persowidth/4, jogo.getTrans().y + jogo.persoheight/4, 
+				jogo.persowidth/4, jogo.persoheight/4);
+		Rectangle tiro2 = new Rectangle(jogo.getTrans().x + jogo.persowidth/4, jogo.getTrans().y + jogo.persoheight/4, 
+				jogo.persowidth/3, jogo.persoheight/3);
+		Rectangle tiro3 = new Rectangle(jogo.getTrans().x + jogo.persowidth/4, jogo.getTrans().y + jogo.persoheight/4, 
+				jogo.persowidth/2, jogo.persoheight/2);
 		
 		tiros.add(tiro1);
 		tiros.add(tiro2);

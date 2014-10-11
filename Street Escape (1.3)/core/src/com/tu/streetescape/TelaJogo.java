@@ -91,39 +91,29 @@ public class TelaJogo extends Calculos implements Screen{
 				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 			}
 			
-			if(TimeUtils.nanoTime() - trans.lastShotTime > 3000000000f){
-				if(Gdx.input.isKeyPressed(Keys.UP)){
+			System.out.println(TimeUtils.nanoTime() - trans.lastShotTime + " = " + TimeUtils.nanoTime() + " - " + trans.lastShotTime);
+			if(TimeUtils.nanoTime() - trans.lastShotTime > 20000000){
+				if(Gdx.input.isKeyJustPressed(Keys.UP)){
+					System.out.println("Deu tiro!");
 					trans.atirar();
 					trans.direcTiros.add(1);
 				}
-				if(Gdx.input.isKeyPressed(Keys.DOWN)){
+				if(Gdx.input.isKeyJustPressed(Keys.DOWN)){
+					System.out.println("Deu tiro!");
 					trans.atirar();
 					trans.direcTiros.add(2);
 				}
-				if(Gdx.input.isKeyPressed(Keys.LEFT)){
+				if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
+					System.out.println("Deu tiro!");
 					trans.atirar();
 					trans.direcTiros.add(3);
 				}
-				if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+				if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
+					System.out.println("Deu tiro!");
 					trans.atirar();
 					trans.direcTiros.add(4);
 				}
-				if(Gdx.input.isKeyPressed(Keys.UP) && Gdx.input.isKeyPressed(Keys.LEFT)){
-					trans.atirar();
-					trans.direcTiros.add(5);
-				}
-				if(Gdx.input.isKeyPressed(Keys.UP) && Gdx.input.isKeyPressed(Keys.RIGHT)){
-					trans.atirar();
-					trans.direcTiros.add(6);
-				}
-				if(Gdx.input.isKeyPressed(Keys.DOWN) && Gdx.input.isKeyPressed(Keys.LEFT)){
-					trans.atirar();
-					trans.direcTiros.add(7);
-				}
-				if(Gdx.input.isKeyPressed(Keys.DOWN) && Gdx.input.isKeyPressed(Keys.RIGHT)){
-					trans.atirar();
-					trans.direcTiros.add(8);
-				}
+				trans.lastShotTime = TimeUtils.nanoTime();
 			}
 		}
 				
