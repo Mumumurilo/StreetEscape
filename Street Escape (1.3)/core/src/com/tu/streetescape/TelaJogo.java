@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 
 public class TelaJogo extends Calculos implements Screen{
 	private final MainGame jogo;
@@ -91,32 +90,36 @@ public class TelaJogo extends Calculos implements Screen{
 				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 			}
 			
-			System.out.println(TimeUtils.nanoTime() - trans.lastShotTime + " = " + TimeUtils.nanoTime() + " - " + trans.lastShotTime);
-			if(TimeUtils.nanoTime() - trans.lastShotTime > 20000000){
-				if(Gdx.input.isKeyJustPressed(Keys.UP)){
-					System.out.println("Deu tiro!");
-					trans.atirar();
+			if(Gdx.input.isKeyJustPressed(Keys.UP)){
+				trans.atirar();
+				if(trans.tiroValido){
 					trans.direcTiros.add(1);
+					trans.tiroValido = false;
 				}
-				if(Gdx.input.isKeyJustPressed(Keys.DOWN)){
-					System.out.println("Deu tiro!");
-					trans.atirar();
+			}
+			if(Gdx.input.isKeyJustPressed(Keys.DOWN)){
+				trans.atirar();
+				if(trans.tiroValido){
 					trans.direcTiros.add(2);
+					trans.tiroValido = false;
 				}
-				if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
-					System.out.println("Deu tiro!");
-					trans.atirar();
+			}
+			if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
+				trans.atirar();
+				if(trans.tiroValido){
 					trans.direcTiros.add(3);
+					trans.tiroValido = false;
 				}
-				if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
-					System.out.println("Deu tiro!");
-					trans.atirar();
+			}
+			if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
+				trans.atirar();
+				if(trans.tiroValido){
 					trans.direcTiros.add(4);
+					trans.tiroValido = false;
 				}
-				trans.lastShotTime = TimeUtils.nanoTime();
 			}
 		}
-				
+
 		if(transeunte.overlaps(exitS)){
 			transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
 			if(idsala == 0){

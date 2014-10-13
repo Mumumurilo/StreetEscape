@@ -3,16 +3,16 @@ package com.tu.streetescape;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class Transeunte extends Calculos{
 	
 	private double life = 3;
 	public double lastShotTime;
+	public boolean tiroValido = false;
 	private Array<Rectangle> tipoTiros;
 	public Array<Rectangle> tiros;
 	public Array<Integer> direcTiros;
@@ -26,19 +26,23 @@ public class Transeunte extends Calculos{
 	}
 	
 	public void atirar(){
-		super.geraTiro(tipoTiros);
-		
-		int randShotType = MathUtils.random(1, 60);
-		
-		if(randShotType >= 1 && randShotType < 10){
-			tiros.add(tipoTiros.get(0));
-		}else if(randShotType >= 10 && randShotType < 30){
-			tiros.add(tipoTiros.get(1));
-		}else{
-			tiros.add(tipoTiros.get(2));
+		if(TimeUtils.nanoTime() - lastShotTime > 250000000){
+			super.geraTiro(tipoTiros);
+			
+			int randShotType = MathUtils.random(1, 60);
+			
+			if(randShotType >= 1 && randShotType < 10){
+				tiros.add(tipoTiros.get(0));
+			}else if(randShotType >= 10 && randShotType < 30){
+				tiros.add(tipoTiros.get(1));
+			}else{
+				tiros.add(tipoTiros.get(2));
+			}
+			
+			tipoTiros.removeRange(0, 2);
+			tiroValido = true;
+			lastShotTime = TimeUtils.nanoTime();
 		}
-		
-		tipoTiros.removeRange(0, 2);
 	}
 	
 	public void movAtk(Rectangle enemy){
@@ -50,16 +54,16 @@ public class Transeunte extends Calculos{
 			int direcao = iterint.next();
 			
 			if(direcao == 1){ //Up
-				rect.y += 150 * Gdx.graphics.getDeltaTime();
+				rect.y += 100 * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 2){ //Down
-				rect.y -= 150 * Gdx.graphics.getDeltaTime();
+				rect.y -= 100 * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 3){ //Left
-				rect.x -= 150 * Gdx.graphics.getDeltaTime();
+				rect.x -= 100 * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 4){ //Right
-				rect.x += 150 * Gdx.graphics.getDeltaTime();
+				rect.x += 100 * Gdx.graphics.getDeltaTime();
 			}
 						
 			if(rect.overlaps(enemy)){
