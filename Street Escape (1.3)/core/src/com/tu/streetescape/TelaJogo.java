@@ -180,10 +180,11 @@ public class TelaJogo extends Calculos implements Screen{
 			
 			tempenemy.machine.update();
 			tempenemy.movAtk();
-			trans.movAtk(temprect);
+			trans.movAtk(temprect, tempenemy, numEnemy);
 			
 			if(tempenemy.morto){
 				enemy.removeIndex(j);
+				numEnemy--;
 			}
 			
 			if(settings.debug = true){

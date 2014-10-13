@@ -118,6 +118,10 @@ public class Enemy extends Calculos{
 	
 	public void tomaDano(){
 		life--;
+		
+		if(life > 0){
+			tomouDano = false;
+		}
 	}
 	
 	public void atacar(){

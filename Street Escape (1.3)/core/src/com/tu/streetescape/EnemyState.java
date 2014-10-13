@@ -7,13 +7,15 @@ public enum EnemyState implements State<Enemy>{
 	ANDAR(){
 		@Override
 		public void update(Enemy entity) {
-			if(entity.estaLonge() && entity.life > 0){
+			if(entity.estaLonge() && !entity.tomouDano){
 				entity.movEnemy();
 				
-			}else if(!entity.estaLonge()){
+			}
+			if(!entity.estaLonge()){
 				entity.machine.changeState(ATACAR);
 				
-			}else if(entity.tomouDano){
+			}
+			if(entity.tomouDano){
 				entity.machine.changeState(TOMA_DANO);
 			}
 		}
@@ -21,14 +23,16 @@ public enum EnemyState implements State<Enemy>{
 	ATACAR(){
 		@Override
 		public void update(Enemy entity) {
-			if(entity.estaLonge() && entity.life > 0){
+			if(entity.estaLonge() && !entity.tomouDano){
 				entity.machine.changeState(ANDAR);
 				
-			}else if(!entity.estaLonge()){
+			}
+			if(!entity.estaLonge()){
 				entity.atacar();
 				entity.segueTrans();
 				
-			}else if(entity.tomouDano){
+			}
+			if(entity.tomouDano){
 				entity.machine.changeState(TOMA_DANO);
 			}
 		}

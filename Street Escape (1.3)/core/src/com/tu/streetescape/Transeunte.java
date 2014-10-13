@@ -45,7 +45,7 @@ public class Transeunte extends Calculos{
 		}
 	}
 	
-	public void movAtk(Rectangle enemy){
+	public void movAtk(Rectangle enemy, Enemy enem, int numEnemy){
 		Iterator<Rectangle> iter = tiros.iterator();
 		Iterator<Integer> iterint = direcTiros.iterator();
 		
@@ -54,21 +54,22 @@ public class Transeunte extends Calculos{
 			int direcao = iterint.next();
 			
 			if(direcao == 1){ //Up
-				rect.y += 100 * Gdx.graphics.getDeltaTime();
+				rect.y += (160/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 2){ //Down
-				rect.y -= 100 * Gdx.graphics.getDeltaTime();
+				rect.y -= (160/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 3){ //Left
-				rect.x -= 100 * Gdx.graphics.getDeltaTime();
+				rect.x -= (160/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 4){ //Right
-				rect.x += 100 * Gdx.graphics.getDeltaTime();
+				rect.x += (160/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 						
 			if(rect.overlaps(enemy)){
 				iter.remove();
 				iterint.remove();
+				enem.tomouDano = true;
 			}
 			
 			if(rect.x >= jogo.WIDTH || rect.x <= 0 || rect.y >= jogo.HEIGHT || rect.y <= 0){
