@@ -17,6 +17,7 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	private int idsala = 0;
 	private Rectangle exitN, exitS, exitO, exitL;
+	private boolean existeEnemy = false;
 	
 	private int numEnemy, i = 1, j = 0;
 	private Array<Enemy> enemy;
@@ -48,10 +49,6 @@ public class TelaJogo extends Calculos implements Screen{
 		exitO = new Rectangle(1, 107, 5, 370 - 107);
 		
 		transeunte = new Rectangle(380, 200, jogo.persowidth, jogo.persoheight);
-		
-		/*Essa variável terá que se alterar a cada mudança de sala. Terá que se integrar à
-		 * lógica de mudança de salas. Está aqui só por provisório mesmo.*/
-		numEnemy = MathUtils.random(1, 4);
 	}
 
 	@Override
@@ -121,6 +118,9 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 
 		if(transeunte.overlaps(exitS)){
+			existeEnemy = true;
+			i = 1;
+			GeraEnemy();
 			transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
 			if(idsala == 0){
 				idsala = 1;
@@ -130,6 +130,9 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		if(transeunte.overlaps(exitL)){
+			existeEnemy = true;
+			i = 1;
+			GeraEnemy();
 			transeunte.x = 10;
 			if(idsala == 0){
 				idsala = 2;
@@ -139,6 +142,9 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		if(transeunte.overlaps(exitN)){
+			existeEnemy = true;
+			i = 1;
+			GeraEnemy();
 			transeunte.y = 10;
 			if(idsala == 0){
 				idsala = 3;
@@ -148,6 +154,9 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		if(transeunte.overlaps(exitO)){
+			existeEnemy = true;
+			i = 1;
+			GeraEnemy();
 			transeunte.x = jogo.WIDTH - jogo.persowidth - 10;
 			if(idsala == 0){
 				idsala = 4;
@@ -172,42 +181,47 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		//Atividade do inimigo
-		GeraEnemy();
+		//GeraEnemy();
 		
-		while(j < numEnemy){
-			tempenemy = enemy.get(j);
-			temprect = tempenemy.enemy;
-			
-			tempenemy.machine.update();
-			tempenemy.movAtk();
-			trans.movAtk(temprect, tempenemy, numEnemy);
-			
-			if(tempenemy.morto){
-				enemy.removeIndex(j);
-				numEnemy--;
-			}
-			
-			if(settings.debug = true){
-				jogo.renderer.begin(ShapeType.Filled);
+		if(existeEnemy){
+			while(j < numEnemy){
+				tempenemy = enemy.get(j);
+				temprect = tempenemy.enemy;
 				
-				jogo.renderer.setColor(Color.PURPLE);
-				for(Rectangle recta : tempenemy.atk){
-					jogo.renderer.rect(recta.x, recta.y, recta.width, recta.height);
+				tempenemy.machine.update();
+				tempenemy.movAtk();
+				trans.movAtk(temprect, tempenemy, numEnemy);
+				
+				if(tempenemy.morto){
+					enemy.removeIndex(j);
+					numEnemy--;
 				}
 				
-				jogo.renderer.setColor(Color.PINK);
-				for(Rectangle rect : trans.tiros){
-					jogo.renderer.rect(rect.x, rect.y, rect.width, rect.height);
+				if(settings.debug = true){
+					jogo.renderer.begin(ShapeType.Filled);
+					
+					jogo.renderer.setColor(Color.PURPLE);
+					for(Rectangle recta : tempenemy.atk){
+						jogo.renderer.rect(recta.x, recta.y, recta.width, recta.height);
+					}
+					
+					jogo.renderer.setColor(Color.PINK);
+					for(Rectangle rect : trans.tiros){
+						jogo.renderer.rect(rect.x, rect.y, rect.width, rect.height);
+					}
+					
+					jogo.renderer.setColor(Color.BLUE);
+					jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
+					jogo.renderer.end();
 				}
-				
-				jogo.renderer.setColor(Color.BLUE);
-				jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
-				jogo.renderer.end();
+				j++;
 			}
-			j++;
-		}
-		if(j >= numEnemy){
-			j = 0;
+			if(j >= numEnemy){
+				j = 0;
+			}
+			if(numEnemy == 0){
+				existeEnemy = false;
+			}
 		}
 		
 		//Fonte da GUI (tudo o que for GUI deve ficar aqui em baixo para que nenhum desenho se sobreponha à ela)
@@ -218,6 +232,8 @@ public class TelaJogo extends Calculos implements Screen{
 	}
 	
 	private void GeraEnemy(){
+		numEnemy = MathUtils.random(1, 4);
+		
 		while(i <= numEnemy){
 			Rectangle mau = new Rectangle(MathUtils.random(jogo.WIDTH - 750, jogo.WIDTH - 50),
 					MathUtils.random(jogo.HEIGHT - 430, jogo.HEIGHT - 50), jogo.persowidth, jogo.persoheight);
