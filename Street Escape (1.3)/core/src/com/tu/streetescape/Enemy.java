@@ -22,6 +22,7 @@ public class Enemy extends Calculos{
 	private double anguloParaSeguirTrans;
 	
 	public double life = 2;
+	public boolean tomouDano = false, morto = false;
 	
 	public StateMachine<Enemy> machine;
 	public Array<Rectangle> atk;
@@ -113,6 +114,10 @@ public class Enemy extends Calculos{
 				randirectmov = 4;
 			}
 		}
+	}
+	
+	public void tomaDano(){
+		life--;
 	}
 	
 	public void atacar(){

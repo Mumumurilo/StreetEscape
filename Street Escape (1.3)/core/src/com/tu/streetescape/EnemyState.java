@@ -13,35 +13,41 @@ public enum EnemyState implements State<Enemy>{
 			}else if(!entity.estaLonge()){
 				entity.machine.changeState(ATACAR);
 				
-			}else if(entity.life <= 0){
-				
-				entity.machine.changeState(MORRER);
+			}else if(entity.tomouDano){
+				entity.machine.changeState(TOMA_DANO);
 			}
 		}
 	},
 	ATACAR(){
 		@Override
 		public void update(Enemy entity) {
-			if(entity.estaLonge()){
+			if(entity.estaLonge() && entity.life > 0){
 				entity.machine.changeState(ANDAR);
 				
-			}else{
+			}else if(!entity.estaLonge()){
 				entity.atacar();
 				entity.segueTrans();
+				
+			}else if(entity.tomouDano){
+				entity.machine.changeState(TOMA_DANO);
 			}
 		}
 	},
 	TOMA_DANO(){
 		@Override
 		public void update(Enemy entity) {
-			// TODO Auto-generated method stub
-			
+			entity.tomaDano();
+			if(entity.life <= 0){
+				entity.machine.changeState(MORRER);
+			}else{
+				entity.machine.changeState(ANDAR);
+			}
 		}
 	},
 	MORRER(){
 		@Override
 		public void update(Enemy entity) {
-			// TODO Auto-generated method stub
+			entity.morto = true;
 			
 		}
 	}

@@ -182,6 +182,10 @@ public class TelaJogo extends Calculos implements Screen{
 			tempenemy.movAtk();
 			trans.movAtk(temprect);
 			
+			if(tempenemy.morto){
+				enemy.removeIndex(j);
+			}
+			
 			if(settings.debug = true){
 				jogo.renderer.begin(ShapeType.Filled);
 				
