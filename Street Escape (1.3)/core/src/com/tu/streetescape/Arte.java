@@ -18,7 +18,7 @@ public class Arte {
 		
 		salas = new ArrayList<Texture>();
 		
-		forninho = new Texture(Gdx.files.internal("forninho.jpg"));
+		forninho = new Texture(Gdx.files.internal("menu.png"));
 		
 		salas.add(cenario1 = new Texture(Gdx.files.internal("paulista1.jpg")));
 		salas.add(cima = new Texture(Gdx.files.internal("saidacima.jpg")));
