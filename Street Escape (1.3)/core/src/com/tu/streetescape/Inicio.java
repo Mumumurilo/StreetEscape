@@ -1,6 +1,8 @@
 package com.tu.streetescape;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
@@ -38,8 +40,9 @@ public class Inicio implements Screen{
 		jogo.renderer.setColor(Color.RED);
 		jogo.renderer.end();
 		
-		//Temporário (serve enquanto montamos os menus)
-		jogo.setScreen(jogo.telajogo);
+		if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.SPACE)){
+			jogo.setScreen(jogo.telajogo);
+		}
 	}
 
 	@Override
