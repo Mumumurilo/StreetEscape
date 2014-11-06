@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class TelaJogo extends Calculos implements Screen{
 	private final MainGame jogo;
@@ -23,6 +24,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private Array<Enemy> enemy;
 	private Rectangle temprect;
 	private Enemy tempenemy;
+	private float lastToque;
 	
 	private Rectangle transeunte;
 	private Transeunte trans;
@@ -177,11 +179,10 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		if(jogo.getTransLife() <= 0){
-			transeunte.setPosition(1000, 680); //Temporário. Penso que teremos uma animação de morte, correto? Vamos perguntar pra Ana
+			transeunte.setPosition(1000, 680);
 		}
 		
-		//Atividade do inimigo
-		//GeraEnemy();
+		//Atividade do inimigo----------------------------------------------------------------
 		
 		if(existeEnemy){
 			while(j < numEnemy){
@@ -195,6 +196,13 @@ public class TelaJogo extends Calculos implements Screen{
 				if(tempenemy.morto){
 					enemy.removeIndex(j);
 					numEnemy--;
+				}
+				
+				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 1000000000){
+					double temptranslife = jogo.getTransLife();
+					temptranslife -= 0.5;
+					jogo.setTransLife(temptranslife);
+					lastToque = TimeUtils.nanoTime();
 				}
 				
 				if(settings.debug = true){
