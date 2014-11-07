@@ -89,32 +89,34 @@ public class TelaJogo extends Calculos implements Screen{
 				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.UP)){
-				trans.atirar();
-				if(trans.tiroValido){
-					trans.direcTiros.add(1);
-					trans.tiroValido = false;
+			if(existeEnemy){
+				if(Gdx.input.isKeyJustPressed(Keys.UP)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(1);
+						trans.tiroValido = false;
+					}
 				}
-			}
-			if(Gdx.input.isKeyJustPressed(Keys.DOWN)){
-				trans.atirar();
-				if(trans.tiroValido){
-					trans.direcTiros.add(2);
-					trans.tiroValido = false;
+				if(Gdx.input.isKeyJustPressed(Keys.DOWN)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(2);
+						trans.tiroValido = false;
+					}
 				}
-			}
-			if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
-				trans.atirar();
-				if(trans.tiroValido){
-					trans.direcTiros.add(3);
-					trans.tiroValido = false;
+				if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(3);
+						trans.tiroValido = false;
+					}
 				}
-			}
-			if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
-				trans.atirar();
-				if(trans.tiroValido){
-					trans.direcTiros.add(4);
-					trans.tiroValido = false;
+				if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(4);
+						trans.tiroValido = false;
+					}
 				}
 			}
 		}
@@ -229,6 +231,8 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			if(numEnemy == 0){
 				existeEnemy = false;
+				trans.direcTiros.clear();
+				trans.tiros.clear();
 			}
 		}
 		
@@ -266,7 +270,7 @@ public class TelaJogo extends Calculos implements Screen{
 			 * ATENÇÃO: A terceira referência do construtor de Enemy é o tipo de inimigo. Acredito que teríamos que criar algo que modificasse 
 			 * o tipo dependendo da variação das salas. Temos que discutir isso! Por default, estou deixando 1 (manifestantes).
 			 */
-			Enemy mal = new Enemy(jogo, mau, 1);
+			Enemy mal = new Enemy(jogo, mau, 3);
 			enemy.add(mal);
 			
 			i++;
