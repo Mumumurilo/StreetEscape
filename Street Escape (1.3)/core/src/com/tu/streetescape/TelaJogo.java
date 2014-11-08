@@ -28,6 +28,8 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	private Rectangle transeunte;
 	private Transeunte trans;
+	
+	private float contFimJogo = 0;
 		
 	public TelaJogo(final MainGame jogo){
 		super(jogo);
@@ -241,6 +243,19 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.GUIFont.setColor(Color.WHITE);
 		jogo.GUIFont.draw(jogo.batch, "Life: " + jogo.getTransLife(), 10, 460);
 		jogo.batch.end();
+		
+		if(jogo.getTransLife() <= 0){
+			contFimJogo += Gdx.graphics.getDeltaTime();
+			jogo.batch.begin();
+			jogo.gameoverfont.setColor(Color.GREEN);
+			jogo.gameoverfont.draw(jogo.batch, "Game Over!", jogo.WIDTH/2 - 245, jogo.HEIGHT/2 + 20);
+			jogo.batch.end();
+		}
+		
+		if(contFimJogo >= 5){
+			//condição de quebrar o ciclo e ir pra tela de créditos
+			
+		}
 	}
 	
 	private void GeraEnemy(){

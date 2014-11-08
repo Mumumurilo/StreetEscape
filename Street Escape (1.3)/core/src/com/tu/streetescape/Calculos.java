@@ -55,7 +55,7 @@ public class Calculos {
 		double distx = Math.cos(angle)*distance;
 		double disty = Math.sin(angle)*distance;
 		
-		if(distx <= 350 && disty <= 350 && distx >= -350 && disty >= -350){
+		if(distx <= 200 && disty <= 200 && distx >= -200 && disty >= -200){
 			return true;
 		}
 		return false;

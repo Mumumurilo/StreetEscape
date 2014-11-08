@@ -39,6 +39,7 @@ public class MainGame extends Game {
 		renderer = new ShapeRenderer();
 		transeunte = new Transeunte(this);
 		GUIFont = new BitmapFont(Gdx.files.internal("Fontes/GUIFont.fnt"));
+		gameoverfont = new BitmapFont(Gdx.files.internal("Fontes/gameover.fnt"));
 		
 		//Telas
 		telainicio = new Inicio(this);
