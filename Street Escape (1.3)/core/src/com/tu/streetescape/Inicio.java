@@ -31,6 +31,7 @@ public class Inicio implements Screen{
 	public void render(float delta) { //"loop" principal da tela
 		if(jogo.reset == true){
 			jogo.telacreditos.dispose();
+			jogo.create();
 			jogo.reset = false;
 		}
 		
