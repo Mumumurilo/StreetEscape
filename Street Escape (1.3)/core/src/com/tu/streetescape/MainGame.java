@@ -21,9 +21,9 @@ public class MainGame extends Game {
 	public ShapeRenderer renderer;
 	public Transeunte transeunte;
 	public BitmapFont gameoverfont, GUIFont;
-	public boolean debug;
-	public boolean music;
-	public boolean sound;
+	private boolean debug;
+	private boolean music;
+	private boolean sound;
 	public final int WIDTH = 800;
 	public final int HEIGHT = 480;	
 	public final int persowidth = 70;
@@ -61,6 +61,18 @@ public class MainGame extends Game {
 	
 	public void setMusic(boolean music){
 		music = this.music;
+	}
+	
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public boolean isMusic() {
+		return music;
+	}
+
+	public boolean isSound() {
+		return sound;
 	}
 
 	@Override

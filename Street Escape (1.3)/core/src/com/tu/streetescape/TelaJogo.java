@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class TelaJogo extends Calculos implements Screen{
 	private final MainGame jogo;
 	
-	private Settings settings;
 	private Arte artes;
+	private Settings settings;
 	
 	private int idsala = 0;
 	private Rectangle exitN, exitS, exitO, exitL;
@@ -72,11 +72,13 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.renderer.setColor(Color.RED);
 		
 		//Atividade do personagem
-		if(settings.debug = true && jogo.getTransLife() > 0){
+		if(jogo.isDebug() == true && jogo.getTransLife() > 0){
 			jogo.renderer.begin(ShapeType.Filled);
 			jogo.renderer.rect(transeunte.getX(), transeunte.getY(), jogo.persowidth, jogo.persoheight);
 			jogo.renderer.end();
 		}
+		
+		settings.configButtons();
 		
 		if(jogo.getTransLife() > 0){
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
@@ -173,7 +175,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
-		if(settings.debug == true){
+		if(jogo.isDebug() == true){
 			jogo.renderer.begin(ShapeType.Filled);
 			jogo.renderer.setColor(Color.GREEN);
 			jogo.renderer.rect(exitN.x, exitN.y, exitN.width, exitN.height);
@@ -210,7 +212,7 @@ public class TelaJogo extends Calculos implements Screen{
 					lastToque = TimeUtils.nanoTime();
 				}
 				
-				if(settings.debug = true){
+				if(jogo.isDebug() == true){
 					jogo.renderer.begin(ShapeType.Filled);
 					
 					jogo.renderer.setColor(Color.PURPLE);

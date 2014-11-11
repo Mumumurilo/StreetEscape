@@ -11,8 +11,7 @@ public class Inicio implements Screen{
 	
 	//Classes utilizadas
 	private Arte artes;
-	
-	//Elementos da tela
+	private Settings settings;
 	
 	public Inicio(final MainGame jogo){ //Construtor. Serve para instanciar os elementos das telas
 		this.jogo = jogo;
@@ -22,6 +21,7 @@ public class Inicio implements Screen{
 		
 		//Declaração de telas
 		artes = new Arte(jogo);
+		settings = new Settings(jogo);
 		
 		//Declaração de elementos
 		
@@ -46,6 +46,8 @@ public class Inicio implements Screen{
 		jogo.renderer.setColor(Color.RED);
 		jogo.renderer.end();
 		
+		settings.configButtons();
+		System.out.println(jogo.isDebug());
 		if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.SPACE)){	
 			jogo.telajogo = new TelaJogo(jogo);
 			
