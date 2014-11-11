@@ -38,7 +38,8 @@ public class TelaJogo extends Calculos implements Screen{
 		//Posicionamento da câmera
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
 				
-		//Declaração de telas
+		//Deleta tela anterior
+		jogo.telainicio.dispose();
 		
 		//Declaração de elementos
 		artes = new Arte(jogo);
@@ -254,7 +255,8 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		if(contFimJogo >= 5){
 			//condição de quebrar o ciclo e ir pra tela de créditos
-			
+			jogo.telacreditos = new TelaCreditos(jogo);
+			jogo.setScreen(jogo.telacreditos);
 		}
 	}
 	

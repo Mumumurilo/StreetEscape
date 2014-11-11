@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 public class MainGame extends Game {
-	//Declaração de telas do jogo
+	//Declaração das telas
 	public Inicio telainicio;
 	public TelaJogo telajogo;
+	public TelaCreditos telacreditos;
 	
 	//Declaração de elementos globais, utilizados em todas as classes do jogo
 	public SpriteBatch batch;
@@ -31,6 +31,8 @@ public class MainGame extends Game {
 	
 	private Rectangle unitrans;
 	
+	public boolean reset = false;
+	
 	@Override
 	public void create() { //Método aonde tudo é instanciado
 		//Elementos globais
@@ -43,7 +45,6 @@ public class MainGame extends Game {
 		
 		//Telas
 		telainicio = new Inicio(this);
-		telajogo = new TelaJogo(this);
 		
 		//Mudança de tela (direciona o jogo para ir à tela seguinte)
 		this.setScreen(telainicio);			

@@ -29,6 +29,11 @@ public class Inicio implements Screen{
 
 	@Override
 	public void render(float delta) { //"loop" principal da tela
+		if(jogo.reset == true){
+			jogo.telacreditos.dispose();
+			jogo.reset = false;
+		}
+		
 		//Desenho do forninho
 		jogo.batch.begin();
 		jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
@@ -40,7 +45,9 @@ public class Inicio implements Screen{
 		jogo.renderer.setColor(Color.RED);
 		jogo.renderer.end();
 		
-		if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.SPACE)){
+		if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.SPACE)){	
+			jogo.telajogo = new TelaJogo(jogo);
+			
 			jogo.setScreen(jogo.telajogo);
 		}
 	}
