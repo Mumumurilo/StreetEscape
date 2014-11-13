@@ -87,9 +87,6 @@ public class MainGame extends Game {
 		batch.dispose();
 		renderer.dispose();
 		GUIFont.dispose();
-		
-		//Telas
-		telainicio.dispose();
 	}
 
 	@Override

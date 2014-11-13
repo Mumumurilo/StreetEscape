@@ -20,7 +20,7 @@ public class Inicio implements Screen{
 		//Posicionamento da câmera
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
 		
-		//Declaração de telas
+		//Declaração de classes
 		artes = new Arte(jogo);
 		settings = new Settings(jogo);
 		
