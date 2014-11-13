@@ -3,6 +3,7 @@ package com.tu.streetescape;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,8 +23,8 @@ public class MainGame extends Game {
 	public Transeunte transeunte;
 	public BitmapFont gameoverfont, GUIFont;
 	private boolean debug = true;
-	private boolean music= true;
-	private boolean sound= true;
+	private boolean music = true;
+	private boolean sound = true;
 	public final int WIDTH = 800;
 	public final int HEIGHT = 480;	
 	public final int persowidth = 70;
@@ -32,6 +33,11 @@ public class MainGame extends Game {
 	private Rectangle unitrans;
 	
 	public boolean reset = false;
+	
+	//Músicas
+	public Music temamenu;
+	public Music temajogo;
+	public Music temacreditos;
 	
 	@Override
 	public void create() { //Método aonde tudo é instanciado

@@ -3,6 +3,7 @@ package com.tu.streetescape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
@@ -24,14 +25,15 @@ public class Inicio implements Screen{
 		settings = new Settings(jogo);
 		
 		//Declaração de elementos
-		
+		jogo.temamenu = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 3.mp3"));
+		jogo.temamenu.setLooping(true);
+		jogo.temamenu.play();
 	}
 
 	@Override
 	public void render(float delta) { //"loop" principal da tela
 		if(jogo.reset == true){
 			jogo.telacreditos.dispose();
-			jogo.create();
 			jogo.reset = false;
 		}
 		
@@ -40,13 +42,14 @@ public class Inicio implements Screen{
 		jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
 		jogo.batch.end();
 		
-		//Atualização da câmera e renderer (para debug)
+		//Atualização da câmera
 		jogo.camera.update();
-		jogo.renderer.begin(ShapeType.Filled);
-		jogo.renderer.setColor(Color.RED);
-		jogo.renderer.end();
 		
+		//Método de atalho dos botões de config
 		settings.configButtons();
+		
+		//Condição para música parar ou tocar
+		settings.condMusica(jogo.temamenu);
 
 		if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.SPACE)){	
 			jogo.telajogo = new TelaJogo(jogo);

@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class TelaCreditos implements Screen{
 	private final MainGame jogo;
 	
+	private Settings settings;
+	
 	private Texture background;
 	
 	public TelaCreditos(final MainGame jogo){
@@ -15,11 +17,21 @@ public class TelaCreditos implements Screen{
 		
 		//Deleta tela anterior
 		jogo.telajogo.dispose();
+		jogo.temajogo.dispose();
 		
 		//Posicionamento da câmera
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
 		
+		//bg
 		background = new Texture(Gdx.files.internal("bg.png"));
+		
+		//Config
+		settings = new Settings(jogo);
+		
+		//Música
+		jogo.temacreditos = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 1.mp3"));
+		jogo.temacreditos.setLooping(true);
+		jogo.temacreditos.play();
 	}
 
 	@Override
@@ -30,10 +42,13 @@ public class TelaCreditos implements Screen{
 		
 		jogo.camera.update();
 		
+		settings.configButtons();
+		settings.condMusica(jogo.temacreditos);
+		
 		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.SPACE)){
 			jogo.reset = true;
-			jogo.telainicio = new Inicio(jogo);
-			jogo.setScreen(jogo.telainicio);
+			jogo.temacreditos.dispose();
+			jogo.create();
 		}
 	}
 

@@ -40,6 +40,7 @@ public class TelaJogo extends Calculos implements Screen{
 				
 		//Deleta tela anterior
 		jogo.telainicio.dispose();
+		jogo.temamenu.dispose();
 		
 		//Declaração de elementos
 		artes = new Arte(jogo);
@@ -54,6 +55,10 @@ public class TelaJogo extends Calculos implements Screen{
 		exitO = new Rectangle(1, 107, 5, 370 - 107);
 		
 		transeunte = new Rectangle(380, 200, jogo.persowidth, jogo.persoheight);
+		
+		jogo.temajogo = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 2.mp3"));
+		jogo.temajogo.setLooping(true);
+		jogo.temajogo.play();
 	}
 
 	@Override
@@ -79,6 +84,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		settings.configButtons();
+		settings.condMusica(jogo.temajogo);
 		
 		if(jogo.getTransLife() > 0){
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
