@@ -9,32 +9,27 @@ public class Settings extends MainGame{
 	
 	public Settings(final MainGame jogo){
 		this.jogo = jogo;
-		jogo.setDebug(true);
-		jogo.setMusic(true);
-		jogo.setSound(true);
 	}
 	
 	public void configButtons(){
-		if(Gdx.input.isKeyJustPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.N)){
-			if(jogo.isSound() == true){
-				jogo.setSound(false);
-			}else{
-				jogo.setSound(true);
-			}
+		if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.N) && jogo.isSound()){
+			jogo.setSound(false);
+		}else if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.N) && !jogo.isSound()){
+			jogo.setSound(true);
 		}
-		if(Gdx.input.isKeyJustPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.M)){
-			if(jogo.isMusic() == true){
-				jogo.setMusic(false);
-			}else{
-				jogo.setMusic(true);
-			}
+		
+		if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.M) && jogo.isMusic()){
+			jogo.setMusic(false);
+		}else if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.M) && !jogo.isMusic()){
+			jogo.setMusic(true);
 		}
-		if(Gdx.input.isKeyJustPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.ALT_LEFT) && Gdx.input.isKeyJustPressed(Keys.P)){
-			if(jogo.isDebug() == true){
-				jogo.setDebug(false);
-			}else{
-				jogo.setDebug(true);
-			}
+		
+		if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Keys.ALT_LEFT) && Gdx.input.isKeyJustPressed(Keys.L)
+				&& jogo.isDebug()){
+			jogo.setDebug(false);
+		}else if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Keys.ALT_LEFT) && Gdx.input.isKeyJustPressed(Keys.L)
+				&& !jogo.isDebug()){
+			jogo.setDebug(true);
 		}
 	}
 }

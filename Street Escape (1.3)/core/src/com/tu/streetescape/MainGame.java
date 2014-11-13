@@ -21,9 +21,9 @@ public class MainGame extends Game {
 	public ShapeRenderer renderer;
 	public Transeunte transeunte;
 	public BitmapFont gameoverfont, GUIFont;
-	private boolean debug;
-	private boolean music;
-	private boolean sound;
+	private boolean debug = true;
+	private boolean music= true;
+	private boolean sound= true;
 	public final int WIDTH = 800;
 	public final int HEIGHT = 480;	
 	public final int persowidth = 70;
@@ -52,15 +52,15 @@ public class MainGame extends Game {
 	
 	//Getters and Setters de debug
 	public void setDebug(boolean debug){
-		debug = this.debug;
+		this.debug = debug;
 	}
 	
 	public void setSound(boolean sound){
-		sound = this.sound;
+		this.sound = sound;
 	}
 	
 	public void setMusic(boolean music){
-		music = this.music;
+		this.music = music;
 	}
 	
 	public boolean isDebug() {

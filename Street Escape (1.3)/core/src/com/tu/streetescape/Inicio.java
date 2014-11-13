@@ -47,7 +47,7 @@ public class Inicio implements Screen{
 		jogo.renderer.end();
 		
 		settings.configButtons();
-		System.out.println(jogo.isDebug());
+
 		if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.SPACE)){	
 			jogo.telajogo = new TelaJogo(jogo);
 			
