@@ -162,7 +162,7 @@ public class Enemy extends Calculos{
 			if(recta.overlaps(trans)){
 				iter.remove();
 				ite.remove();
-				double translife = jogo.getTransLife() - 0.5;
+				double translife = jogo.getTransLife() - 1;
 				jogo.setTransLife(translife);
 			}
 			if(recta.x >= jogo.WIDTH || recta.x <= 0 || recta.y >= jogo.HEIGHT || recta.y <= 0){

@@ -12,7 +12,7 @@ public class Settings extends MainGame{
 		this.jogo = jogo;
 	}
 	
-	public void configButtons(){
+	public void configButtons(Music music){
 		if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.N) && jogo.isSound()){
 			jogo.setSound(false);
 		}else if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.N) && !jogo.isSound()){
@@ -20,8 +20,10 @@ public class Settings extends MainGame{
 		}
 		
 		if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.M) && jogo.isMusic()){
+			music.stop();
 			jogo.setMusic(false);
 		}else if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Keys.M) && !jogo.isMusic()){
+			music.play();
 			jogo.setMusic(true);
 		}
 		
@@ -31,14 +33,6 @@ public class Settings extends MainGame{
 		}else if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Keys.ALT_LEFT) && Gdx.input.isKeyJustPressed(Keys.L)
 				&& !jogo.isDebug()){
 			jogo.setDebug(true);
-		}
-	}
-	
-	public void condMusica(Music music){
-		if(!jogo.isMusic() && music.isPlaying()){
-			music.stop();
-		}else if(jogo.isMusic() && !music.isPlaying()){
-			music.play();
 		}
 	}
 }

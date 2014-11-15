@@ -58,7 +58,9 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		jogo.temajogo = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 2.mp3"));
 		jogo.temajogo.setLooping(true);
-		jogo.temajogo.play();
+		if(jogo.isMusic()){
+			jogo.temajogo.play();
+		}
 	}
 
 	@Override
@@ -83,8 +85,7 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.renderer.end();
 		}
 		
-		settings.configButtons();
-		settings.condMusica(jogo.temajogo);
+		settings.configButtons(jogo.temajogo);
 		
 		if(jogo.getTransLife() > 0){
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
@@ -211,7 +212,7 @@ public class TelaJogo extends Calculos implements Screen{
 					numEnemy--;
 				}
 				
-				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 1000000000){
+				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 2000000000){
 					double temptranslife = jogo.getTransLife();
 					temptranslife -= 0.5;
 					jogo.setTransLife(temptranslife);
@@ -249,8 +250,13 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		//Fonte da GUI (tudo o que for GUI deve ficar aqui em baixo para que nenhum desenho se sobreponha à ela)
 		jogo.batch.begin();
-		jogo.GUIFont.setColor(Color.WHITE);
-		jogo.GUIFont.draw(jogo.batch, "Life: " + jogo.getTransLife(), 10, 460);
+		//jogo.GUIFont.setColor(Color.WHITE);
+		//jogo.GUIFont.draw(jogo.batch, "Life: " + jogo.getTransLife(), 10, 460);
+		
+		//Life
+		int momlife = (int) jogo.getTransLife();
+		jogo.batch.draw(artes.life.get(momlife), 10, 420);
+		
 		jogo.batch.end();
 		
 		if(jogo.getTransLife() <= 0){

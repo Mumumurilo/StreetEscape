@@ -31,7 +31,9 @@ public class TelaCreditos implements Screen{
 		//Música
 		jogo.temacreditos = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 1.mp3"));
 		jogo.temacreditos.setLooping(true);
-		jogo.temacreditos.play();
+		if(jogo.isMusic()){
+			jogo.temacreditos.play();
+		}
 	}
 
 	@Override
@@ -42,8 +44,7 @@ public class TelaCreditos implements Screen{
 		
 		jogo.camera.update();
 		
-		settings.configButtons();
-		settings.condMusica(jogo.temacreditos);
+		settings.configButtons(jogo.temacreditos);
 		
 		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.SPACE)){
 			jogo.reset = true;

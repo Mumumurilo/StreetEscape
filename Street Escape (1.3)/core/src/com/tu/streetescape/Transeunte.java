@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class Transeunte extends Calculos{
 	
-	private double life = 3;
+	private double life = 6;
 	public double lastShotTime;
 	public boolean tiroValido = false;
 	private Array<Rectangle> tipoTiros;

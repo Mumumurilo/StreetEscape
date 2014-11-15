@@ -3,9 +3,6 @@ package com.tu.streetescape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Inicio implements Screen{
 	private final MainGame jogo;
@@ -13,6 +10,9 @@ public class Inicio implements Screen{
 	//Classes utilizadas
 	private Arte artes;
 	private Settings settings;
+	
+	//Contador de logo
+	private float somaLogo = 0;
 	
 	public Inicio(final MainGame jogo){ //Construtor. Serve para instanciar os elementos das telas
 		this.jogo = jogo;
@@ -27,7 +27,9 @@ public class Inicio implements Screen{
 		//Declaração de elementos
 		jogo.temamenu = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 3.mp3"));
 		jogo.temamenu.setLooping(true);
-		jogo.temamenu.play();
+		if(jogo.isMusic()){
+			jogo.temamenu.play();
+		}
 	}
 
 	@Override
@@ -35,27 +37,35 @@ public class Inicio implements Screen{
 		if(jogo.reset == true){
 			jogo.telacreditos.dispose();
 			jogo.reset = false;
+			somaLogo = 5;
 		}
 		
-		//Desenho do forninho
-		jogo.batch.begin();
-		jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
-		jogo.batch.end();
+		if(somaLogo <= 4){
+			somaLogo += Gdx.graphics.getDeltaTime();
+			
+			jogo.batch.begin();
+			jogo.batch.draw(artes.logotu, 0, 0, jogo.WIDTH, jogo.HEIGHT);
+			jogo.batch.end();
+		}
+		
+		if(somaLogo > 4){
+			//Desenho do forninho
+			jogo.batch.begin();
+			jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
+			jogo.batch.end();
+			
+			if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyJustPressed(Keys.SPACE)){	
+				jogo.telajogo = new TelaJogo(jogo);
+				
+				jogo.setScreen(jogo.telajogo);
+			}
+		}
 		
 		//Atualização da câmera
 		jogo.camera.update();
 		
 		//Método de atalho dos botões de config
-		settings.configButtons();
-		
-		//Condição para música parar ou tocar
-		settings.condMusica(jogo.temamenu);
-
-		if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.SPACE)){	
-			jogo.telajogo = new TelaJogo(jogo);
-			
-			jogo.setScreen(jogo.telajogo);
-		}
+		settings.configButtons(jogo.temamenu);
 	}
 
 	@Override
