@@ -134,6 +134,9 @@ public class Enemy extends Calculos{
 			if(type == 1){ //Bombas de vinagre
 				Rectangle rect = new Rectangle(enemy.x + jogo.persowidth/2, enemy.y + jogo.persoheight/2, jogo.persowidth/3, jogo.persoheight/3);
 				atk.add(rect);
+				if(jogo.isSound()){
+					jogo.enemTiro.play();
+				}
 								
 			}else if(type == 2){
 				//Policial não atira nada! Ma oeeeeee
@@ -141,6 +144,9 @@ public class Enemy extends Calculos{
 			}else if(type == 3){ //Consoles de mesa
 				Rectangle rect = new Rectangle(enemy.x + jogo.persowidth/2, enemy.y + jogo.persoheight/2, jogo.persowidth/2, jogo.persoheight/2);
 				atk.add(rect);
+				if(jogo.isSound()){
+					jogo.enemTiro.play();
+				}
 			}
 			lastAtkTime = TimeUtils.nanoTime();
 			
@@ -164,6 +170,18 @@ public class Enemy extends Calculos{
 				ite.remove();
 				double translife = jogo.getTransLife() - 1;
 				jogo.setTransLife(translife);
+				
+				if(jogo.isSound()){
+					boolean randDano = MathUtils.randomBoolean();
+					if(jogo.getTransLife() >= 1){
+						if(randDano){
+							jogo.transDano1.play();
+						}
+						if(!randDano){
+							jogo.transDano2.play();
+						}
+					}
+				}
 			}
 			if(recta.x >= jogo.WIDTH || recta.x <= 0 || recta.y >= jogo.HEIGHT || recta.y <= 0){
 				iter.remove();
@@ -176,5 +194,9 @@ public class Enemy extends Calculos{
 		anguloParaSeguirTrans = super.getAngleDaReta(enemy, trans);
 		enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
 		enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+	}
+	
+	public int getType(){
+		return type;
 	}
 }

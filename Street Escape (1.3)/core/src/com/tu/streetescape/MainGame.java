@@ -4,6 +4,7 @@ package com.tu.streetescape;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,6 +39,11 @@ public class MainGame extends Game {
 	public Music temamenu;
 	public Music temajogo;
 	public Music temacreditos;
+	
+	//Efeitos sonoros
+	public Sound transDano1, transDano2, transMorre, transAtira;
+	public Sound enemDano, enemMorre, enemTiro;
+	public Sound enemNDano, enemNMorre;
 	
 	@Override
 	public void create() { //Método aonde tudo é instanciado

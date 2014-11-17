@@ -42,6 +42,10 @@ public class Transeunte extends Calculos{
 			tipoTiros.removeRange(0, 2);
 			tiroValido = true;
 			lastShotTime = TimeUtils.nanoTime();
+			
+			if(jogo.isSound()){
+				jogo.transAtira.play();
+			}
 		}
 	}
 	
@@ -70,6 +74,14 @@ public class Transeunte extends Calculos{
 				iter.remove();
 				iterint.remove();
 				enem.tomouDano = true;
+				
+				if(jogo.isSound() && enem.life > 1){
+					if(enem.getType() == 3){
+						jogo.enemNDano.play();
+					}else{
+						jogo.enemDano.play();
+					}
+				}
 			}
 			
 			if(rect.x >= jogo.WIDTH || rect.x <= 0 || rect.y >= jogo.HEIGHT || rect.y <= 0){

@@ -3,6 +3,7 @@ package com.tu.streetescape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
@@ -30,6 +31,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private Transeunte trans;
 	
 	private float contFimJogo = 0;
+	private boolean deadOnce = true;
 		
 	public TelaJogo(final MainGame jogo){
 		super(jogo);
@@ -41,6 +43,17 @@ public class TelaJogo extends Calculos implements Screen{
 		//Deleta tela anterior
 		jogo.telainicio.dispose();
 		jogo.temamenu.dispose();
+		
+		//Efeitos sonoros
+		jogo.enemDano = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy dano.mp3"));
+		jogo.enemMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy morre.mp3"));
+		jogo.enemTiro = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy tiro.mp3"));
+		jogo.enemNDano = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy N emo dano.mp3"));
+		jogo.enemNMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy N emo morre.mp3"));
+		jogo.transDano1 = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans dano 1.mp3"));
+		jogo.transDano2 = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans dano 2.mp3"));
+		jogo.transMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans morre.mp3"));
+		jogo.transAtira = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans atira.mp3"));
 		
 		//Declaração de elementos
 		artes = new Arte(jogo);
@@ -69,7 +82,7 @@ public class TelaJogo extends Calculos implements Screen{
 		//Desenhos
 		jogo.batch.begin();
 		
-			//Fundo das salas
+		//Fundo das salas
 		jogo.batch.draw(artes.salas.get(idsala), 0, 0, jogo.WIDTH, jogo.HEIGHT);
 		
 		jogo.batch.end();
@@ -210,13 +223,33 @@ public class TelaJogo extends Calculos implements Screen{
 				if(tempenemy.morto){
 					enemy.removeIndex(j);
 					numEnemy--;
+					
+					if(jogo.isSound()){
+						if(tempenemy.getType() == 3){
+							jogo.enemNMorre.play();
+						}else{
+							jogo.enemMorre.play();
+						}
+					}
 				}
 				
 				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 2000000000){
 					double temptranslife = jogo.getTransLife();
-					temptranslife -= 0.5;
+					temptranslife -= 2;
 					jogo.setTransLife(temptranslife);
 					lastToque = TimeUtils.nanoTime();
+					
+					if(jogo.isSound()){
+						boolean randDano = MathUtils.randomBoolean();
+						if(jogo.getTransLife() >= 1){
+							if(randDano){
+								jogo.transDano1.play();
+							}
+							if(!randDano){
+								jogo.transDano2.play();
+							}
+						}
+					}
 				}
 				
 				if(jogo.isDebug() == true){
@@ -250,16 +283,24 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		//Fonte da GUI (tudo o que for GUI deve ficar aqui em baixo para que nenhum desenho se sobreponha à ela)
 		jogo.batch.begin();
-		//jogo.GUIFont.setColor(Color.WHITE);
-		//jogo.GUIFont.draw(jogo.batch, "Life: " + jogo.getTransLife(), 10, 460);
 		
 		//Life
 		int momlife = (int) jogo.getTransLife();
+		if(momlife < 0){
+			momlife = 0;
+		}
+		
 		jogo.batch.draw(artes.life.get(momlife), 10, 420);
 		
 		jogo.batch.end();
 		
 		if(jogo.getTransLife() <= 0){
+			if(deadOnce){
+				if(jogo.isSound()){
+					jogo.transMorre.play();
+				}
+				deadOnce = false;
+			}
 			contFimJogo += Gdx.graphics.getDeltaTime();
 			jogo.batch.begin();
 			jogo.gameoverfont.setColor(Color.GREEN);
@@ -301,7 +342,7 @@ public class TelaJogo extends Calculos implements Screen{
 			 * ATENÇÃO: A terceira referência do construtor de Enemy é o tipo de inimigo. Acredito que teríamos que criar algo que modificasse 
 			 * o tipo dependendo da variação das salas. Temos que discutir isso! Por default, estou deixando 1 (manifestantes).
 			 */
-			Enemy mal = new Enemy(jogo, mau, 3);
+			Enemy mal = new Enemy(jogo, mau, 1);
 			enemy.add(mal);
 			
 			i++;
@@ -345,8 +386,16 @@ public class TelaJogo extends Calculos implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		//Sons
+		jogo.enemDano.dispose();
+		jogo.enemMorre.dispose();
+		jogo.enemNDano.dispose();
+		jogo.enemNMorre.dispose();
+		jogo.enemTiro.dispose();
+		jogo.transAtira.dispose();
+		jogo.transDano1.dispose();
+		jogo.transDano2.dispose();
+		jogo.transMorre.dispose();
 	}
 
 }
