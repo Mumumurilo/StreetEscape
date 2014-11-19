@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -32,6 +33,8 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	private float contFimJogo = 0;
 	private boolean deadOnce = true;
+	
+	private Rectangle cima, baixo, esq, dir;
 		
 	public TelaJogo(final MainGame jogo){
 		super(jogo);
@@ -66,6 +69,11 @@ public class TelaJogo extends Calculos implements Screen{
 		exitS = new Rectangle(264, 1, 533 - 264, 5);
 		exitL = new Rectangle(jogo.WIDTH - 1, 107, 5, 370 - 107);
 		exitO = new Rectangle(1, 107, 5, 370 - 107);
+		
+		cima = new Rectangle(0, jogo.HEIGHT/2, jogo.WIDTH, jogo.HEIGHT/2);
+		baixo = new Rectangle(0, 0, jogo.WIDTH, jogo.HEIGHT/2);
+		dir = new Rectangle(jogo.WIDTH/2, 0, jogo.WIDTH/2, jogo.HEIGHT);
+		esq = new Rectangle(0, 0, jogo.WIDTH/2, jogo.HEIGHT);
 		
 		transeunte = new Rectangle(380, 200, jogo.persowidth, jogo.persoheight);
 		
@@ -112,6 +120,22 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
 				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
+			}
+			
+			if(Gdx.input.isTouched()){
+				Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+				if(cima.contains(touchPos)){
+					transeunte.y += 150 * Gdx.graphics.getDeltaTime();
+				}
+				if(baixo.contains(touchPos)){
+					transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
+				}
+				if(esq.contains(touchPos)){
+					transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
+				}
+				if(dir.contains(touchPos)){
+					transeunte.x += 150 * Gdx.graphics.getDeltaTime();
+				}
 			}
 			
 			if(existeEnemy){

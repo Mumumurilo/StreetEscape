@@ -35,6 +35,9 @@ public class MainGame extends Game {
 	
 	public boolean reset = false;
 	
+	//Vai compilar a versão para PC ou para Android?
+	private boolean androidGameplay = false;
+	
 	//Músicas
 	public Music temamenu;
 	public Music temajogo;

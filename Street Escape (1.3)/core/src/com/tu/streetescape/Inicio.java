@@ -54,7 +54,7 @@ public class Inicio implements Screen{
 			jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
 			jogo.batch.end();
 			
-			if(Gdx.input.isKeyJustPressed(Keys.ENTER) || Gdx.input.isKeyJustPressed(Keys.SPACE)){	
+			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
 				jogo.telajogo = new TelaJogo(jogo);
 				
 				jogo.setScreen(jogo.telajogo);
