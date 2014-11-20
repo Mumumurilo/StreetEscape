@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -34,7 +35,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private float contFimJogo = 0;
 	private boolean deadOnce = true;
 	
-	private Rectangle cima, baixo, esq, dir;
+	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
 		
 	public TelaJogo(final MainGame jogo){
 		super(jogo);
@@ -42,6 +43,8 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		//Posicionamento da câmera
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
+		jogo.batch.setProjectionMatrix(jogo.camera.combined);
+		jogo.renderer.setProjectionMatrix(jogo.camera.combined);
 				
 		//Deleta tela anterior
 		jogo.telainicio.dispose();
@@ -70,10 +73,15 @@ public class TelaJogo extends Calculos implements Screen{
 		exitL = new Rectangle(jogo.WIDTH - 1, 107, 5, 370 - 107);
 		exitO = new Rectangle(1, 107, 5, 370 - 107);
 		
-		cima = new Rectangle(0, jogo.HEIGHT/2, jogo.WIDTH, jogo.HEIGHT/2);
-		baixo = new Rectangle(0, 0, jogo.WIDTH, jogo.HEIGHT/2);
-		dir = new Rectangle(jogo.WIDTH/2, 0, jogo.WIDTH/2, jogo.HEIGHT);
-		esq = new Rectangle(0, 0, jogo.WIDTH/2, jogo.HEIGHT);
+		cima = new Rectangle(0, (jogo.HEIGHT/4)*3, jogo.WIDTH, jogo.HEIGHT/4);
+		baixo = new Rectangle(0, 0, jogo.WIDTH, jogo.HEIGHT/4);
+		dir = new Rectangle((jogo.WIDTH/4)*3, 0, jogo.WIDTH/4, jogo.HEIGHT);
+		esq = new Rectangle(0, 0, jogo.WIDTH/4, jogo.HEIGHT);
+		
+		shootcima = new Rectangle(jogo.WIDTH/4, jogo.HEIGHT/2, jogo.WIDTH/4, jogo.HEIGHT/4);
+		shootbaixo = new Rectangle(jogo.WIDTH/4, jogo.HEIGHT/4, jogo.WIDTH/4, jogo.HEIGHT/4);
+		shootesq = new Rectangle(jogo.WIDTH/4, jogo.HEIGHT/4, jogo.WIDTH/4, jogo.HEIGHT/2);
+		shootdir = new Rectangle(jogo.WIDTH/2, jogo.HEIGHT/4, jogo.WIDTH/4, jogo.HEIGHT/2);
 		
 		transeunte = new Rectangle(380, 200, jogo.persowidth, jogo.persoheight);
 		
@@ -123,17 +131,19 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			
 			if(Gdx.input.isTouched()){
-				Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-				if(cima.contains(touchPos)){
+				Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+				jogo.camera.unproject(touchPos);
+				
+				if(cima.contains(touchPos.x, touchPos.y)){
 					transeunte.y += 150 * Gdx.graphics.getDeltaTime();
 				}
-				if(baixo.contains(touchPos)){
+				if(baixo.contains(touchPos.x, touchPos.y)){
 					transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
 				}
-				if(esq.contains(touchPos)){
+				if(esq.contains(touchPos.x, touchPos.y)){
 					transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
 				}
-				if(dir.contains(touchPos)){
+				if(dir.contains(touchPos.x, touchPos.y)){
 					transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 				}
 			}
@@ -161,6 +171,40 @@ public class TelaJogo extends Calculos implements Screen{
 					}
 				}
 				if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(4);
+						trans.tiroValido = false;
+					}
+				}
+			}
+			
+			if(Gdx.input.isTouched()){
+				Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+				jogo.camera.unproject(touchPos);
+				
+				if(shootcima.contains(touchPos.x, touchPos.y)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(1);
+						trans.tiroValido = false;
+					}
+				}
+				if(shootbaixo.contains(touchPos.x, touchPos.y)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(2);
+						trans.tiroValido = false;
+					}
+				}
+				if(shootesq.contains(touchPos.x, touchPos.y)){
+					trans.atirar();
+					if(trans.tiroValido){
+						trans.direcTiros.add(3);
+						trans.tiroValido = false;
+					}
+				}
+				if(shootdir.contains(touchPos.x, touchPos.y)){
 					trans.atirar();
 					if(trans.tiroValido){
 						trans.direcTiros.add(4);

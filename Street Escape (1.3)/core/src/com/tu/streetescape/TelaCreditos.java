@@ -21,6 +21,8 @@ public class TelaCreditos implements Screen{
 		
 		//Posicionamento da câmera
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
+		jogo.batch.setProjectionMatrix(jogo.camera.combined);
+		jogo.renderer.setProjectionMatrix(jogo.camera.combined);
 		
 		//bg
 		background = new Texture(Gdx.files.internal("bg.png"));

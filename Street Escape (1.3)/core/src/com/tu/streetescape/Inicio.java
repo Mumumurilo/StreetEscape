@@ -19,6 +19,8 @@ public class Inicio implements Screen{
 		
 		//Posicionamento da câmera
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
+		jogo.batch.setProjectionMatrix(jogo.camera.combined);
+		jogo.renderer.setProjectionMatrix(jogo.camera.combined);
 		
 		//Declaração de classes
 		artes = new Arte(jogo);
