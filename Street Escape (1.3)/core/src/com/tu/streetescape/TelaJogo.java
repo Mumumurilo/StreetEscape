@@ -3,12 +3,10 @@ package com.tu.streetescape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -31,6 +29,7 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	private Rectangle transeunte;
 	private Transeunte trans;
+	private float contTransLife = 0;
 	
 	private float contFimJogo = 0;
 	private boolean deadOnce = true;
@@ -301,7 +300,7 @@ public class TelaJogo extends Calculos implements Screen{
 					}
 				}
 				
-				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 2000000000){
+				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 2000000000 && !trans.getTransLifeCounter()){
 					double temptranslife = jogo.getTransLife();
 					temptranslife -= 2;
 					jogo.setTransLife(temptranslife);
@@ -352,7 +351,7 @@ public class TelaJogo extends Calculos implements Screen{
 		//Fonte da GUI (tudo o que for GUI deve ficar aqui em baixo para que nenhum desenho se sobreponha à ela)
 		jogo.batch.begin();
 		
-		//Life
+		//Life (corações na tela)
 		int momlife = (int) jogo.getTransLife();
 		if(momlife < 0){
 			momlife = 0;
@@ -374,6 +373,15 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.gameoverfont.setColor(Color.GREEN);
 			jogo.gameoverfont.draw(jogo.batch, "Game Over!", jogo.WIDTH/2 - 245, jogo.HEIGHT/2 + 20);
 			jogo.batch.end();
+		}
+		
+		//Contador que não permite o enemy atacar o transeunte por um tempo depois de levar dano
+		if(trans.getTransLifeCounter()){
+			contTransLife += Gdx.graphics.getDeltaTime();
+			if(contTransLife >= 3){
+				trans.setTransLifeCounter(false);
+				contTransLife = 0;
+			}
 		}
 		
 		if(contFimJogo >= 5){
