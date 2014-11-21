@@ -60,16 +60,16 @@ public class Transeunte extends Calculos{
 			int direcao = iterint.next();
 			
 			if(direcao == 1){ //Up
-				rect.y += (160/numEnemy) * Gdx.graphics.getDeltaTime();
+				rect.y += (170/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 2){ //Down
-				rect.y -= (160/numEnemy) * Gdx.graphics.getDeltaTime();
+				rect.y -= (170/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 3){ //Left
-				rect.x -= (160/numEnemy) * Gdx.graphics.getDeltaTime();
+				rect.x -= (170/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 			if(direcao == 4){ //Right
-				rect.x += (160/numEnemy) * Gdx.graphics.getDeltaTime();
+				rect.x += (170/numEnemy) * Gdx.graphics.getDeltaTime();
 			}
 						
 			if(rect.overlaps(enemy)){

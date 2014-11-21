@@ -3,6 +3,7 @@ package com.tu.streetescape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.GL20;
 
 public class Inicio implements Screen{
 	private final MainGame jogo;
@@ -50,7 +51,9 @@ public class Inicio implements Screen{
 			jogo.batch.end();
 		}
 		
-		if(somaLogo > 4){
+		if(somaLogo > 4 && somaLogo <= 20){
+			somaLogo += Gdx.graphics.getDeltaTime();
+			
 			//Desenho do forninho
 			jogo.batch.begin();
 			jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
@@ -61,6 +64,73 @@ public class Inicio implements Screen{
 				
 				jogo.setScreen(jogo.telajogo);
 			}
+		}
+		
+		if(somaLogo > 20 && somaLogo <= 36){
+			somaLogo += Gdx.graphics.getDeltaTime();
+			
+			Gdx.gl.glClearColor(0, 0, 0, 0);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			
+			jogo.batch.begin();
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\nTranseunte is a simple citizen that wanted to\ntake a walk at the biggest avenue of the " +
+					"city.\nHowever, when he left the subway... He\ndiscovered that a big manifestation was\nhappening!\n\n", 10, jogo.HEIGHT - 10);
+			jogo.batch.end();
+			
+			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
+				somaLogo = 5;
+			}
+		}
+		
+		if(somaLogo > 36 && somaLogo <= 52){
+			somaLogo += Gdx.graphics.getDeltaTime();
+			
+			Gdx.gl.glClearColor(0, 0, 0, 0);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			
+			jogo.batch.begin();
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\nWhen he tried to go back to subway he saw that\nit was just closed!\n" +
+					"Besides that, the people on the street started to\nhurt him! AND NOW!?", 10, jogo.HEIGHT - 10);
+			jogo.batch.end();
+			
+			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
+				somaLogo = 5;
+			}
+		}
+		
+		if(somaLogo > 52 && somaLogo <= 68){
+			somaLogo += Gdx.graphics.getDeltaTime();
+			
+			Gdx.gl.glClearColor(0, 0, 0, 0);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			
+			jogo.batch.begin();
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\nTranseunte needs to find the closest and opened\nstation ASAP!\n" +
+					"                                   Or he will DIE!", 10, jogo.HEIGHT - 10);
+			jogo.batch.end();
+			
+			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
+				somaLogo = 5;
+			}
+		}
+		
+		if(somaLogo > 68 && somaLogo <= 76){
+			somaLogo += Gdx.graphics.getDeltaTime();
+			
+			Gdx.gl.glClearColor(0, 0, 0, 0);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			
+			jogo.batch.begin();
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n\n                                      Yes... DIE!!!", 10, jogo.HEIGHT - 10);
+			jogo.batch.end();
+			
+			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
+				somaLogo = 5;
+			}
+		}
+		
+		if(somaLogo > 76){
+			somaLogo = 5;
 		}
 		
 		//Atualização da câmera
