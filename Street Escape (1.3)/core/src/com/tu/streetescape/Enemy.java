@@ -24,8 +24,6 @@ public class Enemy extends Calculos{
 	public double life = 2;
 	public boolean tomouDano = false, morto = false;
 	
-	private int randItem;
-	
 	public StateMachine<Enemy> machine;
 	public Array<Rectangle> atk;
 	private Array<Double> angles;
@@ -197,15 +195,6 @@ public class Enemy extends Calculos{
 		anguloParaSeguirTrans = super.getAngleDaReta(enemy, trans);
 		enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
 		enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
-	}
-	
-	public void dropLifeItem(){
-		if(life <= 0){
-			randItem = MathUtils.random(9);
-			if(randItem > 6){
-				//New item
-			}
-		}
 	}
 	
 	public int getType(){

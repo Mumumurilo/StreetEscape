@@ -44,7 +44,7 @@ public class MainGame extends Game {
 	public Music temacreditos;
 	
 	//Efeitos sonoros
-	public Sound transDano1, transDano2, transMorre, transAtira;
+	public Sound transDano1, transDano2, transMorre, transAtira, transRecoverLife;
 	public Sound enemDano, enemMorre, enemTiro;
 	public Sound enemNDano, enemNMorre;
 	

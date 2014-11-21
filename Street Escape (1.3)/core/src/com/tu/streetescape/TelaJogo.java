@@ -14,26 +14,38 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class TelaJogo extends Calculos implements Screen{
 	private final MainGame jogo;
 	
+	//Classes
 	private Arte artes;
 	private Settings settings;
 	
+	//Salas
 	private int idsala = 0;
 	private Rectangle exitN, exitS, exitO, exitL;
 	private boolean existeEnemy = false;
 	
+	//Enemy
 	private int numEnemy, i = 1, j = 0;
 	private Array<Enemy> enemy;
 	private Rectangle temprect;
 	private Enemy tempenemy;
 	private float lastToque;
 	
+	//Transeunte
 	private Rectangle transeunte;
 	private Transeunte trans;
 	private float contTransLife = 0;
 	
+	//Itens
+	private int randItem, numItem = 0, k = 0;
+	private double addlife;
+	private Array<Rectangle> lifeItem;
+	private Rectangle tempItem;
+	
+	//Outros
 	private float contFimJogo = 0;
 	private boolean deadOnce = true;
 	
+	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
 		
 	public TelaJogo(final MainGame jogo){
@@ -59,6 +71,7 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.transDano2 = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans dano 2.mp3"));
 		jogo.transMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans morre.mp3"));
 		jogo.transAtira = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans atira.mp3"));
+		jogo.transRecoverLife = Gdx.audio.newSound(Gdx.files.internal("Sons/Life.mp3"));
 		
 		//Declaração de elementos
 		artes = new Arte(jogo);
@@ -66,6 +79,8 @@ public class TelaJogo extends Calculos implements Screen{
 		trans = new Transeunte(jogo);
 		
 		enemy = new Array<Enemy>();
+		
+		lifeItem = new Array<Rectangle>();
 
 		exitN = new Rectangle(264, jogo.HEIGHT - 1, 533 - 264, 5);
 		exitS = new Rectangle(264, 1, 533 - 264, 5);
@@ -272,11 +287,43 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.renderer.end();
 		}
 		
+		while(k < numItem){
+			tempItem = lifeItem.get(k);
+			if(transeunte.overlaps(tempItem)){
+				addlife = jogo.getTransLife();
+				addlife += 2;
+				jogo.setTransLife(addlife);
+				
+				numItem--;
+				lifeItem.removeIndex(k);
+				
+				if(jogo.isSound()){
+					jogo.transRecoverLife.play();
+				}
+			}
+			
+			if(jogo.isDebug()){
+				jogo.renderer.begin(ShapeType.Filled);
+				jogo.renderer.setColor(Color.ORANGE);
+				for(Rectangle life : lifeItem){
+					jogo.renderer.rect(life.x, life.y, life.width, life.height);
+				}
+				jogo.renderer.end();
+			}
+			k++;
+		}
+		if(k >= numItem){
+			k = 0;
+		}
+		
 		if(jogo.getTransLife() <= 0){
 			transeunte.setPosition(1000, 680);
 		}
+		if(jogo.getTransLife() > 6){
+			jogo.setTransLife(6);
+		}
 		
-		//Atividade do inimigo----------------------------------------------------------------
+		//Atividade do inimigo---------------------------------------------------------------------------------------------------------------
 		
 		if(existeEnemy){
 			while(j < numEnemy){
@@ -290,6 +337,13 @@ public class TelaJogo extends Calculos implements Screen{
 				if(tempenemy.morto){
 					enemy.removeIndex(j);
 					numEnemy--;
+					
+					randItem = MathUtils.random(9);
+					if(randItem > 6){
+						Rectangle item = new Rectangle(temprect.x, temprect.y, jogo.persowidth/2, jogo.persoheight/2);
+						lifeItem.add(item);
+						numItem++;
+					}
 					
 					if(jogo.isSound()){
 						if(tempenemy.getType() == 3){
@@ -376,10 +430,10 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		//Contador que não permite o enemy atacar o transeunte por um tempo depois de levar dano
-		if(trans.getTransLifeCounter()){
+		if(jogo.transeunte.getTransLifeCounter()){
 			contTransLife += Gdx.graphics.getDeltaTime();
 			if(contTransLife >= 3){
-				trans.setTransLifeCounter(false);
+				jogo.transeunte.setTransLifeCounter(false);
 				contTransLife = 0;
 			}
 		}
