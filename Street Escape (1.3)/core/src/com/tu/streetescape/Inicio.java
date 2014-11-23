@@ -73,8 +73,11 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\nTranseunte is a simple citizen that wanted to\ntake a walk at the biggest avenue of the " +
-					"city.\nHowever, when he left the subway... He\ndiscovered that a big manifestation was\nhappening!\n\n", 10, jogo.HEIGHT - 10);
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n    Transeunte is a simple citizen that wanted to\n" +
+					"    take a walk at the biggest avenue of the " +
+					"city.\n       However, when he left the subway... He\n" +
+					"      discovered that a big manifestation was\n" +
+					"                                    happening!\n\n", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
@@ -89,8 +92,10 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\nWhen he tried to go back to subway he saw that\nit was just closed!\n" +
-					"Besides that, the people on the street started to\nhurt him! AND NOW!?", 10, jogo.HEIGHT - 10);
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n When he tried to go back to subway he saw that\n" +
+					"                              it was just closed!\n" +
+					" Besides that, the people on the street started to\n" +
+					"                           hurt him! AND NOW!?", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
@@ -105,7 +110,8 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\nTranseunte needs to find the closest and opened\nstation ASAP!\n" +
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\nTranseunte needs to find the closest and opened\n" +
+					"                                    station ASAP!\n" +
 					"                                   Or he will DIE!", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
@@ -121,7 +127,9 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n\n                                      Yes... DIE!!!", 10, jogo.HEIGHT - 10);
+			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n\n                                      Yes... DIE!!!\n\n" +
+					"                                        Controls:\n" +
+					"              Walk: W-S-A-D | Shoot: Arrow Keys", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	

@@ -25,7 +25,7 @@ public class TelaCreditos implements Screen{
 		jogo.renderer.setProjectionMatrix(jogo.camera.combined);
 		
 		//bg
-		background = new Texture(Gdx.files.internal("bg.png"));
+		background = new Texture(Gdx.files.internal("credits.png"));
 		
 		//Config
 		settings = new Settings(jogo);
