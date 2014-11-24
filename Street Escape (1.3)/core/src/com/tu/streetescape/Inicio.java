@@ -76,7 +76,7 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.setColor(Color.DARK_GRAY);
+			jogo.GUIFont.setColor(Color.BLACK);
 			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n    Transeunte is a simple citizen that wanted to\n" +
 					"    take a walk at the biggest avenue of the " +
 					"city.\n       However, when he left the subway... He\n" +
