@@ -11,6 +11,7 @@ public class Arte {
 	
 	//Declaração das imagens e artes utilizadas no jogo
 	public Texture forninho;
+	public Texture menu2;
 	
 	private Texture cenario1, esq, cima, baixo, dir;
 	public ArrayList<Texture> salas;
@@ -25,6 +26,7 @@ public class Arte {
 		
 		forninho = new Texture(Gdx.files.internal("menu.png"));
 		logotu = new Texture(Gdx.files.internal("Arte/TU Logo.png"));
+		menu2 = new Texture(Gdx.files.internal("menu2.png"));
 		
 		salas = new ArrayList<Texture>();
 		
@@ -53,6 +55,8 @@ public class Arte {
 		baixo.dispose();
 		
 		forninho.dispose();
+		logotu.dispose();
+		menu2.dispose();
 		
 		life6.dispose();
 		life5.dispose();

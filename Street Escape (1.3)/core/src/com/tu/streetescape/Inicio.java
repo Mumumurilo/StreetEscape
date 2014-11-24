@@ -3,6 +3,7 @@ package com.tu.streetescape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
 public class Inicio implements Screen{
@@ -73,6 +74,9 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
+			jogo.batch.draw(artes.menu2, 0, 0);
+			
+			jogo.GUIFont.setColor(Color.DARK_GRAY);
 			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n    Transeunte is a simple citizen that wanted to\n" +
 					"    take a walk at the biggest avenue of the " +
 					"city.\n       However, when he left the subway... He\n" +
@@ -92,6 +96,8 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
+			jogo.batch.draw(artes.menu2, 0, 0);
+			
 			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n When he tried to go back to subway he saw that\n" +
 					"                              it was just closed!\n" +
 					" Besides that, the people on the street started to\n" +
@@ -110,6 +116,8 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
+			jogo.batch.draw(artes.menu2, 0, 0);
+			
 			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\nTranseunte needs to find the closest and opened\n" +
 					"                                    station ASAP!\n" +
 					"                                   Or he will DIE!", 10, jogo.HEIGHT - 10);
@@ -127,6 +135,8 @@ public class Inicio implements Screen{
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
 			jogo.batch.begin();
+			jogo.batch.draw(artes.menu2, 0, 0);
+			
 			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n\n                                      Yes... DIE!!!\n\n" +
 					"                                        Controls:\n" +
 					"              Walk: W-S-A-D | Shoot: Arrow Keys", 10, jogo.HEIGHT - 10);
