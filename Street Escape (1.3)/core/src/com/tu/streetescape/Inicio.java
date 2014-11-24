@@ -13,7 +13,7 @@ public class Inicio implements Screen{
 	private Settings settings;
 	
 	//Contador de logo
-	private float somaLogo = 0;
+	private float somaLogo = -4;
 	
 	public Inicio(final MainGame jogo){ //Construtor. Serve para instanciar os elementos das telas
 		this.jogo = jogo;
@@ -40,10 +40,10 @@ public class Inicio implements Screen{
 		if(jogo.reset == true){
 			jogo.telacreditos.dispose();
 			jogo.reset = false;
-			somaLogo = 5;
+			somaLogo = 0;
 		}
 		
-		if(somaLogo <= 4){
+		if(somaLogo <= 0){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
 			jogo.batch.begin();
@@ -51,7 +51,7 @@ public class Inicio implements Screen{
 			jogo.batch.end();
 		}
 		
-		if(somaLogo > 4 && somaLogo <= 20){
+		if(somaLogo > 0 && somaLogo <= 16){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
 			//Desenho do forninho
@@ -66,7 +66,7 @@ public class Inicio implements Screen{
 			}
 		}
 		
-		if(somaLogo > 20 && somaLogo <= 36){
+		if(somaLogo > 16 && somaLogo <= 32){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
 			Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -85,7 +85,7 @@ public class Inicio implements Screen{
 			}
 		}
 		
-		if(somaLogo > 36 && somaLogo <= 52){
+		if(somaLogo > 32 && somaLogo <= 48){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
 			Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -103,7 +103,7 @@ public class Inicio implements Screen{
 			}
 		}
 		
-		if(somaLogo > 52 && somaLogo <= 68){
+		if(somaLogo > 48 && somaLogo <= 64){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
 			Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -120,7 +120,7 @@ public class Inicio implements Screen{
 			}
 		}
 		
-		if(somaLogo > 68 && somaLogo <= 76){
+		if(somaLogo > 64 && somaLogo <= 72){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
 			Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -137,8 +137,8 @@ public class Inicio implements Screen{
 			}
 		}
 		
-		if(somaLogo > 76){
-			somaLogo = 5;
+		if(somaLogo > 72){
+			somaLogo = 0;
 		}
 		
 		//Atualização da câmera
