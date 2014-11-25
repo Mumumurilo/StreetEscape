@@ -193,8 +193,14 @@ public class Enemy extends Calculos{
 	
 	public void segueTrans(){
 		anguloParaSeguirTrans = super.getAngleDaReta(enemy, trans);
-		enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
-		enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+		
+		if(type == 2){
+			enemy.x -= (float) ((150 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
+			enemy.y -= (float) ((150 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+		}else{
+			enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
+			enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+		}
 	}
 	
 	public int getType(){
