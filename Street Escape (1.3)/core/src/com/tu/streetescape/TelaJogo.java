@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,6 +18,7 @@ public class TelaJogo extends Calculos implements Screen{
 	//Classes
 	private Arte artes;
 	private Settings settings;
+	private OrthographicCamera cam2;
 	
 	//Salas
 	private int idsala = 0;
@@ -47,6 +49,7 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
+	private Vector3 touchPos;
 		
 	public TelaJogo(final MainGame jogo){
 		super(jogo);
@@ -56,6 +59,10 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
 		jogo.batch.setProjectionMatrix(jogo.camera.combined);
 		jogo.renderer.setProjectionMatrix(jogo.camera.combined);
+		
+		//Câmera para o controller de Android
+		cam2 = new OrthographicCamera();
+		cam2.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);
 				
 		//Deleta tela anterior
 		jogo.telainicio.dispose();
@@ -96,6 +103,8 @@ public class TelaJogo extends Calculos implements Screen{
 		shootbaixo = new Rectangle(jogo.WIDTH - (2*jogo.persowidth - 10), 10, jogo.persowidth, jogo.persoheight);
 		shootesq = new Rectangle(jogo.WIDTH - (3*jogo.persowidth - 10), jogo.persoheight + 10, jogo.persowidth, jogo.persoheight);
 		shootdir = new Rectangle(jogo.WIDTH - (jogo.persowidth - 10), jogo.persoheight + 10, jogo.persowidth, jogo.persoheight);
+		
+		touchPos = new Vector3();
 		
 		transeunte = new Rectangle(380, 200, jogo.persowidth, jogo.persoheight);
 		
@@ -188,50 +197,52 @@ public class TelaJogo extends Calculos implements Screen{
 				}
 			}
 			
-			if(Gdx.input.isTouched()){
-				Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-				jogo.camera.unproject(touchPos);
-				
-				if(cima.contains(touchPos.x, touchPos.y)){
-					transeunte.y += 150 * Gdx.graphics.getDeltaTime();
-				}
-				if(baixo.contains(touchPos.x, touchPos.y)){
-					transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
-				}
-				if(esq.contains(touchPos.x, touchPos.y)){
-					transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
-				}
-				if(dir.contains(touchPos.x, touchPos.y)){
-					transeunte.x += 150 * Gdx.graphics.getDeltaTime();
-				}
-				
-				if(existeEnemy){
-					if(shootcima.contains(touchPos.x, touchPos.y)){
-						trans.atirar();
-						if(trans.tiroValido){
-							trans.direcTiros.add(1);
-							trans.tiroValido = false;
-						}
+			for(i = 0; i < 5; i++){
+				if(Gdx.input.isTouched(i)){
+					touchPos.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
+					cam2.unproject(touchPos);
+					
+					if(cima.contains(touchPos.x, touchPos.y)){
+						transeunte.y += 150 * Gdx.graphics.getDeltaTime();
 					}
-					if(shootbaixo.contains(touchPos.x, touchPos.y)){
-						trans.atirar();
-						if(trans.tiroValido){
-							trans.direcTiros.add(2);
-							trans.tiroValido = false;
-						}
+					if(baixo.contains(touchPos.x, touchPos.y)){
+						transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
 					}
-					if(shootesq.contains(touchPos.x, touchPos.y)){
-						trans.atirar();
-						if(trans.tiroValido){
-							trans.direcTiros.add(3);
-							trans.tiroValido = false;
-						}
+					if(esq.contains(touchPos.x, touchPos.y)){
+						transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
 					}
-					if(shootdir.contains(touchPos.x, touchPos.y)){
-						trans.atirar();
-						if(trans.tiroValido){
-							trans.direcTiros.add(4);
-							trans.tiroValido = false;
+					if(dir.contains(touchPos.x, touchPos.y)){
+						transeunte.x += 150 * Gdx.graphics.getDeltaTime();
+					}
+					
+					if(existeEnemy){
+						if(shootcima.contains(touchPos.x, touchPos.y)){
+							trans.atirar();
+							if(trans.tiroValido){
+								trans.direcTiros.add(1);
+								trans.tiroValido = false;
+							}
+						}
+						if(shootbaixo.contains(touchPos.x, touchPos.y)){
+							trans.atirar();
+							if(trans.tiroValido){
+								trans.direcTiros.add(2);
+								trans.tiroValido = false;
+							}
+						}
+						if(shootesq.contains(touchPos.x, touchPos.y)){
+							trans.atirar();
+							if(trans.tiroValido){
+								trans.direcTiros.add(3);
+								trans.tiroValido = false;
+							}
+						}
+						if(shootdir.contains(touchPos.x, touchPos.y)){
+							trans.atirar();
+							if(trans.tiroValido){
+								trans.direcTiros.add(4);
+								trans.tiroValido = false;
+							}
 						}
 					}
 				}
