@@ -19,6 +19,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private Settings settings;
 	
 	//Salas
+	private Fases fases;
 	private int idsala = 0;
 	private Rectangle exitN, exitS, exitO, exitL;
 	private boolean existeEnemy = false;
@@ -77,6 +78,8 @@ public class TelaJogo extends Calculos implements Screen{
 		artes = new Arte(jogo);
 		settings = new Settings(jogo);
 		trans = new Transeunte(jogo);
+		
+		fases = new Fases();
 		
 		enemy = new Array<Enemy>();
 		
@@ -157,7 +160,7 @@ public class TelaJogo extends Calculos implements Screen{
 				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 			}
 			
-			if(existeEnemy){
+			if(fases.fase1[i][j].sala existeEnemy){
 				if(Gdx.input.isKeyJustPressed(Keys.UP)){
 					trans.atirar();
 					if(trans.tiroValido){
