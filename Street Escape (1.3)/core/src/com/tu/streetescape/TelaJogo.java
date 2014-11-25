@@ -19,10 +19,12 @@ public class TelaJogo extends Calculos implements Screen{
 	private Settings settings;
 	
 	//Salas
-	private Fases fases;
+	private Fases mapa;
 	private int idsala = 0;
 	private Rectangle exitN, exitS, exitO, exitL;
 	private boolean existeEnemy = false;
+	private int salax, salay;
+	private int numarte;
 	
 	//Enemy
 	private int numEnemy, i = 1, j = 0;
@@ -79,7 +81,10 @@ public class TelaJogo extends Calculos implements Screen{
 		settings = new Settings(jogo);
 		trans = new Transeunte(jogo);
 		
-		fases = new Fases();
+		mapa = new Fases();
+		
+		salax = 0;
+		salay = 2;
 		
 		enemy = new Array<Enemy>();
 		
@@ -116,7 +121,40 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.batch.begin();
 		
 		//Fundo das salas
-		jogo.batch.draw(artes.salas.get(idsala), 0, 0, jogo.WIDTH, jogo.HEIGHT);
+		
+		if(mapa.sala[i][j].getID() == 1111){
+			numarte = 1;			
+		}else if(mapa.sala[i][j].getID() == 1101){			
+			numarte = 2;			
+		}else if(mapa.sala[i][j].getID() == 1110){			
+			numarte = 3;			
+		}else if(mapa.sala[i][j].getID() == 1011){			
+			numarte = 4;			
+		}else if(mapa.sala[i][j].getID() == 111){			
+			numarte = 5;			
+		}else if(mapa.sala[i][j].getID() == 1001){			
+			numarte = 6;			
+		}else if(mapa.sala[i][j].getID() == 101){			
+			numarte = 7;			
+		}else if(mapa.sala[i][j].getID() == 1010){			
+			numarte = 8;			
+		}else if(mapa.sala[i][j].getID() == 110){			
+			numarte = 9;			
+		}else if(mapa.sala[i][j].getID() == 1100){			
+			numarte = 10;			
+		}else if(mapa.sala[i][j].getID() == 11){			
+			numarte = 11;			
+		}else if(mapa.sala[i][j].getID() == 1000){			
+			numarte = 12;			
+		}else if(mapa.sala[i][j].getID() == 10){			
+			numarte = 13;			
+		}else if(mapa.sala[i][j].getID() == 1){			
+			numarte = 14;			
+		}else if(mapa.sala[i][j].getID() == 100){			
+			numarte = 15;			
+		}	
+		
+		jogo.batch.draw(artes.salas.get(numarte), 0, 0, jogo.WIDTH, jogo.HEIGHT);
 		
 		jogo.batch.end();
 		
@@ -160,7 +198,7 @@ public class TelaJogo extends Calculos implements Screen{
 				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 			}
 			
-			if(fases.fase1[i][j].sala existeEnemy){
+			if(mapa.sala[i][j].getEnemy() == true){
 				if(Gdx.input.isKeyJustPressed(Keys.UP)){
 					trans.atirar();
 					if(trans.tiroValido){
@@ -241,53 +279,32 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 
-		if(transeunte.overlaps(exitS)){
-			existeEnemy = true;
+		if(transeunte.overlaps(exitS) && mapa.sala[i][j].exitD == true){
 			i = 1;
+			salay = salay + 1;
 			GeraEnemy();
 			transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
-			if(idsala == 0){
-				idsala = 1;
-			}
-			if(idsala == 3){
-				idsala = 0;
-			}
 		}
-		if(transeunte.overlaps(exitL)){
+		if(transeunte.overlaps(exitL) && mapa.sala[i][j].exitR == true){
 			existeEnemy = true;
+			salax = salax - 1;
 			i = 1;
 			GeraEnemy();
 			transeunte.x = 10;
-			if(idsala == 0){
-				idsala = 2;
-			}
-			if(idsala == 4){
-				idsala = 0;
-			}
 		}
-		if(transeunte.overlaps(exitN)){
+		if(transeunte.overlaps(exitN) && mapa.sala[i][j].exitU == true){
 			existeEnemy = true;
+			salay = salay - 1;
 			i = 1;
 			GeraEnemy();
 			transeunte.y = 10;
-			if(idsala == 0){
-				idsala = 3;
-			}
-			if(idsala == 1){
-				idsala = 0;
-			}
 		}
-		if(transeunte.overlaps(exitO)){
+		if(transeunte.overlaps(exitO) && mapa.sala[i][j].exitL == true){
 			existeEnemy = true;
+			salax = salax - 1;
 			i = 1;
 			GeraEnemy();
 			transeunte.x = jogo.WIDTH - jogo.persowidth - 10;
-			if(idsala == 0){
-				idsala = 4;
-			}
-			if(idsala == 2){
-				idsala = 0;
-			}
 		}
 		
 		if(jogo.isDebug() == true){
