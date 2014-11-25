@@ -39,39 +39,31 @@ public class Fases{
 				sala[i][j] = new Sala();
 			}
 		}
-		for(int i = 0; i < 10; i++){
+		for(int i = 1; i < 10; i++){
 			for(int j = 0; j < 5; j++){
 				if(fase1[i][j] == '1'){
 					sala[i][j].setEnemy(true);
 					
-					if(i < 9){
-						if(fase1[i+1][j] == '1' && (i+1) < 11){
-							sala[i][j].exitR = true;
-							cont = cont + 1;
-						}
+					if(fase1[i+1][j] == '1' && (i+1) < 11){
+						sala[i][j].exitR = true;
+						sala[i+1][j].exitL = true;
+						cont = cont + 1;
 					}
 					
-					if(i != 0){
-						if(fase1[i-1][j] == '1'){
-							sala[i][j].exitL = true;
-							cont = cont + 10;
-						}
-					}
-						
-					if(j != 5){	
-						if(fase1[i][j+1] == '1' && (j+1) < 5){
-							sala[i][j].exitU = true;
-							cont = cont + 100;
-						}
+					if(fase1[i-1][j] == '1'){
+						sala[i][j].exitL = true;
+						cont = cont + 10;
 					}
 					
-					if(j != 0){	
-						if(fase1[i][j-1] == '1' && (j-1) > 0){
-							sala[i][j].exitD = true;
-							cont = cont + 1000;
-						}
+					if(fase1[i][j+1] == '1' && (j+1) <= 5){
+						sala[i][j].exitU = true;
+						cont = cont + 100;
 					}
-						
+					
+					if(fase1[i][j-1] == '1' && (j-1) >= 0){
+						sala[i][j].exitD = true;
+						cont = cont + 1000;
+					}
 					sala[i][j].setID(cont);
 					cont = 0;
 				}
