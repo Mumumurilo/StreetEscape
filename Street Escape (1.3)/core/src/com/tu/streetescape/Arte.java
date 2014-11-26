@@ -13,7 +13,7 @@ public class Arte {
 	public Texture forninho;
 	public Texture menu2;
 	
-	private Texture cenario1, esq, cima, baixo, dir;
+	private Texture ALL, UDR, UDL, LRD, LRU, RD, RU, LD, LU, UD, LR, R, D, L, U;
 	public ArrayList<Texture> salas;
 	
 	public Array<Texture> life;
@@ -29,12 +29,22 @@ public class Arte {
 		menu2 = new Texture(Gdx.files.internal("menu2.png"));
 		
 		salas = new ArrayList<Texture>();
-		
-		salas.add(cenario1 = new Texture(Gdx.files.internal("paulista1.jpg")));
-		salas.add(cima = new Texture(Gdx.files.internal("saidacima.jpg")));
-		salas.add(esq = new Texture(Gdx.files.internal("saidaesq.jpg")));
-		salas.add(baixo = new Texture(Gdx.files.internal("saidabaixo.jpg")));
-		salas.add(dir = new Texture(Gdx.files.internal("saidadir.jpg")));
+		//D = 1000, U = 100, L = 10, R = 1
+		salas.add(ALL = new Texture(Gdx.files.internal("ALL.png")));//0, 1111
+		salas.add(UDR = new Texture(Gdx.files.internal("UDR.png")));//1, 1101
+		salas.add(UDL = new Texture(Gdx.files.internal("UDL.png")));//2, 1110
+		salas.add(LRD = new Texture(Gdx.files.internal("LRD.png")));//3, 1011
+		salas.add(LRU = new Texture(Gdx.files.internal("LRU.png")));//4, 111
+		salas.add(RD = new Texture(Gdx.files.internal("RD.png")));//5, 1001
+		salas.add(RU = new Texture(Gdx.files.internal("RU.png")));//6, 101
+		salas.add(LD = new Texture(Gdx.files.internal("LD.png")));//7, 1010
+		salas.add(LU = new Texture(Gdx.files.internal("LU.png")));//8, 110
+		salas.add(UD = new Texture(Gdx.files.internal("UD.png")));//9, 1100
+		salas.add(LR = new Texture(Gdx.files.internal("LR.png")));//10, 11
+		salas.add(L = new Texture(Gdx.files.internal("L.png")));//11, 10
+		salas.add(D = new Texture(Gdx.files.internal("D.png")));//12, 1000
+		salas.add(U = new Texture(Gdx.files.internal("U.png")));//13, 100
+		salas.add(R = new Texture(Gdx.files.internal("R.png")));//14, 1
 		
 		life = new Array<Texture>();
 		
@@ -48,11 +58,21 @@ public class Arte {
 	}
 	
 	public void dispose(){
-		cenario1.dispose();
-		esq.dispose();
-		dir.dispose();
-		cima.dispose();
-		baixo.dispose();
+		ALL.dispose();
+		UDR.dispose();
+		UDL.dispose();
+		LRD.dispose();
+		LRU.dispose();
+		RD.dispose();
+		RU.dispose();
+		LD.dispose();
+		LU.dispose();
+		UD.dispose();
+		LR.dispose();
+		R.dispose();
+		D.dispose();
+		L.dispose();
+		U.dispose();
 		
 		forninho.dispose();
 		logotu.dispose();
