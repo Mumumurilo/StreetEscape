@@ -118,38 +118,40 @@ public class TelaJogo extends Calculos implements Screen{
 	public void render(float delta) {
 		
 		//Desenhos
+		System.out.println(mapa.sala[salax][salay].getID());
+		System.out.println(numarte);
 		if(mapa.sala[salax][salay].getID() == 1111){
-			numarte = 1;
+			numarte = 0;
 		}else if(mapa.sala[salax][salay].getID() == 1101){			
-			numarte = 2;			
+			numarte = 1;			
 		}else if(mapa.sala[salax][salay].getID() == 1110){			
-			numarte = 3;			
+			numarte = 2;			
 		}else if(mapa.sala[salax][salay].getID() == 1011){			
-			numarte = 4;			
+			numarte = 3;			
 		}else if(mapa.sala[salax][salay].getID() == 111){			
-			numarte = 5;			
+			numarte = 4;			
 		}else if(mapa.sala[salax][salay].getID() == 1001){			
-			numarte = 6;			
+			numarte = 5;			
 		}else if(mapa.sala[salax][salay].getID() == 101){			
-			numarte = 7;			
+			numarte = 6;			
 		}else if(mapa.sala[salax][salay].getID() == 1010){			
-			numarte = 8;			
+			numarte = 7;			
 		}else if(mapa.sala[salax][salay].getID() == 110){			
-			numarte = 9;			
+			numarte = 8;			
 		}else if(mapa.sala[salax][salay].getID() == 1100){			
-			numarte = 10;			
+			numarte = 9;			
 		}else if(mapa.sala[salax][salay].getID() == 11){			
-			numarte = 11;			
+			numarte = 10;			
 		}else if(mapa.sala[salax][salay].getID() == 1000){			
-			numarte = 12;			
+			numarte = 11;			
 		}else if(mapa.sala[salax][salay].getID() == 10){			
-			numarte = 13;			
+			numarte = 12;			
 		}else if(mapa.sala[salax][salay].getID() == 1){			
 			numarte = 14;			
 		}else if(mapa.sala[salax][salay].getID() == 100){			
-			numarte = 15;			
+			numarte = 13;			
 		}	
-		System.out.println(mapa.sala[salax][salay].getID());
+		
 		jogo.batch.begin();
 		
 		//Fundo das salas		
