@@ -136,16 +136,16 @@ public class TelaJogo extends Calculos implements Screen{
 			numarte = 6;			
 		}else if(mapa.sala[salax][salay].getID() == 1010){			
 			numarte = 7;			
-		}else if(mapa.sala[salax][salay].getID() == 110){			
+		}else if(mapa.sala[salax][salay].getID() == 110){
 			numarte = 8;			
 		}else if(mapa.sala[salax][salay].getID() == 1100){			
 			numarte = 9;			
 		}else if(mapa.sala[salax][salay].getID() == 11){			
 			numarte = 10;			
 		}else if(mapa.sala[salax][salay].getID() == 1000){			
-			numarte = 11;			
-		}else if(mapa.sala[salax][salay].getID() == 10){			
 			numarte = 12;			
+		}else if(mapa.sala[salax][salay].getID() == 10){			
+			numarte = 11;			
 		}else if(mapa.sala[salax][salay].getID() == 1){			
 			numarte = 14;			
 		}else if(mapa.sala[salax][salay].getID() == 100){			
@@ -281,6 +281,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 
 		if(transeunte.overlaps(exitS) && mapa.sala[salax][salay].exitD == true){
+			existeEnemy = true;
 			i = 1;
 			salay = salay + 1;
 			GeraEnemy();
