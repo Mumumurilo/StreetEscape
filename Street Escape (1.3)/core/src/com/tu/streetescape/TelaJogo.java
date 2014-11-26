@@ -22,7 +22,6 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	//Salas
 	private Fases mapa;
-	private int idsala = 0;
 	private Rectangle exitN, exitS, exitO, exitL;
 	private boolean existeEnemy = false;
 	private int salax, salay;
@@ -127,8 +126,7 @@ public class TelaJogo extends Calculos implements Screen{
 	public void render(float delta) {
 		
 		//Desenhos
-		System.out.println(mapa.sala[salax][salay].getID());
-		System.out.println(numarte);
+		
 		if(mapa.sala[salax][salay].getID() == 1111){
 			numarte = 0;
 		}else if(mapa.sala[salax][salay].getID() == 1101){			
@@ -293,6 +291,7 @@ public class TelaJogo extends Calculos implements Screen{
 
 		if(transeunte.overlaps(exitS) && mapa.sala[salax][salay].exitD == true){
 			existeEnemy = true;
+			deletaItens();
 			i = 1;
 			salay = salay + 1;
 			GeraEnemy();
@@ -300,6 +299,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		if(transeunte.overlaps(exitL) && mapa.sala[salax][salay].exitR == true){
 			existeEnemy = true;
+			deletaItens();
 			salax = salax + 1;
 			i = 1;
 			GeraEnemy();
@@ -307,6 +307,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		if(transeunte.overlaps(exitN) && mapa.sala[salax][salay].exitU == true){
 			existeEnemy = true;
+			deletaItens();
 			salay = salay - 1;
 			i = 1;
 			GeraEnemy();
@@ -314,6 +315,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		if(transeunte.overlaps(exitO) && mapa.sala[salax][salay].exitL == true){
 			existeEnemy = true;
+			deletaItens();
 			salax = salax - 1;
 			i = 1;
 			GeraEnemy();
@@ -521,6 +523,12 @@ public class TelaJogo extends Calculos implements Screen{
 			
 			i++;
 		}
+	}
+	
+	//Deleta itens de recover se não forem pegos
+	private void deletaItens(){
+		numItem = 0;
+		lifeItem.clear();
 	}
 	
 	//Outros métodos
