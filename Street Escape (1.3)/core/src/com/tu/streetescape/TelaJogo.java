@@ -375,10 +375,11 @@ public class TelaJogo extends Calculos implements Screen{
 					}
 				}
 				
-				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 2000000000 && !trans.getTransLifeCounter()){
+				if(temprect.overlaps(transeunte) && (TimeUtils.nanoTime() - lastToque) >= 2000000000 && !jogo.getTransLifeCounter()){
 					double temptranslife = jogo.getTransLife();
 					temptranslife -= 2;
 					jogo.setTransLife(temptranslife);
+					jogo.setTransLifeCounter(true);
 					lastToque = TimeUtils.nanoTime();
 					
 					if(jogo.isSound()){
@@ -451,10 +452,10 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		//Contador que não permite o enemy atacar o transeunte por um tempo depois de levar dano
-		if(jogo.transeunte.getTransLifeCounter()){
+		if(jogo.getTransLifeCounter()){
 			contTransLife += Gdx.graphics.getDeltaTime();
 			if(contTransLife >= 3){
-				jogo.transeunte.setTransLifeCounter(false);
+				jogo.setTransLifeCounter(false);
 				contTransLife = 0;
 			}
 		}

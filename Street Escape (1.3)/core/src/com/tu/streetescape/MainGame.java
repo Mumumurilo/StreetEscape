@@ -32,6 +32,7 @@ public class MainGame extends Game {
 	public final int persoheight = 80;
 	
 	private Rectangle unitrans;
+	private boolean transLifeCounter = false;
 	
 	public boolean reset = false;
 	
@@ -127,5 +128,13 @@ public class MainGame extends Game {
 	
 	public void setTransLife(double life){
 		transeunte.setLife(life);
+	}
+	
+	public void setTransLifeCounter(boolean set){
+		this.transLifeCounter = set;
+	}
+	
+	public boolean getTransLifeCounter(){
+		return transLifeCounter;
 	}
 }

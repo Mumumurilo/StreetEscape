@@ -17,8 +17,6 @@ public class Transeunte extends Calculos{
 	public Array<Rectangle> tiros;
 	public Array<Integer> direcTiros;
 	
-	private boolean transLifeCounter = false;
-	
 	public Transeunte(MainGame jogo) {
 		super(jogo);
 		
@@ -100,13 +98,4 @@ public class Transeunte extends Calculos{
 	public void setLife(double life){
 		this.life = life;
 	}
-	
-	public void setTransLifeCounter(boolean set){
-		this.transLifeCounter = set;
-	}
-	
-	public boolean getTransLifeCounter(){
-		return transLifeCounter;
-	}
-
 }

@@ -165,12 +165,12 @@ public class Enemy extends Calculos{
 			recta.x -= (float) (3 * Math.sin(anguloDoTiro));
 			recta.y -= (float) (3 * Math.cos(anguloDoTiro));
 			
-			if(recta.overlaps(trans) && !jogo.transeunte.getTransLifeCounter()){
+			if(recta.overlaps(trans) && !jogo.getTransLifeCounter()){
 				iter.remove();
 				ite.remove();
 				double translife = jogo.getTransLife() - 1;
 				jogo.setTransLife(translife);
-				jogo.transeunte.setTransLifeCounter(true);
+				jogo.setTransLifeCounter(true);
 				
 				if(jogo.isSound()){
 					boolean randDano = MathUtils.randomBoolean();
