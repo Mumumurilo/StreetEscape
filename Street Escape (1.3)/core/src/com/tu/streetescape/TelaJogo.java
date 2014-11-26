@@ -288,7 +288,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		if(transeunte.overlaps(exitL) && mapa.sala[salax][salay].exitR == true){
 			existeEnemy = true;
-			salax = salax - 1;
+			salax = salax + 1;
 			i = 1;
 			GeraEnemy();
 			transeunte.x = 10;

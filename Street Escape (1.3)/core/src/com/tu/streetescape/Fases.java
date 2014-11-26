@@ -46,7 +46,6 @@ public class Fases{
 					
 					if(fase1[i+1][j] == '1' && (i+1) < 11){
 						sala[i][j].exitR = true;
-						sala[i+1][j].exitL = true;
 						cont = cont + 1;
 					}
 					
@@ -57,7 +56,7 @@ public class Fases{
 						}
 					}
 						
-					if(fase1[i][j+1] == '1' && (j+1) <= 5){
+					if(fase1[i][j+1] == '1' && (j+1) < 5){
 						sala[i][j].exitD = true;
 						cont = cont + 1000;
 					}
