@@ -5,17 +5,19 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class Fases{
 
-	FileHandle leitor;
+	private FileHandle leitor;
 	
-	String textoDoArquivo;
+	private String textoDoArquivo;
 	
-	char[][] fase1;
-	char[][] fase2;
-	char[][] fase3;
+	private char[][] fase1;
+	private char[][] fase2;
+	private char[][] fase3;
 	
 	public Sala[][] sala;
 	
-	int cont = 0;
+	private int cont = 0;
+	
+	private int numFase = 1;
 	
 	public Fases(){
 		fase1 = new char[10][5];
@@ -42,7 +44,7 @@ public class Fases{
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 5; j++){
 				if(fase1[i][j] == '1'){
-					sala[i][j].setEnemy(true);
+					sala[i][j].enemy = true;
 					
 					if(fase1[i+1][j] == '1' && (i+1) < 11){
 						sala[i][j].exitR = true;
@@ -55,15 +57,19 @@ public class Fases{
 							cont = cont + 10;
 						}
 					}
-						
-					if(fase1[i][j+1] == '1' && (j+1) < 5){
-						sala[i][j].exitD = true;
-						cont = cont + 1000;
+					
+					if(j < 4){
+						if(fase1[i][j+1] == '1' && (j+1) < 5){
+							sala[i][j].exitD = true;
+							cont = cont + 1000;
+						}
 					}
 					
-					if(fase1[i][j-1] == '1' && (j-1) >= 0){
-						sala[i][j].exitU = true;
-						cont = cont + 100;
+					if(j > 0){
+						if(fase1[i][j-1] == '1' && (j-1) >= 0){
+							sala[i][j].exitU = true;
+							cont = cont + 100;
+						}
 					}
 					sala[i][j].setID(cont);
 					cont = 0;
@@ -71,6 +77,14 @@ public class Fases{
 			}
 		}
 		
+	}
+	
+	public int getNumFase(){
+		return numFase;
+	}
+	
+	public void setNumFase(int numFase){
+		this.numFase = numFase;
 	}
 }
 

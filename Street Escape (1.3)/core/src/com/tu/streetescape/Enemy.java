@@ -162,8 +162,8 @@ public class Enemy extends Calculos{
 		while(iter.hasNext() && ite.hasNext()){
 			Rectangle recta = iter.next();
 			double anguloDoTiro = ite.next();
-			recta.x -= (float) (3 * Math.sin(anguloDoTiro));
-			recta.y -= (float) (3 * Math.cos(anguloDoTiro));
+			recta.x -= (float) (4 * Math.sin(anguloDoTiro));
+			recta.y -= (float) (4 * Math.cos(anguloDoTiro));
 			
 			if(recta.overlaps(trans) && !jogo.getTransLifeCounter()){
 				iter.remove();

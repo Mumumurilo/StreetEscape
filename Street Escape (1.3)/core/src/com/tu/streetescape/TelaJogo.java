@@ -23,9 +23,9 @@ public class TelaJogo extends Calculos implements Screen{
 	//Salas
 	private Fases mapa;
 	private Rectangle exitN, exitS, exitO, exitL;
-	private boolean existeEnemy = false;
 	private int salax, salay;
 	private int numarte;
+	private boolean bloqueiaSaida = false;
 	
 	//Enemy
 	private int numEnemy, i = 1, j = 0;
@@ -194,16 +194,16 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		if(jogo.getTransLife() > 0){
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
-				transeunte.y += 150 * Gdx.graphics.getDeltaTime();
+				transeunte.y += 200 * Gdx.graphics.getDeltaTime();
 			}
 			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
-				transeunte.y -= 150 * Gdx.graphics.getDeltaTime();
+				transeunte.y -= 200 * Gdx.graphics.getDeltaTime();
 			}
 			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
-				transeunte.x -= 150 * Gdx.graphics.getDeltaTime();
+				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
 			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
-				transeunte.x += 150 * Gdx.graphics.getDeltaTime();
+				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
 			}
 			
 			if(mapa.sala[salax][salay].enemy == true){
@@ -255,7 +255,7 @@ public class TelaJogo extends Calculos implements Screen{
 						transeunte.x += 150 * Gdx.graphics.getDeltaTime();
 					}
 					
-					if(existeEnemy){
+					if(mapa.sala[salax][salay].enemy == true){
 						if(shootcima.contains(touchPos.x, touchPos.y)){
 							trans.atirar();
 							if(trans.tiroValido){
@@ -288,38 +288,47 @@ public class TelaJogo extends Calculos implements Screen{
 				}
 			}
 		}
-
-		if(transeunte.overlaps(exitS) && mapa.sala[salax][salay].exitD == true){
-			existeEnemy = true;
-			deletaItens();
-			i = 1;
-			salay = salay + 1;
-			GeraEnemy();
-			transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
+		
+		//Bloqueia saídas
+		if(!checaSalaBoss()){
+			if(mapa.sala[salax][salay].enemy == true){
+				bloqueiaSaida = true;
+			}else{
+				bloqueiaSaida = false;
+			}
 		}
-		if(transeunte.overlaps(exitL) && mapa.sala[salax][salay].exitR == true){
-			existeEnemy = true;
-			deletaItens();
-			salax = salax + 1;
-			i = 1;
-			GeraEnemy();
-			transeunte.x = 10;
-		}
-		if(transeunte.overlaps(exitN) && mapa.sala[salax][salay].exitU == true){
-			existeEnemy = true;
-			deletaItens();
-			salay = salay - 1;
-			i = 1;
-			GeraEnemy();
-			transeunte.y = 10;
-		}
-		if(transeunte.overlaps(exitO) && mapa.sala[salax][salay].exitL == true){
-			existeEnemy = true;
-			deletaItens();
-			salax = salax - 1;
-			i = 1;
-			GeraEnemy();
-			transeunte.x = jogo.WIDTH - jogo.persowidth - 10;
+		
+		checaSalaBoss();
+		
+		if(!bloqueiaSaida){
+			if(transeunte.overlaps(exitS) && mapa.sala[salax][salay].exitD == true){
+				deletaItens();
+				i = 1;
+				salay = salay + 1;
+				GeraEnemy();
+				transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
+			}
+			if(transeunte.overlaps(exitL) && mapa.sala[salax][salay].exitR == true){
+				deletaItens();
+				salax = salax + 1;
+				i = 1;
+				GeraEnemy();
+				transeunte.x = 10;
+			}
+			if(transeunte.overlaps(exitN) && mapa.sala[salax][salay].exitU == true){
+				deletaItens();
+				salay = salay - 1;
+				i = 1;
+				GeraEnemy();
+				transeunte.y = 10;
+			}
+			if(transeunte.overlaps(exitO) && mapa.sala[salax][salay].exitL == true){
+				deletaItens();
+				salax = salax - 1;
+				i = 1;
+				GeraEnemy();
+				transeunte.x = jogo.WIDTH - jogo.persowidth - 10;
+			}
 		}
 		
 		if(jogo.isDebug() == true){
@@ -370,7 +379,7 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		//Atividade do inimigo---------------------------------------------------------------------------------------------------------------
 		
-		if(existeEnemy){
+		if(mapa.sala[salax][salay].enemy){
 			while(j < numEnemy){
 				tempenemy = enemy.get(j);
 				temprect = tempenemy.enemy;
@@ -442,7 +451,7 @@ public class TelaJogo extends Calculos implements Screen{
 				j = 0;
 			}
 			if(numEnemy == 0){
-				existeEnemy = false;
+				mapa.sala[salax][salay].enemy = false;
 				trans.direcTiros.clear();
 				trans.tiros.clear();
 			}
@@ -495,25 +504,16 @@ public class TelaJogo extends Calculos implements Screen{
 		numEnemy = MathUtils.random(1, 4);
 		
 		while(i <= numEnemy){
-			Rectangle mau = new Rectangle(MathUtils.random(jogo.WIDTH - 750, jogo.WIDTH - 50),
-					MathUtils.random(jogo.HEIGHT - 430, jogo.HEIGHT - 50), jogo.persowidth, jogo.persoheight);
+			Rectangle mau = new Rectangle(MathUtils.random(jogo.WIDTH/3, (jogo.WIDTH/3)*2),
+					MathUtils.random(jogo.HEIGHT/3, (jogo.HEIGHT/3)*2), jogo.persowidth, jogo.persoheight);
 			
 			boolean proximidadetrans = checaProxRect(mau, transeunte);
 			while(proximidadetrans == true){
-				mau.x = MathUtils.random(jogo.WIDTH - 750, jogo.WIDTH - 50);
-				mau.y = MathUtils.random(jogo.HEIGHT - 430, jogo.HEIGHT - 50);
+				mau.x = MathUtils.random(jogo.WIDTH/3, (jogo.WIDTH/3)*2);
+				mau.y = MathUtils.random(jogo.HEIGHT/3, (jogo.HEIGHT/3)*2);
 				proximidadetrans = checaProxRect(mau, transeunte);
 			}
-			if(i >= 2){
-				Enemy mal = enemy.get(i - 2);
-				boolean proximidadeOtherEnemy = checaProxRect(mau, mal.enemy);
-				while(proximidadeOtherEnemy == true){
-					mau.x = MathUtils.random(jogo.WIDTH - 750, jogo.WIDTH - 50);
-					mau.y = MathUtils.random(jogo.HEIGHT - 430, jogo.HEIGHT - 50);
-					proximidadeOtherEnemy = checaProxRect(mau, mal.enemy);
-				}
-			}
-			
+						
 			/*
 			 * ATENÇÃO: A terceira referência do construtor de Enemy é o tipo de inimigo. Acredito que teríamos que criar algo que modificasse 
 			 * o tipo dependendo da variação das salas. Temos que discutir isso! Por default, estou deixando 1 (manifestantes).
@@ -529,6 +529,32 @@ public class TelaJogo extends Calculos implements Screen{
 	private void deletaItens(){
 		numItem = 0;
 		lifeItem.clear();
+	}
+	
+	//Condição de sala de boss
+	private boolean checaSalaBoss(){
+		if(salax == 7 && salay == 0 && mapa.getNumFase() == 1){
+			mapa.sala[salax][salay].enemy = false;
+			bloqueiaSaida = true;
+			jogo.temajogo.stop();
+			jogo.temajogo.dispose();
+			return true;
+		}
+		if(salax == 0 && salay == 0 && mapa.getNumFase() == 2){
+			mapa.sala[salax][salay].enemy = false;
+			bloqueiaSaida = true;
+			jogo.temajogo.stop();
+			jogo.temajogo.dispose();
+			return true;
+		}
+		if(salax == 0 && salay == 0 && mapa.getNumFase() == 3){
+			mapa.sala[salax][salay].enemy = false;
+			bloqueiaSaida = true;
+			jogo.temajogo.stop();
+			jogo.temajogo.dispose();
+			return true;
+		}
+		return false;
 	}
 	
 	//Outros métodos

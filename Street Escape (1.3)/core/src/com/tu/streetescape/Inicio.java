@@ -16,6 +16,9 @@ public class Inicio implements Screen{
 	//Contador de logo
 	private float somaLogo = -4;
 	
+	//Contador de press space
+	private float somaSpace = 0;
+	
 	public Inicio(final MainGame jogo){ //Construtor. Serve para instanciar os elementos das telas
 		this.jogo = jogo;
 		
@@ -54,10 +57,22 @@ public class Inicio implements Screen{
 		
 		if(somaLogo > 0 && somaLogo <= 16){
 			somaLogo += Gdx.graphics.getDeltaTime();
+			somaSpace += Gdx.graphics.getDeltaTime();
+			
+			if(somaSpace >= 0 && somaSpace < 0.5){
+				jogo.GUIFont.setColor(Color.DARK_GRAY);
+			}else if(somaSpace >= 0.5 && somaSpace < 1){
+				jogo.GUIFont.setColor(Color.BLACK);
+			}
+			if(somaSpace >= 1){
+				somaSpace = 0;
+			}
 			
 			//Desenho do forninho
 			jogo.batch.begin();
 			jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
+			
+			jogo.GUIFont.draw(jogo.batch, "Press SPACE to play!", 240, 100);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
@@ -73,10 +88,10 @@ public class Inicio implements Screen{
 			Gdx.gl.glClearColor(0, 0, 0, 0);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
+			jogo.GUIFont.setColor(Color.DARK_GRAY);
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.setColor(Color.BLACK);
 			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n    Transeunte is a simple citizen that wanted to\n" +
 					"    take a walk at the biggest avenue of the " +
 					"city.\n       However, when he left the subway... He\n" +
@@ -99,7 +114,7 @@ public class Inicio implements Screen{
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
 			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n When he tried to go back to subway he saw that\n" +
-					"                              it was just closed!\n" +
+					"                              it had just closed!\n" +
 					" Besides that, the people on the street started to\n" +
 					"                           hurt him! AND NOW!?", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
