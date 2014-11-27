@@ -9,7 +9,6 @@ public enum EnemyState implements State<Enemy>{
 		public void update(Enemy entity) {
 			if(entity.estaLonge() && !entity.tomouDano){
 				entity.movEnemy();
-				
 			}
 			if(!entity.estaLonge()){
 				entity.machine.changeState(ATACAR);

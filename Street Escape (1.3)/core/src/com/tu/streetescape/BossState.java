@@ -7,7 +7,8 @@ public enum BossState implements State<Boss>{
 	ATACAR(){
 		@Override
 		public void update(Boss entity) {
-			
+			System.out.println("furunfa");
+			entity.andar();
 		}
 	},
 	CHAMA_ENEMY(){

@@ -34,6 +34,10 @@ public class TelaJogo extends Calculos implements Screen{
 	private Enemy tempenemy;
 	private float lastToque;
 	
+	//Boss
+	private Boss boss;
+	private boolean oneCheck = true;
+	
 	//Transeunte
 	private Rectangle transeunte;
 	private Transeunte trans;
@@ -198,6 +202,14 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		settings.configButtons(jogo.temajogo);
+		
+		//Debug de boss!
+		if(jogo.isDebug()){
+			if(Gdx.input.isKeyPressed(Keys.ESCAPE) && mapa.getNumFase() == 1){
+				salax = 7;
+				salay = 0;
+			}
+		}
 		
 		if(jogo.getTransLife() > 0){
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
@@ -556,11 +568,17 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	private void salaBoss(){
 		if(checaSalaBoss()){
-			mapa.sala[salax][salay].enemy = false;
-			bloqueiaSaida = true;
-			
-			jogo.temajogo.stop();
-			jogo.temajogo.dispose();
+			if(oneCheck){
+				mapa.sala[salax][salay].enemy = false;
+				bloqueiaSaida = true;
+				
+				jogo.temajogo.stop();
+				jogo.temajogo.dispose();
+				
+				boss = new Boss(jogo, 1);
+				
+				oneCheck = false;
+			}
 			
 			if(jogo.isSound()){
 				if(!play){
@@ -572,6 +590,13 @@ public class TelaJogo extends Calculos implements Screen{
 					jogo.temaboss2.play();
 					play2 = true;
 				}
+			}
+			
+			if(jogo.isDebug() == true){
+				jogo.renderer.setColor(Color.TEAL);
+				jogo.renderer.begin(ShapeType.Filled);
+				jogo.renderer.rect(boss.bossRect.x, boss.bossRect.y, boss.bossRect.width, boss.bossRect.height);
+				jogo.renderer.end();
 			}
 		}
 	}
