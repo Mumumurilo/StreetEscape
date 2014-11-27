@@ -562,14 +562,16 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.temajogo.stop();
 			jogo.temajogo.dispose();
 			
-			if(!play){
-				jogo.temaboss1.play();
-				play = true;
-			}
-			playing = jogo.temaboss1.isPlaying();
-			if(playing == false && play2 == false){
-				jogo.temaboss2.play();
-				play2 = true;
+			if(jogo.isSound()){
+				if(!play){
+					jogo.temaboss1.play();
+					play = true;
+				}
+				playing = jogo.temaboss1.isPlaying();
+				if(playing == false && play2 == false){
+					jogo.temaboss2.play();
+					play2 = true;
+				}
 			}
 		}
 	}
