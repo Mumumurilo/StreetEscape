@@ -52,6 +52,9 @@ public class TelaJogo extends Calculos implements Screen{
 	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
 	private Vector3 touchPos;
+	
+	//Condições música
+	private boolean playing, play = false, play2 = false;
 		
 	public TelaJogo(final MainGame jogo){
 		super(jogo);
@@ -120,6 +123,10 @@ public class TelaJogo extends Calculos implements Screen{
 		if(jogo.isMusic()){
 			jogo.temajogo.play();
 		}
+		
+		jogo.temaboss1 = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 4-1.mp3"));
+		jogo.temaboss2 = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 4-2.mp3"));
+		jogo.temaboss2.setLooping(true);
 	}
 
 	@Override
@@ -298,7 +305,9 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
-		checaSalaBoss();
+		if(checaSalaBoss()){
+			salaBoss();
+		}
 		
 		if(!bloqueiaSaida){
 			if(transeunte.overlaps(exitS) && mapa.sala[salax][salay].exitD == true){
@@ -534,27 +543,35 @@ public class TelaJogo extends Calculos implements Screen{
 	//Condição de sala de boss
 	private boolean checaSalaBoss(){
 		if(salax == 7 && salay == 0 && mapa.getNumFase() == 1){
-			mapa.sala[salax][salay].enemy = false;
-			bloqueiaSaida = true;
-			jogo.temajogo.stop();
-			jogo.temajogo.dispose();
 			return true;
 		}
 		if(salax == 0 && salay == 0 && mapa.getNumFase() == 2){
-			mapa.sala[salax][salay].enemy = false;
-			bloqueiaSaida = true;
-			jogo.temajogo.stop();
-			jogo.temajogo.dispose();
 			return true;
 		}
 		if(salax == 0 && salay == 0 && mapa.getNumFase() == 3){
-			mapa.sala[salax][salay].enemy = false;
-			bloqueiaSaida = true;
-			jogo.temajogo.stop();
-			jogo.temajogo.dispose();
 			return true;
 		}
 		return false;
+	}
+	
+	private void salaBoss(){
+		if(checaSalaBoss()){
+			mapa.sala[salax][salay].enemy = false;
+			bloqueiaSaida = true;
+			
+			jogo.temajogo.stop();
+			jogo.temajogo.dispose();
+			
+			if(!play){
+				jogo.temaboss1.play();
+				play = true;
+			}
+			playing = jogo.temaboss1.isPlaying();
+			if(playing == false && play2 == false){
+				jogo.temaboss2.play();
+				play2 = true;
+			}
+		}
 	}
 	
 	//Outros métodos

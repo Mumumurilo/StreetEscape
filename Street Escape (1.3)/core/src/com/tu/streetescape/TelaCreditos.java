@@ -18,6 +18,8 @@ public class TelaCreditos implements Screen{
 		//Deleta tela anterior
 		jogo.telajogo.dispose();
 		jogo.temajogo.dispose();
+		jogo.temaboss1.dispose();
+		jogo.temaboss2.dispose();
 		
 		//Posicionamento da câmera
 		jogo.camera.setToOrtho(false, jogo.WIDTH, jogo.HEIGHT);

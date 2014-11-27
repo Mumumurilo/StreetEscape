@@ -42,6 +42,8 @@ public class MainGame extends Game {
 	//Músicas
 	public Music temamenu;
 	public Music temajogo;
+	public Music temaboss1;
+	public Music temaboss2;
 	public Music temacreditos;
 	
 	//Efeitos sonoros
