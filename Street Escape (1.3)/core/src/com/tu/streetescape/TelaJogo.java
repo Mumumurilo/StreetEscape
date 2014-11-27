@@ -340,7 +340,7 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.renderer.rect(exitL.x, exitL.y, exitL.width, exitL.height);
 			jogo.renderer.rect(exitO.x, exitO.y, exitO.width, exitO.height);
 			
-			jogo.renderer.rect(predesqcima.x, predesqcima.y, predesqcima.width, predesqcima.height);
+			/*jogo.renderer.rect(predesqcima.x, predesqcima.y, predesqcima.width, predesqcima.height);
 			jogo.renderer.rect(predesq.x, predesq.y, predesq.width, predesq.height);
 			jogo.renderer.rect(predesqbai.x, predesqbai.y, predesqbai.width, predesqbai.height);
 			
@@ -350,7 +350,7 @@ public class TelaJogo extends Calculos implements Screen{
 			
 			jogo.renderer.rect(predmeiobai.x, predmeiobai.y, predmeiobai.width, predmeiobai.height);
 			jogo.renderer.rect(predmeiocima.x, predmeiocima.y, predmeiocima.width, predmeiocima.height);
-			
+			*/
 			jogo.renderer.end();
 		}
 		
