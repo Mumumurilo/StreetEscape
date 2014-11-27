@@ -51,6 +51,7 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
+	private Rectangle predesqcima, predmeiocima, preddircima, predesq, preddir, predesqbai, predmeiobai, preddirbai;
 	private Vector3 touchPos;
 		
 	public TelaJogo(final MainGame jogo){
@@ -105,6 +106,15 @@ public class TelaJogo extends Calculos implements Screen{
 		baixo = new Rectangle(jogo.persowidth + 10, 10, jogo.persowidth, jogo.persoheight);
 		dir = new Rectangle((jogo.persowidth*2) + 10, jogo.persoheight + 10, jogo.persowidth, jogo.persoheight);
 		esq = new Rectangle(10, jogo.persoheight + 10, jogo.persowidth, jogo.persoheight);
+		
+		predesqcima = new Rectangle(0, jogo.HEIGHT, jogo.WIDTH/3, -(jogo.HEIGHT/3 - jogo.corrigealtura));
+		predmeiocima = new Rectangle(jogo.WIDTH/3, jogo.HEIGHT, jogo.WIDTH/3, -(jogo.HEIGHT/3 - jogo.corrigealtura));
+		preddircima = new Rectangle((jogo.WIDTH/3) * 2,jogo.HEIGHT, jogo.WIDTH/3, -(jogo.HEIGHT/3 - jogo.corrigealtura));
+		predesq = new Rectangle(0, jogo.HEIGHT/3, jogo.WIDTH/3, jogo.HEIGHT/3);
+		preddir = new Rectangle((jogo.WIDTH/3) * 2 + 10, jogo.HEIGHT/3, jogo.WIDTH/3, jogo.HEIGHT/3);
+		predesqbai = new Rectangle(0, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
+		predmeiobai = new Rectangle(jogo.WIDTH/3, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
+		preddirbai = new Rectangle((jogo.WIDTH/3) * 2, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
 		
 		shootcima = new Rectangle(jogo.WIDTH - (2*jogo.persowidth - 10), (jogo.persoheight*2) + 10, jogo.persowidth, jogo.persoheight);
 		shootbaixo = new Rectangle(jogo.WIDTH - (2*jogo.persowidth - 10), 10, jogo.persowidth, jogo.persoheight);
@@ -329,6 +339,18 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.renderer.rect(exitS.x, exitS.y, exitS.width, exitS.height);
 			jogo.renderer.rect(exitL.x, exitL.y, exitL.width, exitL.height);
 			jogo.renderer.rect(exitO.x, exitO.y, exitO.width, exitO.height);
+			
+			jogo.renderer.rect(predesqcima.x, predesqcima.y, predesqcima.width, predesqcima.height);
+			jogo.renderer.rect(predesq.x, predesq.y, predesq.width, predesq.height);
+			jogo.renderer.rect(predesqbai.x, predesqbai.y, predesqbai.width, predesqbai.height);
+			
+			jogo.renderer.rect(preddircima.x, preddircima.y, preddircima.width, preddircima.height);
+			jogo.renderer.rect(preddir.x, preddir.y, preddir.width, preddir.height);
+			jogo.renderer.rect(preddirbai.x, preddirbai.y, preddirbai.width, preddirbai.height);
+			
+			jogo.renderer.rect(predmeiobai.x, predmeiobai.y, predmeiobai.width, predmeiobai.height);
+			jogo.renderer.rect(predmeiocima.x, predmeiocima.y, predmeiocima.width, predmeiocima.height);
+			
 			jogo.renderer.end();
 		}
 		
