@@ -33,6 +33,8 @@ public class TelaJogo extends Calculos implements Screen{
 	private Rectangle temprect;
 	private Enemy tempenemy;
 	private float lastToque;
+	private double anguloenemy;
+	private int moveenemy;
 	
 	//Boss
 	private Boss boss;
@@ -43,6 +45,8 @@ public class TelaJogo extends Calculos implements Screen{
 	private Transeunte trans;
 	private float contTransLife = 0;
 	private int movx = 0;
+	private boolean movis = false;
+	private int direction = 0;
 	
 	//Itens
 	private int randItem, numItem = 0, k = 0;
@@ -222,10 +226,158 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
+		if(movis == false){
+			if(direction == 0){
+				artes.currentFrame = artes.transeunte[2][0];
+				
+				jogo.batch.begin();
+				
+				jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+				
+				jogo.batch.end();
+			}
+			if(direction == 1){
+				artes.currentFrame = artes.transeunte[1][0];
+				
+				jogo.batch.begin();
+				
+				jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+				
+				jogo.batch.end();
+			}
+			if(direction == 2){
+				artes.currentFrame = artes.transeunte[0][0];
+				
+				jogo.batch.begin();
+				
+				jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+				
+				jogo.batch.end();
+			}
+			if(direction == 3){
+				artes.currentFrame = artes.transeunte[0][0];
+				
+				jogo.batch.begin();
+				
+				jogo.batch.draw(artes.currentFrame, transeunte.x + jogo.persowidth, transeunte.y, -jogo.persowidth, jogo.persoheight);
+				
+				jogo.batch.end();
+			}
+		}
+		
+		movis = false;
+		
 		if(jogo.getTransLife() > 0){
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
-				if(movx < 12){
-					artes.currentFrame = artes.transeunte[1][0];
+				movis = true;
+				if(Gdx.input.isKeyPressed(Keys.A) == false && Gdx.input.isKeyPressed(Keys.D) == false){
+					if(movx < 12){
+						artes.currentFrame = artes.transeunte[1][1];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					if(movx >= 12 && movx <= 23){
+						artes.currentFrame = artes.transeunte[1][2];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					direction = 1;
+					movx++;
+					if(movx > 24){
+						movx = 0;
+					}
+				}
+					transeunte.y += 200 * Gdx.graphics.getDeltaTime();
+			}
+			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
+				movis = true;
+				if(Gdx.input.isKeyPressed(Keys.A) == false && Gdx.input.isKeyPressed(Keys.D) == false ){
+					if(movx < 12){
+						artes.currentFrame = artes.transeunte[2][1];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					if(movx >= 12 && movx <= 23){
+						artes.currentFrame = artes.transeunte[2][2];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					direction = 0;
+					movx++;
+					if(movx > 24){
+						movx = 0;
+					}
+				}
+				transeunte.y -= 200 * Gdx.graphics.getDeltaTime();
+			}
+			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
+				movis = true;
+				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
+				//if(Gdx.input.isKeyPressed(Keys.W) == false && Gdx.input.isKeyPressed(Keys.S) == false){
+					if(movx <= 12){
+						artes.currentFrame = artes.transeunte[0][1];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x + jogo.persowidth, transeunte.y, -jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					if(movx >= 13 && movx <= 23){
+						artes.currentFrame = artes.transeunte[0][0];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x + jogo.persowidth, transeunte.y, -jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					if(movx >= 24 && movx <= 36){
+						artes.currentFrame = artes.transeunte[0][2];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x + jogo.persowidth, transeunte.y, -jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					if(movx >= 37 && movx <= 48){
+						artes.currentFrame = artes.transeunte[0][0];
+						
+						jogo.batch.begin();
+						
+						jogo.batch.draw(artes.currentFrame, transeunte.x + jogo.persowidth, transeunte.y, -jogo.persowidth, jogo.persoheight);
+						
+						jogo.batch.end();
+					}
+					direction = 3;
+					movx++;
+					if(movx > 48){
+						movx = 0;
+					}
+				//}
+			}
+			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
+				movis = true;
+				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
+				if(movx <= 12){
+					artes.currentFrame = artes.transeunte[0][1];
 					
 					jogo.batch.begin();
 					
@@ -233,8 +385,8 @@ public class TelaJogo extends Calculos implements Screen{
 					
 					jogo.batch.end();
 				}
-				if(movx >= 12 && movx <= 23){
-					artes.currentFrame = artes.transeunte[1][1];
+				if(movx >= 13 && movx <=23){
+					artes.currentFrame = artes.transeunte[0][0];
 					
 					jogo.batch.begin();
 					
@@ -243,7 +395,7 @@ public class TelaJogo extends Calculos implements Screen{
 					jogo.batch.end();
 				}
 				if(movx >= 24 && movx <= 36){
-					artes.currentFrame = artes.transeunte[1][2];
+					artes.currentFrame = artes.transeunte[0][2];
 					
 					jogo.batch.begin();
 					
@@ -251,20 +403,20 @@ public class TelaJogo extends Calculos implements Screen{
 					
 					jogo.batch.end();
 				}
+				if(movx >= 37 && movx <= 48){
+					artes.currentFrame = artes.transeunte[0][0];
+					
+					jogo.batch.begin();
+					
+					jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+					
+					jogo.batch.end();
+				}
+				direction = 2;
 				movx++;
-				if(movx > 36){
+				if(movx > 48){
 					movx = 0;
 				}
-				transeunte.y += 200 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
-				transeunte.y -= 200 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
-				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
-				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
 			}
 			
 			if(mapa.sala[salax][salay].enemy == true){
@@ -452,6 +604,7 @@ public class TelaJogo extends Calculos implements Screen{
 			jogo.setTransLife(6);
 		}
 		
+
 		//Atividade do inimigo---------------------------------------------------------------------------------------------------------------
 		
 		if(mapa.sala[salax][salay].enemy){
@@ -461,6 +614,8 @@ public class TelaJogo extends Calculos implements Screen{
 				
 				tempenemy.machine.update();
 				tempenemy.movAtk();
+				
+				
 				trans.movAtk(temprect, tempenemy, numEnemy);
 				
 				if(tempenemy.morto){
@@ -519,7 +674,208 @@ public class TelaJogo extends Calculos implements Screen{
 					jogo.renderer.setColor(Color.BLUE);
 					jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
 					jogo.renderer.end();
+					
 				}
+				anguloenemy = tempenemy.getAngleDaReta(temprect, transeunte) * MathUtils.radiansToDegrees;
+				jogo.batch.begin();
+
+				if(tempenemy.checaProxRect(temprect, transeunte) == false && j != 0){
+					if(enemy.get(j).randirectmov == 1){
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[1][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[1][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 23){
+							moveenemy = 0;
+						}
+					}
+					if(enemy.get(j).randirectmov == 2){
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[2][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[2][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 23){
+							moveenemy = 0;
+						}
+					}
+					if(enemy.get(j).randirectmov == 3){
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[0][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}if(moveenemy >= 24 && moveenemy <= 36){
+							artes.currentFrameman1 = artes.man1[0][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 37 && moveenemy <= 48){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 48){
+							moveenemy = 0;
+						}
+					}
+					if(enemy.get(j).randirectmov == 4){
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[0][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 24 && moveenemy <= 36){
+							artes.currentFrameman1 = artes.man1[0][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 37 && moveenemy <= 48){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 48){
+							moveenemy = 0;
+						}
+					}
+					
+				}
+				
+				if(tempenemy.checaProxRect(temprect, transeunte) == true){
+					if(anguloenemy <= 45 && anguloenemy >= -45 ){						
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[2][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[2][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 23){
+							moveenemy = 0;
+						}
+					}
+					if((anguloenemy > 135 && anguloenemy < 179.9)  || (anguloenemy < -135 && anguloenemy > -179.9)){
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[1][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[1][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 23){
+							moveenemy = 0;
+						}
+					}
+					if(anguloenemy < 135 && anguloenemy > 45 ){
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[0][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}if(moveenemy >= 24 && moveenemy <= 36){
+							artes.currentFrameman1 = artes.man1[0][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 37 && moveenemy <= 48){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x + jogo.persowidth, temprect.y, -temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 48){
+							moveenemy = 0;
+						}
+					}
+					if(anguloenemy > -135 && anguloenemy < -45 ){
+						if(moveenemy < 12){
+							artes.currentFrameman1 = artes.man1[0][1];					
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 12 && moveenemy <= 23){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 24 && moveenemy <= 36){
+							artes.currentFrameman1 = artes.man1[0][2];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						if(moveenemy >= 37 && moveenemy <= 48){
+							artes.currentFrameman1 = artes.man1[0][0];
+							
+							jogo.batch.draw(artes.currentFrameman1, temprect.x, temprect.y, temprect.width, temprect.height);
+							
+						}
+						moveenemy++;
+						if(moveenemy >= 48){
+							moveenemy = 0;
+						}
+					}
+				}
+				jogo.batch.end();
 				j++;
 			}
 			if(j >= numEnemy){
