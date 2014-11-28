@@ -97,6 +97,44 @@ public class Transeunte extends Calculos{
 		}
 	}
 	
+	public void movAtk(Rectangle boss, Boss bos){
+		Iterator<Rectangle> iter = tiros.iterator();
+		Iterator<Integer> iterint = direcTiros.iterator();
+		
+		while(iter.hasNext() && iterint.hasNext()){
+			Rectangle rect = iter.next();
+			int direcao = iterint.next();
+			
+			if(direcao == 1){ //Up
+				rect.y += (300) * Gdx.graphics.getDeltaTime();
+			}
+			if(direcao == 2){ //Down
+				rect.y -= (300) * Gdx.graphics.getDeltaTime();
+			}
+			if(direcao == 3){ //Left
+				rect.x -= (300) * Gdx.graphics.getDeltaTime();
+			}
+			if(direcao == 4){ //Right
+				rect.x += (300) * Gdx.graphics.getDeltaTime();
+			}
+						
+			if(rect.overlaps(boss)){
+				iter.remove();
+				iterint.remove();
+				bos.tomouDano = true;
+				
+				if(jogo.isSound() && bos.life > 1){
+					
+				}
+			}
+			
+			if(rect.x >= jogo.WIDTH || rect.x <= 0 || rect.y >= jogo.HEIGHT || rect.y <= 0){
+				iter.remove();
+				iterint.remove();
+			}
+		}
+	}
+	
 	public double getLife(){
 		return life;
 	}

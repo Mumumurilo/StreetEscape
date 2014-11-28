@@ -30,6 +30,8 @@ public class MainGame extends Game {
 	public final int HEIGHT = 480;	
 	public final int persowidth = 70;
 	public final int persoheight = 80;
+	public final int bosswidth = 90;
+	public final int bossheight = 100;
 	public final int corrigealtura = 30;
 	public final int corrigelargura = 30;
 	
@@ -52,6 +54,7 @@ public class MainGame extends Game {
 	public Sound transDano1, transDano2, transMorre, transAtira, transRecoverLife;
 	public Sound enemDano, enemMorre, enemTiro;
 	public Sound enemNDano, enemNMorre;
+	public Sound bossDano1, bossDano2, bossTiro1, bossTiro2, bossMorre;
 	
 	@Override
 	public void create() { //Método aonde tudo é instanciado

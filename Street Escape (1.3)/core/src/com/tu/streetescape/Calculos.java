@@ -84,4 +84,13 @@ public class Calculos {
 		tiros.add(tiro2);
 		tiros.add(tiro3);
 	}
+	
+	protected boolean checaColisao(Rectangle stopped, Rectangle walking){
+		if(stopped.x + stopped.width <= walking.x && stopped.x >= walking.x + walking.width
+				&& stopped.y + stopped.height <= walking.y && stopped.y >= walking.y + walking.height){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }

@@ -51,7 +51,6 @@ public enum EnemyState implements State<Enemy>{
 		@Override
 		public void update(Enemy entity) {
 			entity.morto = true;
-			
 		}
 	}
 	;

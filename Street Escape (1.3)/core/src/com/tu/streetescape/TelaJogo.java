@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -22,9 +21,9 @@ public class TelaJogo extends Calculos implements Screen{
 	private OrthographicCamera cam2;
 	
 	//Salas
-	private Fases mapa;
+	public Fases mapa;
 	private Rectangle exitN, exitS, exitO, exitL;
-	private int salax, salay;
+	public int salax, salay;
 	private int numarte;
 	private boolean bloqueiaSaida = false;
 	
@@ -37,6 +36,7 @@ public class TelaJogo extends Calculos implements Screen{
 	
 	//Boss
 	private Boss boss;
+	private Rectangle bossRect;
 	private boolean oneCheck = true;
 	
 	//Transeunte
@@ -58,6 +58,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private boolean esqcima, meiocima, dircima, Esq, Dir, esqbai, meiobai, dirbai;
 	private Array<Boolean> colisaoPredios;
 	private Array<Rectangle> predios;
+	private int collisionCounter, rectnumber;
 	
 	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
@@ -94,6 +95,11 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.transMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans morre.mp3"));
 		jogo.transAtira = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans atira.mp3"));
 		jogo.transRecoverLife = Gdx.audio.newSound(Gdx.files.internal("Sons/Life.mp3"));
+		jogo.bossDano1 = Gdx.audio.newSound(Gdx.files.internal("Sons/Boss dano 1.mp3"));
+		jogo.bossDano2 = Gdx.audio.newSound(Gdx.files.internal("Sons/Boss dano 2.mp3"));
+		jogo.bossTiro1 = Gdx.audio.newSound(Gdx.files.internal("Sons/Boss atira 1.mp3"));
+		jogo.bossTiro2 = Gdx.audio.newSound(Gdx.files.internal("Sons/Boss atira 1.mp3"));
+		jogo.bossMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Boss morre.mp3"));
 		
 		//Declaração de elementos
 		artes = new Arte(jogo);
@@ -389,11 +395,11 @@ public class TelaJogo extends Calculos implements Screen{
 			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
 				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH) ){ //right
+			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
 				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
 			}
 			
-			if(mapa.sala[salax][salay].enemy == true){
+			if(mapa.sala[salax][salay].enemy == true || checaSalaBoss()){
 				if(Gdx.input.isKeyJustPressed(Keys.UP)){
 					trans.atirar();
 					if(trans.tiroValido){
@@ -522,7 +528,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
-		if(jogo.isDebug() == true){
+		/*if(jogo.isDebug() == true){
 			jogo.renderer.begin(ShapeType.Line);
 			jogo.renderer.setColor(Color.GREEN);
 			
@@ -533,7 +539,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			
 			jogo.renderer.end();
-		}
+		}*/
 		
 		while(k < numItem){
 			tempItem = lifeItem.get(k);
@@ -694,7 +700,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 	}
 	
-	private void GeraEnemy(){
+	public void GeraEnemy(){		
 		numEnemy = MathUtils.random(1, 4);
 		
 		while(i <= numEnemy){
@@ -748,7 +754,8 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.temajogo.stop();
 				jogo.temajogo.dispose();
 				
-				boss = new Boss(jogo, 1);
+				bossRect = new Rectangle(jogo.WIDTH/2 - jogo.bosswidth/2, jogo.HEIGHT - (jogo.bossheight + 10), jogo.bosswidth, jogo.bossheight);
+				boss = new Boss(jogo, bossRect, 1);
 				
 				oneCheck = false;
 			}
@@ -769,7 +776,49 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.renderer.setColor(Color.TEAL);
 				jogo.renderer.begin(ShapeType.Filled);
 				jogo.renderer.rect(boss.bossRect.x, boss.bossRect.y, boss.bossRect.width, boss.bossRect.height);
+				
+				jogo.renderer.setColor(Color.MAROON);
+				for(Rectangle down : boss.tirodown){
+					jogo.renderer.rect(down.x, down.y, down.width, down.height);
+				}
+				for(Rectangle left : boss.tiroleft){
+					jogo.renderer.rect(left.x, left.y, left.width, left.height);
+				}
+				for(Rectangle right : boss.tiroright){
+					jogo.renderer.rect(right.x, right.y, right.width, right.height);
+				}
+				jogo.renderer.setColor(Color.PINK);
+				for(Rectangle rect : trans.tiros){
+					jogo.renderer.rect(rect.x, rect.y, rect.width, rect.height);
+				}
+				
 				jogo.renderer.end();
+			}
+			
+			boss.machine.update();
+			boss.movAtk();
+			trans.movAtk(bossRect, boss);
+			
+			if(bossRect.overlaps(transeunte) && !jogo.getTransLifeCounter()){
+				double temptranslife = jogo.getTransLife();
+				temptranslife -= 4;
+				jogo.setTransLife(temptranslife);
+				jogo.setTransLifeCounter(true);
+			}
+			
+			if(boss.morto){
+				bossRect.setPosition(jogo.WIDTH*2, jogo.HEIGHT*2);
+				
+				contFimJogo += Gdx.graphics.getDeltaTime();
+				jogo.batch.begin();
+				jogo.gameoverfont.setColor(Color.GREEN);
+				jogo.gameoverfont.draw(jogo.batch, "You Won!", jogo.WIDTH/2 - 200, jogo.HEIGHT/2 + 20);
+				jogo.batch.end();
+				
+				if(jogo.isSound() && deadOnce){
+					jogo.bossMorre.play();
+					deadOnce = false;
+				}
 			}
 		}
 	}
@@ -781,35 +830,12 @@ public class TelaJogo extends Calculos implements Screen{
 	}
 	
 	private void condCollide(Rectangle perso){
-		Rectangle intersection = new Rectangle();
-		
+		rectnumber = colisaoPredios.size;
 		for(int i = 0; i < 8; i++){
-			if(colisaoPredios.get(i)){
-				Intersector.intersectRectangles(perso, predios.get(i), intersection);				
-				
-				if(jogo.isDebug()){
-					jogo.renderer.setColor(Color.YELLOW);
-					jogo.renderer.begin(ShapeType.Line);
-					jogo.renderer.rect(intersection.x, intersection.y, intersection.width, intersection.height);
-					jogo.renderer.end();
-				}
-				
-				if(intersection.x > perso.x){
-					//perso.y = predios.get(i).y - predios.get(i).height;
-					System.out.println("A");
-				}
-				if(intersection.y > perso.y){
-					//perso.y = predios.get(i).y + predios.get(i).height;
-					System.out.println("B");
-				}
-				if(intersection.x + intersection.width < perso.x + perso.width){
-					//perso.x = predios.get(i).x + predios.get(i).width;
-					System.out.println("C");
-				}
-				if(intersection.y + intersection.height < perso.y + perso.height){
-					//perso.x = predios.get(i).x - predios.get(i).width;
-					System.out.println("D");
-				}
+			if(colisaoPredios.get(i)){				
+				if(trans.checaColisao(predios.get(i), perso)){
+					collisionCounter++;
+				}		
 			}
 		}
 	}
@@ -861,6 +887,11 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.transDano1.dispose();
 		jogo.transDano2.dispose();
 		jogo.transMorre.dispose();
+		jogo.bossDano1.dispose();
+		jogo.bossDano2.dispose();
+		jogo.bossTiro1.dispose();
+		jogo.bossTiro2.dispose();
+		jogo.bossMorre.dispose();
 	}
 
 }
