@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -52,10 +53,13 @@ public class TelaJogo extends Calculos implements Screen{
 	//Outros
 	private float contFimJogo = 0;
 	private boolean deadOnce = true;
+	private Rectangle predesqcima, predmeiocima, preddircima, predesq, preddir, predesqbai, predmeiobai, preddirbai;
+	private boolean esqcima, meiocima, dircima, Esq, Dir, esqbai, meiobai, dirbai;
+	private Array<Boolean> colisaoPredios;
+	private Array<Rectangle> predios;
 	
 	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
-	private Rectangle predesqcima, predmeiocima, preddircima, predesq, preddir, predesqbai, predmeiobai, preddirbai;
 	private Vector3 touchPos;
 	
 	//Condições música
@@ -123,6 +127,26 @@ public class TelaJogo extends Calculos implements Screen{
 		predmeiobai = new Rectangle(jogo.WIDTH/3, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
 		preddirbai = new Rectangle((jogo.WIDTH/3) * 2, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
 		
+		colisaoPredios = new Array<Boolean>();
+		colisaoPredios.add(esqcima);
+		colisaoPredios.add(meiocima);
+		colisaoPredios.add(dircima);
+		colisaoPredios.add(Esq);
+		colisaoPredios.add(Dir);
+		colisaoPredios.add(esqbai);
+		colisaoPredios.add(meiobai);
+		colisaoPredios.add(dirbai);
+		
+		predios = new Array<Rectangle>();
+		predios.add(predesqcima);
+		predios.add(predmeiocima);
+		predios.add(preddircima);
+		predios.add(predesq);
+		predios.add(preddir);
+		predios.add(predesqbai);
+		predios.add(predmeiobai);
+		predios.add(preddirbai);
+		
 		shootcima = new Rectangle(jogo.WIDTH - (2*jogo.persowidth - 10), (jogo.persoheight*2) + 10, jogo.persowidth, jogo.persoheight);
 		shootbaixo = new Rectangle(jogo.WIDTH - (2*jogo.persowidth - 10), 10, jogo.persowidth, jogo.persoheight);
 		shootesq = new Rectangle(jogo.WIDTH - (3*jogo.persowidth - 10), jogo.persoheight + 10, jogo.persowidth, jogo.persoheight);
@@ -145,41 +169,143 @@ public class TelaJogo extends Calculos implements Screen{
 
 	@Override
 	public void render(float delta) {
-		
-		//Desenhos
-		
+		//Elementos exclusivos de cada tipo de sala
 		if(mapa.sala[salax][salay].getID() == 1111){
+			resetColisaoPredios();
 			numarte = 0;
-		}else if(mapa.sala[salax][salay].getID() == 1101){			
-			numarte = 1;			
-		}else if(mapa.sala[salax][salay].getID() == 1110){			
-			numarte = 2;			
-		}else if(mapa.sala[salax][salay].getID() == 1011){			
-			numarte = 3;			
-		}else if(mapa.sala[salax][salay].getID() == 111){			
-			numarte = 4;			
-		}else if(mapa.sala[salax][salay].getID() == 1001){			
-			numarte = 5;			
-		}else if(mapa.sala[salax][salay].getID() == 101){			
-			numarte = 6;			
-		}else if(mapa.sala[salax][salay].getID() == 1010){			
-			numarte = 7;			
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1101){
+			resetColisaoPredios();
+			numarte = 1;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(3, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1110){
+			resetColisaoPredios();
+			numarte = 2;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(4, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1011){
+			resetColisaoPredios();
+			numarte = 3;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(1, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 111){
+			resetColisaoPredios();
+			numarte = 4;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(6, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1001){
+			resetColisaoPredios();
+			numarte = 5;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(1, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(3, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 101){
+			resetColisaoPredios();
+			numarte = 6;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(3, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(6, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1010){
+			resetColisaoPredios();
+			numarte = 7;	
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(1, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(4, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
 		}else if(mapa.sala[salax][salay].getID() == 110){
-			numarte = 8;			
-		}else if(mapa.sala[salax][salay].getID() == 1100){			
-			numarte = 9;			
-		}else if(mapa.sala[salax][salay].getID() == 11){			
-			numarte = 10;			
-		}else if(mapa.sala[salax][salay].getID() == 1000){			
-			numarte = 12;			
-		}else if(mapa.sala[salax][salay].getID() == 10){			
-			numarte = 11;			
-		}else if(mapa.sala[salax][salay].getID() == 1){			
-			numarte = 14;			
-		}else if(mapa.sala[salax][salay].getID() == 100){			
+			resetColisaoPredios();
+			numarte = 8;	
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(4, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(6, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1100){
+			resetColisaoPredios();
+			numarte = 9;		
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(3, true);
+			colisaoPredios.set(4, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 11){
+			resetColisaoPredios();
+			numarte = 10;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(1, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(6, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1000){
+			resetColisaoPredios();
+			numarte = 12;	
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(1, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(3, true);
+			colisaoPredios.set(4, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 10){
+			resetColisaoPredios();
+			numarte = 11;
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(1, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(4, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(6, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 1){
+			resetColisaoPredios();
+			numarte = 14;		
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(1, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(3, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(6, true);
+			colisaoPredios.set(7, true);
+		}else if(mapa.sala[salax][salay].getID() == 100){
+			resetColisaoPredios();
 			numarte = 13;			
+			colisaoPredios.set(0, true);
+			colisaoPredios.set(2, true);
+			colisaoPredios.set(3, true);
+			colisaoPredios.set(4, true);
+			colisaoPredios.set(5, true);
+			colisaoPredios.set(6, true);
+			colisaoPredios.set(7, true);
 		}	
 		
+		//Desenhos---------------------------------------------------------------------------------------------------------------------------------
 		jogo.batch.begin();
 		
 		//Fundo das salas		
@@ -231,7 +357,7 @@ public class TelaJogo extends Calculos implements Screen{
 			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
 				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
+			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH) ){ //right
 				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
 			}
 			
@@ -318,6 +444,8 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
+		//condCollide(transeunte);
+		
 		//Bloqueia saídas
 		if(!checaSalaBoss()){
 			if(mapa.sala[salax][salay].enemy == true){
@@ -363,24 +491,15 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		if(jogo.isDebug() == true){
-			jogo.renderer.begin(ShapeType.Filled);
+			jogo.renderer.begin(ShapeType.Line);
 			jogo.renderer.setColor(Color.GREEN);
-			jogo.renderer.rect(exitN.x, exitN.y, exitN.width, exitN.height);
-			jogo.renderer.rect(exitS.x, exitS.y, exitS.width, exitS.height);
-			jogo.renderer.rect(exitL.x, exitL.y, exitL.width, exitL.height);
-			jogo.renderer.rect(exitO.x, exitO.y, exitO.width, exitO.height);
 			
-			/*jogo.renderer.rect(predesqcima.x, predesqcima.y, predesqcima.width, predesqcima.height);
-			jogo.renderer.rect(predesq.x, predesq.y, predesq.width, predesq.height);
-			jogo.renderer.rect(predesqbai.x, predesqbai.y, predesqbai.width, predesqbai.height);
+			for(int i = 0; i < 8; i++){
+				if(colisaoPredios.get(i) == true){
+					jogo.renderer.rect(predios.get(i).x, predios.get(i).y, predios.get(i).width, predios.get(i).height);
+				}
+			}
 			
-			jogo.renderer.rect(preddircima.x, preddircima.y, preddircima.width, preddircima.height);
-			jogo.renderer.rect(preddir.x, preddir.y, preddir.width, preddir.height);
-			jogo.renderer.rect(preddirbai.x, preddirbai.y, preddirbai.width, preddirbai.height);
-			
-			jogo.renderer.rect(predmeiobai.x, predmeiobai.y, predmeiobai.width, predmeiobai.height);
-			jogo.renderer.rect(predmeiocima.x, predmeiocima.y, predmeiocima.width, predmeiocima.height);
-			*/
 			jogo.renderer.end();
 		}
 		
@@ -619,6 +738,46 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.renderer.begin(ShapeType.Filled);
 				jogo.renderer.rect(boss.bossRect.x, boss.bossRect.y, boss.bossRect.width, boss.bossRect.height);
 				jogo.renderer.end();
+			}
+		}
+	}
+	
+	private void resetColisaoPredios(){
+		for(int i = 0; i < 8; i++){
+			colisaoPredios.set(i, false);
+		}
+	}
+	
+	private void condCollide(Rectangle perso){
+		Rectangle intersection = new Rectangle();
+		
+		for(int i = 0; i < 8; i++){
+			if(colisaoPredios.get(i)){
+				Intersector.intersectRectangles(perso, predios.get(i), intersection);				
+				
+				if(jogo.isDebug()){
+					jogo.renderer.setColor(Color.YELLOW);
+					jogo.renderer.begin(ShapeType.Line);
+					jogo.renderer.rect(intersection.x, intersection.y, intersection.width, intersection.height);
+					jogo.renderer.end();
+				}
+				
+				if(intersection.x > perso.x){
+					//perso.y = predios.get(i).y - predios.get(i).height;
+					System.out.println("A");
+				}
+				if(intersection.y > perso.y){
+					//perso.y = predios.get(i).y + predios.get(i).height;
+					System.out.println("B");
+				}
+				if(intersection.x + intersection.width < perso.x + perso.width){
+					//perso.x = predios.get(i).x + predios.get(i).width;
+					System.out.println("C");
+				}
+				if(intersection.y + intersection.height < perso.y + perso.height){
+					//perso.x = predios.get(i).x - predios.get(i).width;
+					System.out.println("D");
+				}
 			}
 		}
 	}
