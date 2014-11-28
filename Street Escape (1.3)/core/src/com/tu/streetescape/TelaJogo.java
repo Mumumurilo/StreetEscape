@@ -43,6 +43,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private Rectangle transeunte;
 	private Transeunte trans;
 	private float contTransLife = 0;
+	private int movx = 0;
 	
 	//Itens
 	private int randItem, numItem = 0, k = 0;
@@ -349,6 +350,37 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		if(jogo.getTransLife() > 0){
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
+				if(movx < 12){
+					artes.currentFrame = artes.transeunte[1][0];
+					
+					jogo.batch.begin();
+					
+					jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+					
+					jogo.batch.end();
+				}
+				if(movx >= 12 && movx <= 23){
+					artes.currentFrame = artes.transeunte[1][1];
+					
+					jogo.batch.begin();
+					
+					jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+					
+					jogo.batch.end();
+				}
+				if(movx >= 24 && movx <= 36){
+					artes.currentFrame = artes.transeunte[1][2];
+					
+					jogo.batch.begin();
+					
+					jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
+					
+					jogo.batch.end();
+				}
+				movx++;
+				if(movx > 36){
+					movx = 0;
+				}
 				transeunte.y += 200 * Gdx.graphics.getDeltaTime();
 			}
 			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
