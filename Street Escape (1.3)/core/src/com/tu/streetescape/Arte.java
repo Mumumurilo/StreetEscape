@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 public class Arte {
@@ -15,6 +16,11 @@ public class Arte {
 	
 	private Texture ALL, UDR, UDL, LRD, LRU, RD, RU, LD, LU, UD, LR, R, D, L, U;
 	public ArrayList<Texture> salas;
+	public ArrayList<Texture> personagem;
+	
+	public TextureRegion[][] transeunte;
+	public Texture trananda;
+	public TextureRegion currentFrame;
 	
 	public Array<Texture> life;
 	private Texture life6, life5, life4, life3, life2, life1, life0;
@@ -55,6 +61,12 @@ public class Arte {
 		life.add(life2 = new Texture(Gdx.files.internal("Arte/2 Hearts.png")));
 		life.add(life1 = new Texture(Gdx.files.internal("Arte/25 Hearts.png")));
 		life.add(life0 = new Texture(Gdx.files.internal("Arte/3 Hearts.png")));
+		
+
+		trananda = new Texture(Gdx.files.internal("Arte/perandando.png"));
+		
+		transeunte = TextureRegion.split(trananda, 512, 512);
+		
 	}
 	
 	public void dispose(){

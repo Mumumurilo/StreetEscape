@@ -3,6 +3,8 @@ package com.tu.streetescape;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -16,6 +18,9 @@ public class Transeunte extends Calculos{
 	private Array<Rectangle> tipoTiros;
 	public Array<Rectangle> tiros;
 	public Array<Integer> direcTiros;
+	public TextureRegion[][] transeunte;
+	public Texture trananda;
+	public TextureRegion currentFrame;
 	
 	public Transeunte(MainGame jogo) {
 		super(jogo);
@@ -23,6 +28,7 @@ public class Transeunte extends Calculos{
 		tipoTiros = new Array<Rectangle>();
 		tiros = new Array<Rectangle>();
 		direcTiros = new Array<Integer>();
+		
 	}
 	
 	public void atirar(){
