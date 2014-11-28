@@ -30,6 +30,8 @@ public class MainGame extends Game {
 	public final int HEIGHT = 480;	
 	public final int persowidth = 70;
 	public final int persoheight = 80;
+	public final int corrigealtura = 30;
+	public final int corrigelargura = 30;
 	
 	private Rectangle unitrans;
 	private boolean transLifeCounter = false;
