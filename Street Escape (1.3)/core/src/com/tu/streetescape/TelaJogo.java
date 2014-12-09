@@ -423,7 +423,7 @@ public class TelaJogo extends Calculos implements Screen{
 					}
 					direction = 1;
 					movx++;
-					if(movx >= 23){
+					if(movx > 24){
 						movx = 0;
 					}
 				}
@@ -452,7 +452,7 @@ public class TelaJogo extends Calculos implements Screen{
 					}
 					direction = 0;
 					movx++;
-					if(movx >= 23){
+					if(movx > 24){
 						movx = 0;
 					}
 				}
@@ -500,7 +500,7 @@ public class TelaJogo extends Calculos implements Screen{
 					}
 					direction = 3;
 					movx++;
-					if(movx >= 48){
+					if(movx > 48){
 						movx = 0;
 					}
 				//}
@@ -546,7 +546,7 @@ public class TelaJogo extends Calculos implements Screen{
 				}
 				direction = 2;
 				movx++;
-				if(movx >= 48){
+				if(movx > 48){
 					movx = 0;
 				}
 			}
