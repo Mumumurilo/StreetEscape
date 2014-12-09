@@ -1,0 +1,16 @@
+﻿Revert "Merge remote-tracking branch 'origin/Animações'"
+
+This reverts commit d8a42dcc492dc11733dcccb893f037c2a2718061, reversing
+changes made to 772cf3f102d305e7d91873a6b1074a08dd3a587c.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch Continuação
+# Changes to be committed:
+#	deleted:    Street Escape (1.3)/android/assets/Arte/man1andando.png
+#	deleted:    Street Escape (1.3)/android/assets/Arte/man2andando.png
+#	modified:   Street Escape (1.3)/core/src/com/tu/streetescape/Arte.java
+#	modified:   Street Escape (1.3)/core/src/com/tu/streetescape/Enemy.java
+#	modified:   Street Escape (1.3)/core/src/com/tu/streetescape/TelaJogo.java
+#
+

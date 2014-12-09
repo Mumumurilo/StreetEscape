@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class Enemy extends Calculos{
 
-	int randirectmov; 
+	private int randirectmov; 
 	private float randtimemov = 0, contmov = 0, randstopmov = 0, contstopmov = 0;
 	public Rectangle enemy;
 	private Rectangle trans;

@@ -18,9 +18,9 @@ public class Arte {
 	public ArrayList<Texture> salas;
 	public ArrayList<Texture> personagem;
 	
-	public TextureRegion[][] transeunte, man1, man2;
-	public Texture trananda, man1anda, man2anda;
-	public TextureRegion currentFrame, currentFrameman1, currentFrameman2;
+	public TextureRegion[][] transeunte;
+	public Texture trananda;
+	public TextureRegion currentFrame;
 	
 	public Array<Texture> life;
 	private Texture life6, life5, life4, life3, life2, life1, life0;
@@ -66,14 +66,6 @@ public class Arte {
 		trananda = new Texture(Gdx.files.internal("Arte/perandando.png"));
 		
 		transeunte = TextureRegion.split(trananda, 512, 512);
-		
-		man1anda = new Texture(Gdx.files.internal("Arte/man1andando.png"));
-		
-		man1 = TextureRegion.split(man1anda, 512, 512);
-		
-		man2anda = new Texture(Gdx.files.internal("Arte/man2andando.png"));
-		
-		man2 = TextureRegion.split(man2anda, 512, 512);
 		
 	}
 	
