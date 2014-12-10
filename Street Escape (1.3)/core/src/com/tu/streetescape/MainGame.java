@@ -32,8 +32,11 @@ public class MainGame extends Game {
 	public final int persoheight = 80;
 	public final int bosswidth = 90;
 	public final int bossheight = 100;
-	public final int corrigealtura = 30;
+	
+	//Correções dos retângulos de colisão dos prédios
+	public final int corrigealtura = 20;
 	public final int corrigelargura = 30;
+	public final int largurarua = 206;
 	
 	private Rectangle unitrans;
 	private boolean transLifeCounter = false;

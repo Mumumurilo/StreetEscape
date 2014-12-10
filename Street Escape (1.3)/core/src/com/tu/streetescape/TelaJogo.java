@@ -42,8 +42,8 @@ public class TelaJogo extends Calculos implements Screen{
 	//Transeunte
 	private Rectangle transeunte;
 	private Transeunte trans;
+	private float centerx, centery;
 	private float contTransLife = 0;
-	private int movx = 0;
 	
 	//Itens
 	private int randItem, numItem = 0, k = 0;
@@ -54,11 +54,14 @@ public class TelaJogo extends Calculos implements Screen{
 	//Outros
 	private float contFimJogo = 0;
 	private boolean deadOnce = true;
+	
+	//Prédios
 	private Rectangle predesqcima, predmeiocima, preddircima, predesq, preddir, predesqbai, predmeiobai, preddirbai;
 	private boolean esqcima, meiocima, dircima, Esq, Dir, esqbai, meiobai, dirbai;
-	private Array<Boolean> colisaoPredios;
+	private Array<Boolean> colisaoPredios, actualCollision;
 	private Array<Rectangle> predios;
-	private int collisionCounter, rectnumber;
+	private Array<Float> centrox, centroy;
+	private int ladoColisao;
 	
 	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
@@ -125,14 +128,22 @@ public class TelaJogo extends Calculos implements Screen{
 		dir = new Rectangle((jogo.persowidth*2) + 10, jogo.persoheight + 10, jogo.persowidth, jogo.persoheight);
 		esq = new Rectangle(10, jogo.persoheight + 10, jogo.persowidth, jogo.persoheight);
 		
-		predesqcima = new Rectangle(0, jogo.HEIGHT, jogo.WIDTH/3, -(jogo.HEIGHT/3 - jogo.corrigealtura));
-		predmeiocima = new Rectangle(jogo.WIDTH/3, jogo.HEIGHT, jogo.WIDTH/3, -(jogo.HEIGHT/3 - jogo.corrigealtura));
-		preddircima = new Rectangle((jogo.WIDTH/3) * 2,jogo.HEIGHT, jogo.WIDTH/3, -(jogo.HEIGHT/3 - jogo.corrigealtura));
-		predesq = new Rectangle(0, jogo.HEIGHT/3, jogo.WIDTH/3, jogo.HEIGHT/3);
-		preddir = new Rectangle((jogo.WIDTH/3) * 2 + 10, jogo.HEIGHT/3, jogo.WIDTH/3, jogo.HEIGHT/3);
-		predesqbai = new Rectangle(0, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
-		predmeiobai = new Rectangle(jogo.WIDTH/3, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
-		preddirbai = new Rectangle((jogo.WIDTH/3) * 2, 0, jogo.WIDTH/3, jogo.HEIGHT/3 - jogo.corrigealtura);
+		predesqcima = new Rectangle(0, (2*jogo.HEIGHT/3) + jogo.corrigealtura,
+				(jogo.WIDTH/3) + jogo.corrigelargura, (jogo.HEIGHT/3) - jogo.corrigealtura);
+		predmeiocima = new Rectangle(predesqcima.width, (2*jogo.HEIGHT/3) + jogo.corrigealtura,
+				jogo.largurarua, (jogo.HEIGHT/3) - jogo.corrigealtura);
+		preddircima = new Rectangle(((jogo.WIDTH/3) * 2) - jogo.corrigelargura, (2*jogo.HEIGHT/3) + jogo.corrigealtura,
+				(jogo.WIDTH/3) + jogo.corrigelargura, (jogo.HEIGHT/3) - jogo.corrigealtura);
+		predesq = new Rectangle(0, jogo.HEIGHT/3,
+				jogo.WIDTH/3, jogo.HEIGHT/3);
+		preddir = new Rectangle((jogo.WIDTH/3) * 2, jogo.HEIGHT/3,
+				jogo.WIDTH/3, jogo.HEIGHT/3);
+		predesqbai = new Rectangle(0, 0,
+				(jogo.WIDTH/3) + jogo.corrigelargura, jogo.HEIGHT/3 - jogo.corrigealtura);
+		predmeiobai = new Rectangle(predesqbai.width, 0,
+				jogo.largurarua, jogo.HEIGHT/3 - jogo.corrigealtura);
+		preddirbai = new Rectangle((jogo.WIDTH/3) * 2 - jogo.corrigelargura, 0,
+				(jogo.WIDTH/3) + jogo.corrigelargura, jogo.HEIGHT/3 - jogo.corrigealtura);
 		
 		colisaoPredios = new Array<Boolean>();
 		colisaoPredios.add(esqcima);
@@ -153,6 +164,23 @@ public class TelaJogo extends Calculos implements Screen{
 		predios.add(predesqbai);
 		predios.add(predmeiobai);
 		predios.add(preddirbai);
+		
+		actualCollision = new Array<Boolean>();
+		
+		centrox = new Array<Float>();		
+		centroy = new Array<Float>();
+		for(int i = 0; i < 8; i++){
+			float x = predios.get(i).x;
+			float y = predios.get(i).y;
+			
+			x = x + predios.get(i).width/2;
+			y = y + predios.get(i).height/2;
+			
+			centrox.add(x);
+			centroy.add(y);
+			
+			actualCollision.add(false);
+		}
 		
 		shootcima = new Rectangle(jogo.WIDTH - (2*jogo.persowidth - 10), (jogo.persoheight*2) + 10, jogo.persowidth, jogo.persoheight);
 		shootbaixo = new Rectangle(jogo.WIDTH - (2*jogo.persowidth - 10), 10, jogo.persowidth, jogo.persoheight);
@@ -355,47 +383,17 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		if(jogo.getTransLife() > 0){
-			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT)){ //up
-				if(movx < 12){
-					artes.currentFrame = artes.transeunte[1][0];
-					
-					jogo.batch.begin();
-					
-					jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
-					
-					jogo.batch.end();
-				}
-				if(movx >= 12 && movx <= 23){
-					artes.currentFrame = artes.transeunte[1][1];
-					
-					jogo.batch.begin();
-					
-					jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
-					
-					jogo.batch.end();
-				}
-				if(movx >= 24 && movx <= 36){
-					artes.currentFrame = artes.transeunte[1][2];
-					
-					jogo.batch.begin();
-					
-					jogo.batch.draw(artes.currentFrame, transeunte.x, transeunte.y, jogo.persowidth, jogo.persoheight);
-					
-					jogo.batch.end();
-				}
-				movx++;
-				if(movx > 36){
-					movx = 0;
-				}
+			System.out.println("Atual = " + ladoColisao);
+			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT) && ladoColisao != 3){ //up
 				transeunte.y += 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0)){ //down
+			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0) && ladoColisao != 4){ //down
 				transeunte.y -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0)){ //left
+			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0) && ladoColisao != 2){ //left
 				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH)){ //right
+			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH) && ladoColisao != 1){ //right
 				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
 			}
 			
@@ -482,7 +480,20 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
-		//condCollide(transeunte);
+		centerx = transeunte.x + transeunte.width/2;
+		centery = transeunte.y + transeunte.height/2;
+		
+		condCollide(transeunte);
+		
+		ladoColisao = 0;
+		for(int i = 0; i < 8; i++){
+			if(actualCollision.get(i)){
+				ladoColisao = trans.checaLadoColisao(predios.get(i), transeunte, centrox.get(i), centroy.get(i), centerx, centery);
+			}else{
+				actualCollision.set(i, false);
+			}
+			System.out.println(i + " = " + ladoColisao);
+		}
 		
 		//Bloqueia saídas
 		if(!checaSalaBoss()){
@@ -528,7 +539,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
-		/*if(jogo.isDebug() == true){
+		if(jogo.isDebug() == true){
 			jogo.renderer.begin(ShapeType.Line);
 			jogo.renderer.setColor(Color.GREEN);
 			
@@ -537,9 +548,19 @@ public class TelaJogo extends Calculos implements Screen{
 					jogo.renderer.rect(predios.get(i).x, predios.get(i).y, predios.get(i).width, predios.get(i).height);
 				}
 			}
-			
 			jogo.renderer.end();
-		}*/
+			
+			jogo.renderer.begin(ShapeType.Filled);
+			jogo.renderer.setColor(Color.WHITE);
+			jogo.renderer.circle(centerx, centery, 5);
+			
+			for(int i = 0; i < 8; i++){
+				if(colisaoPredios.get(i)){
+					jogo.renderer.circle(centrox.get(i), centroy.get(i), 5);
+				}
+			}
+			jogo.renderer.end();
+		}
 		
 		while(k < numItem){
 			tempItem = lifeItem.get(k);
@@ -830,12 +851,13 @@ public class TelaJogo extends Calculos implements Screen{
 	}
 	
 	private void condCollide(Rectangle perso){
-		rectnumber = colisaoPredios.size;
 		for(int i = 0; i < 8; i++){
-			if(colisaoPredios.get(i)){				
+			if(colisaoPredios.get(i)){
 				if(trans.checaColisao(predios.get(i), perso)){
-					collisionCounter++;
-				}		
+					actualCollision.set(i, true);
+				}else if(!trans.checaColisao(predios.get(i), perso)){
+					actualCollision.set(i, false);
+				}
 			}
 		}
 	}
