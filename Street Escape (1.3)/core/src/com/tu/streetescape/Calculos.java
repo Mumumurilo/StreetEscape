@@ -86,10 +86,7 @@ public class Calculos {
 	}
 	
 	protected boolean checaColisao(Rectangle stopped, Rectangle walking){
-		if(stopped.x < walking.x + walking.width 
-				&& stopped.x + stopped.width > walking.x 
-				&& stopped.y < walking.y + walking.height 
-				&& stopped.height + stopped.y > walking.y){
+		if(stopped.overlaps(walking)){
 			return true;
 		}else{
 			return false;
@@ -99,25 +96,17 @@ public class Calculos {
 	protected int checaLadoColisao(Rectangle stopped, Rectangle walking, float centerxs, float centerys, float centerxw, float centeryw){
 		if(centeryw - centerys < (stopped.height/2) + walking.height/2 || centerys - centeryw < (stopped.height/2) + walking.height/2){
 			if(centerxw - centerxs < (stopped.width/2) + walking.width/2 && centerxw - centerxs > 0){ //Esquerda
-				//System.out.println(centerxw +" - "+ centerxs);
-				//System.out.println(centeryw +" - "+ centerys);
 				return 2;
 			}
 			if(centerxs - centerxw < (stopped.width/2) + walking.width/2 && centerxs - centerxw > 0){ //Direita
-				//System.out.println(centerxw +" - "+ centerxs);
-				//System.out.println(centeryw +" - "+ centerys);
 				return 1;
 			}
 		}
 		if(centerxw - centerxs < (stopped.width/2) + walking.width/2 || centerxs - centerxw < (stopped.width/2) + walking.width/2){
 			if(centerys - centeryw < (stopped.height/2) + walking.height/2 && centerys - centeryw > 0){ //Baixo
-				//System.out.println(centerxw +" - "+ centerxs);
-				//System.out.println(centeryw +" - "+ centerys);
 				return 4;
 			}
 			if(centeryw - centerys < (stopped.height/2) + walking.height/2 && centeryw - centerys > 0){ //Cima
-				//System.out.println(centerxw +" - "+ centerxs);
-				//System.out.println(centeryw +" - "+ centerys);
 				return 3;
 			}
 		}

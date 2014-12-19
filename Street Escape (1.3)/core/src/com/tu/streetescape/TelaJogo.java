@@ -383,7 +383,7 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		if(jogo.getTransLife() > 0){
-			System.out.println("Atual = " + ladoColisao);
+			//System.out.println("Atual = " + ladoColisao);
 			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT) && ladoColisao != 3){ //up
 				transeunte.y += 200 * Gdx.graphics.getDeltaTime();
 			}
@@ -492,7 +492,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}else{
 				actualCollision.set(i, false);
 			}
-			System.out.println(i + " = " + ladoColisao);
+			//System.out.println(i + " = " + ladoColisao);
 		}
 		
 		//Bloqueia saídas
