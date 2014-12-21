@@ -93,23 +93,31 @@ public class Calculos {
 		}
 	}
 	
-	protected int checaLadoColisao(Rectangle stopped, Rectangle walking, float centerxs, float centerys, float centerxw, float centeryw){
-		if(centeryw - centerys < (stopped.height/2) + walking.height/2 || centerys - centeryw < (stopped.height/2) + walking.height/2){
-			if(centerxw - centerxs < (stopped.width/2) + walking.width/2 && centerxw - centerxs > 0){ //Esquerda
-				return 2;
-			}
-			if(centerxs - centerxw < (stopped.width/2) + walking.width/2 && centerxs - centerxw > 0){ //Direita
+	protected int checaLadoColisao(Rectangle stopped, Rectangle walking){
+		if(stopped.overlaps(walking)){
+			Rectangle cima = new Rectangle(walking.x + 5, (walking.y + walking.height - 1), walking.width - 10, 1);
+			Rectangle baixo = new Rectangle(walking.x + 5, walking.y, walking.width - 10, 1);
+			Rectangle esquerda = new Rectangle(walking.x, walking.y + 1, 1, walking.height - 1);
+			Rectangle direita = new Rectangle(walking.x + walking.width - 1, walking.y + 1, 1, walking.height - 1);
+						
+			if(cima.overlaps(stopped)){//Cima
+				System.out.println("cima");
 				return 1;
 			}
-		}
-		if(centerxw - centerxs < (stopped.width/2) + walking.width/2 || centerxs - centerxw < (stopped.width/2) + walking.width/2){
-			if(centerys - centeryw < (stopped.height/2) + walking.height/2 && centerys - centeryw > 0){ //Baixo
-				return 4;
+			if(baixo.overlaps(stopped)){//Baixo
+				System.out.println("baixo");
+				return 2;
 			}
-			if(centeryw - centerys < (stopped.height/2) + walking.height/2 && centeryw - centerys > 0){ //Cima
+			if(esquerda.overlaps(stopped)){//Esquerda
+				System.out.println("esquerda");
 				return 3;
 			}
+			if(direita.overlaps(stopped)){//Direita
+				System.out.println("direita");
+				return 4;
+			}
 		}
+		
 		return 0;
 	}
 }

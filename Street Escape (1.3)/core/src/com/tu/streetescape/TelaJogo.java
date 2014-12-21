@@ -42,7 +42,6 @@ public class TelaJogo extends Calculos implements Screen{
 	//Transeunte
 	private Rectangle transeunte;
 	private Transeunte trans;
-	private float centerx, centery;
 	private float contTransLife = 0;
 	
 	//Itens
@@ -60,8 +59,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private boolean esqcima, meiocima, dircima, Esq, Dir, esqbai, meiobai, dirbai;
 	private Array<Boolean> colisaoPredios, actualCollision;
 	private Array<Rectangle> predios;
-	private Array<Float> centrox, centroy;
-	private int ladoColisao;
+	private Array<Boolean> ladoColisao;
 	
 	//Android
 	private Rectangle cima, baixo, esq, dir, shootcima, shootbaixo, shootesq, shootdir;
@@ -167,17 +165,17 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		actualCollision = new Array<Boolean>();
 		
-		centrox = new Array<Float>();		
-		centroy = new Array<Float>();
+		ladoColisao = new Array<Boolean>();
+		for(int i = 0; i < 4; i++){
+			ladoColisao.add(false);
+		}
+		
 		for(int i = 0; i < 8; i++){
 			float x = predios.get(i).x;
 			float y = predios.get(i).y;
 			
 			x = x + predios.get(i).width/2;
 			y = y + predios.get(i).height/2;
-			
-			centrox.add(x);
-			centroy.add(y);
 			
 			actualCollision.add(false);
 		}
@@ -383,17 +381,17 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		if(jogo.getTransLife() > 0){
-			//System.out.println("Atual = " + ladoColisao);
-			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT) && ladoColisao != 3){ //up
+			System.out.println("Atual = " + ladoColisao);
+			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT) && !ladoColisao.get(0)){ //up
 				transeunte.y += 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0) && ladoColisao != 4){ //down
+			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0) && !ladoColisao.get(1)){ //down
 				transeunte.y -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0) && ladoColisao != 2){ //left
+			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0) && !ladoColisao.get(2)){ //left
 				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH) && ladoColisao != 1){ //right
+			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH) && !ladoColisao.get(3)){ //right
 				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
 			}
 			
@@ -480,19 +478,31 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
-		centerx = transeunte.x + transeunte.width/2;
-		centery = transeunte.y + transeunte.height/2;
-		
 		condCollide(transeunte);
 		
-		ladoColisao = 0;
+		for(int j = 0; j < 4; j++){
+			ladoColisao.set(j, false);
+		}
+		
 		for(int i = 0; i < 8; i++){
-			if(actualCollision.get(i)){
-				ladoColisao = trans.checaLadoColisao(predios.get(i), transeunte, centrox.get(i), centroy.get(i), centerx, centery);
-			}else{
-				actualCollision.set(i, false);
+			if(colisaoPredios.get(i)){
+				if(trans.checaColisao(transeunte, predios.get(i))){
+					if(trans.checaLadoColisao(predios.get(i), transeunte) == 1){
+						ladoColisao.set(0, true);
+					}
+					if(trans.checaLadoColisao(predios.get(i), transeunte) == 2){
+						ladoColisao.set(1, true);
+					}
+					if(trans.checaLadoColisao(predios.get(i), transeunte) == 3){
+						ladoColisao.set(2, true);
+					}
+					if(trans.checaLadoColisao(predios.get(i), transeunte) == 4){
+						ladoColisao.set(3, true);
+					}
+				}else{
+					actualCollision.set(i, false);
+				}
 			}
-			//System.out.println(i + " = " + ladoColisao);
 		}
 		
 		//Bloqueia saídas
@@ -546,17 +556,6 @@ public class TelaJogo extends Calculos implements Screen{
 			for(int i = 0; i < 8; i++){
 				if(colisaoPredios.get(i) == true){
 					jogo.renderer.rect(predios.get(i).x, predios.get(i).y, predios.get(i).width, predios.get(i).height);
-				}
-			}
-			jogo.renderer.end();
-			
-			jogo.renderer.begin(ShapeType.Filled);
-			jogo.renderer.setColor(Color.WHITE);
-			jogo.renderer.circle(centerx, centery, 5);
-			
-			for(int i = 0; i < 8; i++){
-				if(colisaoPredios.get(i)){
-					jogo.renderer.circle(centrox.get(i), centroy.get(i), 5);
 				}
 			}
 			jogo.renderer.end();

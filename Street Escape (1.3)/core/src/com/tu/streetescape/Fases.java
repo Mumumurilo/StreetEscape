@@ -7,8 +7,6 @@ public class Fases{
 
 	private FileHandle leitor;
 	
-	private String textoDoArquivo;
-	
 	private char[][] fase1;
 	private char[][] fase2;
 	private char[][] fase3;
