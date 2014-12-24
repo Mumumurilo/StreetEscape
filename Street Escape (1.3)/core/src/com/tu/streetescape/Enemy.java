@@ -28,14 +28,26 @@ public class Enemy extends Calculos{
 	public Array<Rectangle> atk;
 	private Array<Double> angles;
 	
+	private Predios build;
+	public Array<Boolean> actualCollision, ladoColisao;
+	
 	public Enemy(MainGame jogo, Rectangle enemy, int type) {
 		super(jogo);
 		this.enemy = enemy;
 		this.type = type;
+		build = new Predios(jogo);
 		
 		machine = new DefaultStateMachine<Enemy>(this, EnemyState.ANDAR);
 		atk = new Array<Rectangle>();
 		angles = new Array<Double>();
+		
+		actualCollision = new Array<Boolean>();
+		build.setActualCollisionArray(actualCollision);
+		
+		ladoColisao = new Array<Boolean>();
+		for(int i = 0; i < 4; i++){
+			ladoColisao.add(false);
+		}
 	}
 	
 	public boolean estaLonge(){
@@ -60,40 +72,35 @@ public class Enemy extends Calculos{
 				contmov = 0;
 				randtimemov = MathUtils.random(3);
 				//1 = up, 2 = down, 3 = left, 4 = right
-				randirectmov = MathUtils.random(1, 8);
+				randirectmov = MathUtils.random(1, 4);
 			}
 		}
 			
 		if(contmov < randtimemov){
 			contmov += Gdx.graphics.getDeltaTime();
 			
-			if(randirectmov == 1){ //up
+			if(randirectmov == 1 && !ladoColisao.get(0)){ //up
 				enemy.y += 100 * Gdx.graphics.getDeltaTime();
+			}else if(ladoColisao.get(0)){
+				contmov = randtimemov;
 			}
-			if(randirectmov == 2){ //down
+			
+			if(randirectmov == 2 && !ladoColisao.get(1)){ //down
 				enemy.y -= 100 * Gdx.graphics.getDeltaTime();
+			}else if(ladoColisao.get(1)){
+				contmov = randtimemov;
 			}
-			if(randirectmov == 3){ //left
+			
+			if(randirectmov == 3 && !ladoColisao.get(2)){ //left
 				enemy.x -= 100 * Gdx.graphics.getDeltaTime();
+			}else if(ladoColisao.get(2)){
+				contmov = randtimemov;
 			}
-			if(randirectmov == 4){ //right
+			
+			if(randirectmov == 4 && !ladoColisao.get(3)){ //right
 				enemy.x += 100 * Gdx.graphics.getDeltaTime();
-			}
-			if(randirectmov == 5){ //up and right
-				enemy.y += 100 * Gdx.graphics.getDeltaTime();
-				enemy.x += 100 * Gdx.graphics.getDeltaTime();
-			}
-			if(randirectmov == 6){ //up and left
-				enemy.y += 100 * Gdx.graphics.getDeltaTime();
-				enemy.x -= 100 * Gdx.graphics.getDeltaTime();
-			}
-			if(randirectmov == 7){ //down and right
-				enemy.y -= 100 * Gdx.graphics.getDeltaTime();
-				enemy.x += 100 * Gdx.graphics.getDeltaTime();
-			}
-			if(randirectmov == 8){ //down and left
-				enemy.y -= 100 * Gdx.graphics.getDeltaTime();
-				enemy.x -= 100 * Gdx.graphics.getDeltaTime();
+			}else if(ladoColisao.get(3)){
+				contmov = randtimemov;
 			}
 		}
 		
@@ -195,11 +202,19 @@ public class Enemy extends Calculos{
 		anguloParaSeguirTrans = super.getAngleDaReta(enemy, trans);
 		
 		if(type == 2){
-			enemy.x -= (float) ((150 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
-			enemy.y -= (float) ((150 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+			if(!ladoColisao.get(2) || !ladoColisao.get(3)){
+				enemy.x -= (float) ((150 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
+			}
+			if(!ladoColisao.get(0) || !ladoColisao.get(1)){
+				enemy.y -= (float) ((150 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+			}
 		}else{
-			enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
-			enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+			if(!ladoColisao.get(2) || !ladoColisao.get(3)){
+				enemy.x -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.sin(anguloParaSeguirTrans));
+			}
+			if(!ladoColisao.get(0) || !ladoColisao.get(1)){
+				enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
+			}
 		}
 	}
 	

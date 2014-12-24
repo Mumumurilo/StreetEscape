@@ -101,19 +101,15 @@ public class Calculos {
 			Rectangle direita = new Rectangle(walking.x + walking.width - 1, walking.y + 1, 1, walking.height - 1);
 						
 			if(cima.overlaps(stopped)){//Cima
-				System.out.println("cima");
 				return 1;
 			}
 			if(baixo.overlaps(stopped)){//Baixo
-				System.out.println("baixo");
 				return 2;
 			}
 			if(esquerda.overlaps(stopped)){//Esquerda
-				System.out.println("esquerda");
 				return 3;
 			}
 			if(direita.overlaps(stopped)){//Direita
-				System.out.println("direita");
 				return 4;
 			}
 		}
