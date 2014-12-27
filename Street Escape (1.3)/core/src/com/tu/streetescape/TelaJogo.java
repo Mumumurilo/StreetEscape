@@ -315,28 +315,28 @@ public class TelaJogo extends Calculos implements Screen{
 				deletaItens();
 				i = 1;
 				salay = salay + 1;
-				GeraEnemy();
+				if(!checaSalaBoss()) GeraEnemy();
 				transeunte.y = jogo.HEIGHT - jogo.persoheight - 10;
 			}
 			if(transeunte.overlaps(exitL) && mapa.sala[salax][salay].exitR == true){
 				deletaItens();
 				salax = salax + 1;
 				i = 1;
-				GeraEnemy();
+				if(!checaSalaBoss()) GeraEnemy();
 				transeunte.x = 10;
 			}
 			if(transeunte.overlaps(exitN) && mapa.sala[salax][salay].exitU == true){
 				deletaItens();
 				salay = salay - 1;
 				i = 1;
-				GeraEnemy();
+				if(!checaSalaBoss()) GeraEnemy();
 				transeunte.y = 10;
 			}
 			if(transeunte.overlaps(exitO) && mapa.sala[salax][salay].exitL == true){
 				deletaItens();
 				salax = salax - 1;
 				i = 1;
-				GeraEnemy();
+				if(!checaSalaBoss()) GeraEnemy();
 				transeunte.x = jogo.WIDTH - jogo.persowidth - 10;
 			}
 		}
@@ -393,6 +393,7 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		if(mapa.sala[salax][salay].enemy){
 			while(j < numEnemy){
+				System.out.println("j = " +j+ " | numEnemy = " +numEnemy+ " | enemy = " +enemy);
 				tempenemy = enemy.get(j);
 				temprect = tempenemy.enemy;
 				
@@ -547,7 +548,7 @@ public class TelaJogo extends Calculos implements Screen{
 	}
 	
 	//Condição de sala de boss
-	private boolean checaSalaBoss(){
+	public boolean checaSalaBoss(){
 		if(salax == 7 && salay == 0 && mapa.getNumFase() == 1){
 			return true;
 		}
@@ -563,7 +564,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private void salaBoss(){
 		if(checaSalaBoss()){
 			if(oneCheck){
-				mapa.sala[salax][salay].enemy = false;
+				j = 0;
 				bloqueiaSaida = true;
 				
 				jogo.temajogo.stop();

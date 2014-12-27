@@ -70,141 +70,146 @@ public class Predios {
 	}
 	
 	public int setPredios(){
-		if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1111){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 0;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1101){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(3, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 1;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1110){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(4, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 2;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1011){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(1, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 3;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 111){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(6, true);
-			colisaoPredios.set(7, true);
-			return 4;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1001){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(1, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(3, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 5;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 101){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(3, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(6, true);
-			colisaoPredios.set(7, true);
-			return 6;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1010){
-			resetColisaoPredios();	
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(1, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(4, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 7;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 110){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(4, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(6, true);
-			colisaoPredios.set(7, true);
-			return 8;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1100){
-			resetColisaoPredios();	
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(3, true);
-			colisaoPredios.set(4, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 9;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 11){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(1, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(6, true);
-			colisaoPredios.set(7, true);
-			return 10;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1000){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(1, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(3, true);
-			colisaoPredios.set(4, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(7, true);
-			return 12;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 10){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(1, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(4, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(6, true);
-			colisaoPredios.set(7, true);
-			return 11;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1){
-			resetColisaoPredios();
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(1, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(3, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(6, true);
-			colisaoPredios.set(7, true);
-			return 14;
-		}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 100){
-			resetColisaoPredios();		
-			colisaoPredios.set(0, true);
-			colisaoPredios.set(2, true);
-			colisaoPredios.set(3, true);
-			colisaoPredios.set(4, true);
-			colisaoPredios.set(5, true);
-			colisaoPredios.set(6, true);
-			colisaoPredios.set(7, true);
-			return 13;
+		if(!jogo.telajogo.checaSalaBoss()){	
+			if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1111){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 0;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1101){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(3, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 1;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1110){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(4, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 2;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1011){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(1, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 3;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 111){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(6, true);
+				colisaoPredios.set(7, true);
+				return 4;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1001){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(1, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(3, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 5;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 101){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(3, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(6, true);
+				colisaoPredios.set(7, true);
+				return 6;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1010){
+				resetColisaoPredios();	
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(1, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(4, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 7;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 110){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(4, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(6, true);
+				colisaoPredios.set(7, true);
+				return 8;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1100){
+				resetColisaoPredios();	
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(3, true);
+				colisaoPredios.set(4, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 9;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 11){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(1, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(6, true);
+				colisaoPredios.set(7, true);
+				return 10;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1000){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(1, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(3, true);
+				colisaoPredios.set(4, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(7, true);
+				return 12;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 10){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(1, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(4, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(6, true);
+				colisaoPredios.set(7, true);
+				return 11;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 1){
+				resetColisaoPredios();
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(1, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(3, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(6, true);
+				colisaoPredios.set(7, true);
+				return 14;
+			}else if(jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].getID() == 100){
+				resetColisaoPredios();		
+				colisaoPredios.set(0, true);
+				colisaoPredios.set(2, true);
+				colisaoPredios.set(3, true);
+				colisaoPredios.set(4, true);
+				colisaoPredios.set(5, true);
+				colisaoPredios.set(6, true);
+				colisaoPredios.set(7, true);
+				return 13;
+			}
+		}else{
+			for(int i = 0; i <= 7; i++){
+				colisaoPredios.set(i, false);
+			}
 		}
-		
 		return 0;
 	}
 	

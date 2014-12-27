@@ -17,8 +17,10 @@ public class Boss extends Calculos{
 	public int life = 20;
 	public boolean tomouDano = false, morto = false;
 	
-	public float tiroCounter = 0, enemCounter = 0;
+	public float tiroCounter = 0;
+	public int randAtk;
 	public Array<Rectangle> tirodown, tiroleft, tiroright;
+	private boolean goForward = true;
 	
 	public Boss(final MainGame jogo, Rectangle bossRect, int type) {
 		super(jogo);
@@ -75,16 +77,38 @@ public class Boss extends Calculos{
 			bossRect.x -= 100 * Gdx.graphics.getDeltaTime();
 		}
 		tiroCounter += Gdx.graphics.getDeltaTime();
-		enemCounter += Gdx.graphics.getDeltaTime();
 		
 		if(tiroCounter >= 5){
-			atacar();
-			tiroCounter = 0;
+			if(randAtk == 0){
+				atacar();
+				tiroCounter = 0;
+			}
+			
+			if(randAtk == 1){
+				if(goForward){
+					if(bossRect.y > jogo.getTrans().y){
+						bossRect.y -= 500 * Gdx.graphics.getDeltaTime();
+					}else{
+						goForward = false;
+					}
+				}else{
+					if(bossRect.y < jogo.HEIGHT - (jogo.bossheight + 10)){
+						bossRect.y += 500 * Gdx.graphics.getDeltaTime();
+					}else{
+						tiroCounter = 0;
+					}
+				}
+			}
+			
+			if(randAtk == 2 && !jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].enemy){
+				//jogo.telajogo.GeraEnemy();
+				jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].enemy = true;
+				tiroCounter = 0;
+			}
+			
+		}else{
+			randAtk = MathUtils.random(2);
 		}
-		/*if(enemCounter >= 7){
-			jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].enemy = true;
-			jogo.telajogo.GeraEnemy();
-		}*/
 	}
 	
 	public void movAtk(){
