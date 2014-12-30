@@ -4,7 +4,7 @@ public class Sala {
 	
 	public boolean enemy;
 	public boolean exitL, exitR, exitU, exitD;
-	private int idEnemy, id;
+	private int id;
 	
 	public void setID(int id){
 		this.id = id;

@@ -24,14 +24,24 @@ public class Fases{
 		
 		sala = new Sala[10][5];
 		
-		//comparar characteres : if(fase[i][j] == '1')
-		
-		leitor = Gdx.files.internal("Etc/fase1.map");
-		
+		leitor = Gdx.files.internal("Etc/fase"+numFase+".map");
+
+		if(numFase == 1){
+			geraFases(fase1);
+		}
+		if(numFase == 2){
+			geraFases(fase2);
+		}
+		if(numFase == 3){
+			geraFases(fase3);
+		}
+	}
+	
+	private void geraFases(char fase[][]){
 		for(int i = 0; i < 5; i++){
 			for(int j = 0; j < 10; j++){
-				fase1[j][i] = leitor.readString().split("\n")[i].toCharArray()[j];
-				System.out.print(fase1[j][i]);
+				fase[j][i] = leitor.readString().split("\n")[i].toCharArray()[j];
+				System.out.print(fase[j][i]);
 			}
 			System.out.print("\n");
 		}
@@ -43,30 +53,30 @@ public class Fases{
 		}
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 5; j++){
-				if(fase1[i][j] == '1'){
+				if(fase[i][j] == '1'){
 					sala[i][j].enemy = true;
 					
-					if(fase1[i+1][j] == '1' && (i+1) < 11){
+					if(fase[i+1][j] == '1' && (i+1) < 11){
 						sala[i][j].exitR = true;
 						cont = cont + 1;
 					}
 					
 					if((i-1) >= 0){
-						if(fase1[i-1][j] == '1'){
+						if(fase[i-1][j] == '1'){
 							sala[i][j].exitL = true;
 							cont = cont + 10;
 						}
 					}
 					
 					if(j < 4){
-						if(fase1[i][j+1] == '1' && (j+1) < 5){
+						if(fase[i][j+1] == '1' && (j+1) < 5){
 							sala[i][j].exitD = true;
 							cont = cont + 1000;
 						}
 					}
 					
 					if(j > 0){
-						if(fase1[i][j-1] == '1' && (j-1) >= 0){
+						if(fase[i][j-1] == '1' && (j-1) >= 0){
 							sala[i][j].exitU = true;
 							cont = cont + 100;
 						}
@@ -76,7 +86,6 @@ public class Fases{
 				}
 			}
 		}
-		
 	}
 	
 	public int getNumFase(){
