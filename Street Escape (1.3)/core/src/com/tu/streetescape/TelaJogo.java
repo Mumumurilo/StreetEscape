@@ -543,13 +543,17 @@ public class TelaJogo extends Calculos implements Screen{
 					proximidadetrans = checaProxRect(mau, transeunte);
 				}
 			}
-						
-			/*
-			 * ATENÇÃO: A terceira referência do construtor de Enemy é o tipo de inimigo. Acredito que teríamos que criar algo que modificasse 
-			 * o tipo dependendo da variação das salas. Temos que discutir isso! Por default, estou deixando 1 (manifestantes).
-			 */
-			Enemy mal = new Enemy(jogo, mau, 1);
-			enemy.add(mal);
+			
+			if(mapa.getNumFase() == 1){
+				Enemy mal = new Enemy(jogo, mau, 1);
+				enemy.add(mal);
+			}else if(mapa.getNumFase() == 2){
+				Enemy mal = new Enemy(jogo, mau, MathUtils.random(1, 2));
+				enemy.add(mal);
+			}else if(mapa.getNumFase() == 3){
+				Enemy mal = new Enemy(jogo, mau, 3);
+				enemy.add(mal);
+			}
 			
 			i++;
 		}

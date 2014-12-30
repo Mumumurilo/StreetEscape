@@ -31,9 +31,6 @@ public class Fases{
 		for(int i = 0; i < 5; i++){
 			for(int j = 0; j < 10; j++){
 				fase1[j][i] = leitor.readString().split("\n")[i].toCharArray()[j];
-				
-				
-				
 				System.out.print(fase1[j][i]);
 			}
 			System.out.print("\n");
