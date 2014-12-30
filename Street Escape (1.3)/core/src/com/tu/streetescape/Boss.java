@@ -18,9 +18,11 @@ public class Boss extends Calculos{
 	public boolean tomouDano = false, morto = false;
 	
 	public float tiroCounter = 0;
-	public int randAtk;
+	public int randAtk, enemyCounter = 0;
 	public Array<Rectangle> tirodown, tiroleft, tiroright;
 	private boolean goForward = true;
+	
+	boolean singleScream = false, one = true;
 	
 	public Boss(final MainGame jogo, Rectangle bossRect, int type) {
 		super(jogo);
@@ -41,15 +43,6 @@ public class Boss extends Calculos{
 		tirodown.add(rect);
 		tiroleft.add(rectleft);
 		tiroright.add(rectright);
-		
-		if(jogo.isSound()){
-			boolean randShot = MathUtils.randomBoolean();
-			if(randShot){
-				jogo.bossTiro1.play();
-			}else{
-				jogo.bossTiro2.play();
-			}
-		}
 	}
 	
 	public void tomaDano(){
@@ -70,21 +63,50 @@ public class Boss extends Calculos{
 	}
 	
 	public void andar(){
-		if(bossRect.x + jogo.bosswidth/2 < jogo.getTrans().x + jogo.getTrans().width/2){
-			bossRect.x += 100 * Gdx.graphics.getDeltaTime();
-		}
-		if(bossRect.x + jogo.bosswidth/2 > jogo.getTrans().x + jogo.getTrans().width/2){
-			bossRect.x -= 100 * Gdx.graphics.getDeltaTime();
+		if(jogo.getTransLife() > 0){
+			if(bossRect.x + jogo.bosswidth/2 < jogo.getTrans().x + jogo.getTrans().width/2){
+				bossRect.x += 100 * Gdx.graphics.getDeltaTime();
+			}
+			if(bossRect.x + jogo.bosswidth/2 > jogo.getTrans().x + jogo.getTrans().width/2){
+				bossRect.x -= 100 * Gdx.graphics.getDeltaTime();
+			}
 		}
 		tiroCounter += Gdx.graphics.getDeltaTime();
 		
-		if(tiroCounter >= 5){
+		if(tiroCounter >= 5 && singleScream){
+			if(jogo.isSound()){
+				boolean randShot = MathUtils.randomBoolean();
+				if(randShot){
+					jogo.bossTiro1.play();
+				}else{
+					jogo.bossTiro2.play();
+				}
+			}
+			singleScream = false;
+		}
+		
+		if(tiroCounter >= 5){			
 			if(randAtk == 0){
 				atacar();
 				tiroCounter = 0;
+				singleScream = true;
+				
+				if(jogo.isSound()){
+					boolean randShot = MathUtils.randomBoolean();
+					if(randShot){
+						jogo.bossTiro1.play();
+					}else{
+						jogo.bossTiro2.play();
+					}
+				}
 			}
 			
 			if(randAtk == 1){
+				if(one){
+					singleScream = true;
+					one = false;
+				}
+				
 				if(goForward){
 					if(bossRect.y > jogo.getTrans().y){
 						bossRect.y -= 500 * Gdx.graphics.getDeltaTime();
@@ -96,14 +118,27 @@ public class Boss extends Calculos{
 						bossRect.y += 500 * Gdx.graphics.getDeltaTime();
 					}else{
 						tiroCounter = 0;
+						one = true;
 					}
 				}
 			}
-			
-			if(randAtk == 2 && !jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].enemy){
-				//jogo.telajogo.GeraEnemy();
-				jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].enemy = true;
-				tiroCounter = 0;
+
+			if(randAtk == 2 && !jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].enemy){				
+				if(enemyCounter == 0){
+					jogo.telajogo.GeraEnemy();
+				}
+				
+				if(enemyCounter == 1){
+					jogo.telajogo.mapa.sala[jogo.telajogo.salax][jogo.telajogo.salay].enemy = true;
+				}
+				
+				enemyCounter++;
+				
+				if(enemyCounter >= 2){
+					enemyCounter = 0;
+					tiroCounter = 0;
+					singleScream = true;
+				}
 			}
 			
 		}else{

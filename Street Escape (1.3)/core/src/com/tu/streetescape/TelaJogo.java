@@ -393,7 +393,6 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		if(mapa.sala[salax][salay].enemy){
 			while(j < numEnemy){
-				System.out.println("j = " +j+ " | numEnemy = " +numEnemy+ " | enemy = " +enemy);
 				tempenemy = enemy.get(j);
 				temprect = tempenemy.enemy;
 				
@@ -519,15 +518,30 @@ public class TelaJogo extends Calculos implements Screen{
 	public void GeraEnemy(){		
 		numEnemy = MathUtils.random(1, 4);
 		
+		i = 1;
 		while(i <= numEnemy){
-			Rectangle mau = new Rectangle(MathUtils.random(build.predmeiocima.x, build.preddircima.x - jogo.persowidth),
-					MathUtils.random(build.predmeiobai.height, build.predmeiocima.y - jogo.persoheight), jogo.persowidth, jogo.persoheight);
+			Rectangle mau = new Rectangle();
 			
-			boolean proximidadetrans = checaProxRect(mau, transeunte);
-			while(proximidadetrans == true){
-				mau.x = MathUtils.random(jogo.WIDTH/3, (jogo.WIDTH/3)*2 - jogo.persowidth);
-				mau.y = MathUtils.random(jogo.HEIGHT/3, (jogo.HEIGHT/3)*2 - jogo.persoheight);
-				proximidadetrans = checaProxRect(mau, transeunte);
+			if(!checaSalaBoss()){
+				mau = new Rectangle(MathUtils.random(build.predmeiocima.x, build.preddircima.x - jogo.persowidth),
+						MathUtils.random(build.predmeiobai.height, build.predmeiocima.y - jogo.persoheight), jogo.persowidth, jogo.persoheight);
+				
+				boolean proximidadetrans = checaProxRect(mau, transeunte);
+				while(proximidadetrans == true){
+					mau.x = MathUtils.random(build.predmeiocima.x, build.preddircima.x - jogo.persowidth);
+					mau.y = MathUtils.random(build.predmeiobai.height, build.predmeiocima.y - jogo.persoheight);
+					proximidadetrans = checaProxRect(mau, transeunte);
+				}
+			}else{
+				mau = new Rectangle(MathUtils.random(0, jogo.WIDTH - jogo.persowidth),
+						MathUtils.random(0, jogo.HEIGHT - jogo.persoheight), jogo.persowidth, jogo.persoheight);
+				
+				boolean proximidadetrans = checaProxRect(mau, transeunte);
+				while(proximidadetrans == true){
+					mau.x = MathUtils.random(0, jogo.WIDTH - jogo.persowidth);
+					mau.y = MathUtils.random(0, jogo.HEIGHT - jogo.persoheight);
+					proximidadetrans = checaProxRect(mau, transeunte);
+				}
 			}
 						
 			/*
@@ -576,7 +590,7 @@ public class TelaJogo extends Calculos implements Screen{
 				oneCheck = false;
 			}
 			
-			if(jogo.isSound()){
+			if(jogo.isMusic()){
 				if(!play){
 					jogo.temaboss1.play();
 					play = true;
