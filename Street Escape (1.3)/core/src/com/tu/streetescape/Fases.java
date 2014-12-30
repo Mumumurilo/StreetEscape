@@ -26,12 +26,15 @@ public class Fases{
 		
 		//comparar characteres : if(fase[i][j] == '1')
 		
-		leitor = Gdx.files.internal("Etc/fase1.txt");
+		leitor = Gdx.files.internal("Etc/fase1.map");
 		
-		for(int i = 0; i < 10; i++){
-			for(int j = 0; j < 5; j++){
-				fase1[i][j] = leitor.readString().split("\n")[j].toCharArray()[i];
-				System.out.print(fase1[i][j]);
+		for(int i = 0; i < 5; i++){
+			for(int j = 0; j < 10; j++){
+				fase1[j][i] = leitor.readString().split("\n")[i].toCharArray()[j];
+				
+				
+				
+				System.out.print(fase1[j][i]);
 			}
 			System.out.print("\n");
 		}
