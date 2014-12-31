@@ -51,7 +51,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private Rectangle tempItem;
 	
 	//Outros
-	private float contFimJogo = 0;
+	private float contFimJogo = 0, contNextFase = 0;
 	private boolean deadOnce = true;
 	
 	//Prédios
@@ -104,7 +104,7 @@ public class TelaJogo extends Calculos implements Screen{
 		settings = new Settings(jogo);
 		trans = new Transeunte(jogo);
 		
-		mapa = new Fases();
+		mapa = new Fases(1);
 		
 		salax = 1;
 		salay = 2;
@@ -191,9 +191,14 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		//Debug de boss!
 		if(jogo.isDebug()){
-			if(Gdx.input.isKeyPressed(Keys.ESCAPE) && mapa.getNumFase() == 1){
-				salax = 7;
-				salay = 0;
+			if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
+				if(mapa.getNumFase() == 1){
+					salax = 7;
+					salay = 0;
+				}else if(mapa.getNumFase() == 2){
+					salax = 1;
+					salay = 0;
+				}
 			}
 		}
 		
@@ -508,8 +513,31 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 		}
 		
+		//condição de quebrar o ciclo e ir pra próxima fase
+		if(contNextFase >= 5){
+			jogo.temaboss2.stop();
+			jogo.temajogo.play();
+			
+			deletaItens();
+			trans.direcTiros.clear();
+			trans.tiros.clear();
+			
+			int faseAnterior = mapa.getNumFase();
+			mapa = new Fases(faseAnterior + 1);
+			
+			salax = 9;
+			salay = 4;
+			
+			mapa.sala[salax][salay].enemy = false;
+			
+			transeunte.x = 380;
+			transeunte.y = 200;
+			
+			contNextFase = 0;
+		}
+		
+		//condição de quebrar o ciclo e ir pra tela de créditos
 		if(contFimJogo >= 5){
-			//condição de quebrar o ciclo e ir pra tela de créditos
 			jogo.telacreditos = new TelaCreditos(jogo);
 			jogo.setScreen(jogo.telacreditos);
 		}
@@ -612,15 +640,19 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.renderer.rect(boss.bossRect.x, boss.bossRect.y, boss.bossRect.width, boss.bossRect.height);
 				
 				jogo.renderer.setColor(Color.MAROON);
-				for(Rectangle down : boss.tirodown){
-					jogo.renderer.rect(down.x, down.y, down.width, down.height);
+				
+				if(boss.type == 1){
+					for(Rectangle down : boss.tirodown){
+						jogo.renderer.rect(down.x, down.y, down.width, down.height);
+					}
+					for(Rectangle left : boss.tiroleft){
+						jogo.renderer.rect(left.x, left.y, left.width, left.height);
+					}
+					for(Rectangle right : boss.tiroright){
+						jogo.renderer.rect(right.x, right.y, right.width, right.height);
+					}
 				}
-				for(Rectangle left : boss.tiroleft){
-					jogo.renderer.rect(left.x, left.y, left.width, left.height);
-				}
-				for(Rectangle right : boss.tiroright){
-					jogo.renderer.rect(right.x, right.y, right.width, right.height);
-				}
+				
 				jogo.renderer.setColor(Color.PINK);
 				for(Rectangle rect : trans.tiros){
 					jogo.renderer.rect(rect.x, rect.y, rect.width, rect.height);
@@ -643,10 +675,18 @@ public class TelaJogo extends Calculos implements Screen{
 			if(boss.morto){
 				bossRect.setPosition(jogo.WIDTH*2, jogo.HEIGHT*2);
 				
-				contFimJogo += Gdx.graphics.getDeltaTime();
+				if(mapa.getNumFase() < 3){
+					contNextFase += Gdx.graphics.getDeltaTime();
+				}else{
+					contFimJogo += Gdx.graphics.getDeltaTime();
+				}
 				jogo.batch.begin();
 				jogo.gameoverfont.setColor(Color.GREEN);
-				jogo.gameoverfont.draw(jogo.batch, "You Won!", jogo.WIDTH/2 - 200, jogo.HEIGHT/2 + 20);
+				if(mapa.getNumFase() < 3){
+					jogo.gameoverfont.drawMultiLine(jogo.batch, "     You Won!\nTry Next Stage!", 80, jogo.HEIGHT/2 + 100);
+				}else{
+					jogo.gameoverfont.drawMultiLine(jogo.batch, "You Won!", jogo.WIDTH/2 - 200, jogo.HEIGHT/2 + 20);
+				}
 				jogo.batch.end();
 				
 				if(jogo.isSound() && deadOnce){

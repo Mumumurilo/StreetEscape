@@ -14,7 +14,7 @@ public class Boss extends Calculos{
 	public Rectangle bossRect;
 	public StateMachine<Boss> machine;
 	
-	public int life = 20;
+	public int life = 20, type;
 	public boolean tomouDano = false, morto = false;
 	
 	public float tiroCounter = 0;
@@ -27,6 +27,7 @@ public class Boss extends Calculos{
 	public Boss(final MainGame jogo, Rectangle bossRect, int type) {
 		super(jogo);
 		this.bossRect = bossRect;
+		this.type = type;
 		machine = new DefaultStateMachine<Boss>(this, BossState.ATACAR);
 		
 		tirodown = new Array<Rectangle>();

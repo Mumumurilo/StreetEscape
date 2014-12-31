@@ -15,9 +15,11 @@ public class Fases{
 	
 	private int cont = 0;
 	
-	private int numFase = 1;
+	private int numFase;
 	
-	public Fases(){
+	public Fases(int numFase){
+		this.numFase = numFase;
+		
 		fase1 = new char[10][5];
 		fase2 = new char[10][5];
 		fase3 = new char[10][5];
@@ -56,9 +58,11 @@ public class Fases{
 				if(fase[i][j] == '1'){
 					sala[i][j].enemy = true;
 					
-					if(fase[i+1][j] == '1' && (i+1) < 11){
-						sala[i][j].exitR = true;
-						cont = cont + 1;
+					if((i+1) < 10){
+						if(fase[i+1][j] == '1'){
+							sala[i][j].exitR = true;
+							cont = cont + 1;
+						}
 					}
 					
 					if((i-1) >= 0){
