@@ -198,6 +198,9 @@ public class TelaJogo extends Calculos implements Screen{
 				}else if(mapa.getNumFase() == 2){
 					salax = 1;
 					salay = 0;
+				}else if(mapa.getNumFase() == 3){
+					salax = 4;
+					salay = 2;
 				}
 			}
 		}
@@ -517,6 +520,9 @@ public class TelaJogo extends Calculos implements Screen{
 		if(contNextFase >= 5){
 			jogo.temaboss2.stop();
 			jogo.temajogo.play();
+			play = false;
+			play2 = false;
+			deadOnce = true;
 			
 			deletaItens();
 			trans.direcTiros.clear();
@@ -525,10 +531,16 @@ public class TelaJogo extends Calculos implements Screen{
 			int faseAnterior = mapa.getNumFase();
 			mapa = new Fases(faseAnterior + 1);
 			
-			salax = 9;
-			salay = 4;
+			if(mapa.getNumFase() == 2){
+				salax = 9;
+				salay = 4;
+			}else if(mapa.getNumFase() == 3){
+				salax = 0;
+				salay = 0;
+			}
 			
 			mapa.sala[salax][salay].enemy = false;
+			oneCheck = true;
 			
 			transeunte.x = 380;
 			transeunte.y = 200;
@@ -598,10 +610,10 @@ public class TelaJogo extends Calculos implements Screen{
 		if(salax == 7 && salay == 0 && mapa.getNumFase() == 1){
 			return true;
 		}
-		if(salax == 0 && salay == 0 && mapa.getNumFase() == 2){
+		if(salax == 1 && salay == 0 && mapa.getNumFase() == 2){
 			return true;
 		}
-		if(salax == 0 && salay == 0 && mapa.getNumFase() == 3){
+		if(salax == 4 && salay == 2 && mapa.getNumFase() == 3){
 			return true;
 		}
 		return false;
@@ -683,7 +695,7 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.batch.begin();
 				jogo.gameoverfont.setColor(Color.GREEN);
 				if(mapa.getNumFase() < 3){
-					jogo.gameoverfont.drawMultiLine(jogo.batch, "     You Won!\nTry Next Stage!", 80, jogo.HEIGHT/2 + 100);
+					jogo.gameoverfont.drawMultiLine(jogo.batch, "     You Won!\nTry Next Stage!", 79, jogo.HEIGHT/2 + 100);
 				}else{
 					jogo.gameoverfont.drawMultiLine(jogo.batch, "You Won!", jogo.WIDTH/2 - 200, jogo.HEIGHT/2 + 20);
 				}

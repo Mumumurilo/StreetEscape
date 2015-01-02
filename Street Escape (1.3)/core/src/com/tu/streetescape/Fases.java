@@ -47,6 +47,7 @@ public class Fases{
 			}
 			System.out.print("\n");
 		}
+		System.out.println("----------");
 
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 5; j++){
