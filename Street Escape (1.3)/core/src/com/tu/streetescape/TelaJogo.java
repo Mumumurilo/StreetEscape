@@ -629,7 +629,7 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.temajogo.dispose();
 				
 				bossRect = new Rectangle(jogo.WIDTH/2 - jogo.bosswidth/2, jogo.HEIGHT - (jogo.bossheight + 10), jogo.bosswidth, jogo.bossheight);
-				boss = new Boss(jogo, bossRect, 1);
+				boss = new Boss(jogo, bossRect, mapa.getNumFase());
 				
 				oneCheck = false;
 			}
@@ -674,7 +674,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			
 			boss.machine.update();
-			boss.movAtk();
+			if(boss.type == 1) boss.movAtk();
 			trans.movAtk(bossRect, boss);
 			
 			if(bossRect.overlaps(transeunte) && !jogo.getTransLifeCounter()){

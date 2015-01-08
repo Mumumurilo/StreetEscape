@@ -18,7 +18,7 @@ public class Boss extends Calculos{
 	public boolean tomouDano = false, morto = false;
 	
 	public float tiroCounter = 0;
-	public int randAtk, enemyCounter = 0;
+	public int randAtk, enemyCounter = 0, counter = 1;
 	public Array<Rectangle> tirodown, tiroleft, tiroright;
 	private boolean goForward = true;
 	
@@ -30,9 +30,11 @@ public class Boss extends Calculos{
 		this.type = type;
 		machine = new DefaultStateMachine<Boss>(this, BossState.ATACAR);
 		
-		tirodown = new Array<Rectangle>();
-		tiroleft = new Array<Rectangle>();
-		tiroright = new Array<Rectangle>();
+		if(type == 1){
+			tirodown = new Array<Rectangle>();
+			tiroleft = new Array<Rectangle>();
+			tiroright = new Array<Rectangle>();
+		}
 	}
 	
 	public void atacar(){
@@ -74,7 +76,18 @@ public class Boss extends Calculos{
 		}
 		tiroCounter += Gdx.graphics.getDeltaTime();
 		
-		if(tiroCounter >= 5 && singleScream){
+		if(tiroCounter >= 5 && singleScream && type != 3){ //Tipos 1 e 2
+			if(jogo.isSound()){
+				boolean randShot = MathUtils.randomBoolean();
+				if(randShot){
+					jogo.bossTiro1.play();
+				}else{
+					jogo.bossTiro2.play();
+				}
+			}
+			singleScream = false;
+		}
+		if(tiroCounter >= 3 && singleScream && type == 3){ //Tipo 3
 			if(jogo.isSound()){
 				boolean randShot = MathUtils.randomBoolean();
 				if(randShot){
@@ -87,7 +100,7 @@ public class Boss extends Calculos{
 		}
 		
 		if(tiroCounter >= 5){			
-			if(randAtk == 0){
+			if(randAtk == 0 && type == 1){
 				atacar();
 				tiroCounter = 0;
 				singleScream = true;
@@ -100,6 +113,8 @@ public class Boss extends Calculos{
 						jogo.bossTiro2.play();
 					}
 				}
+			}else if(randAtk == 0){
+				randAtk = MathUtils.random(1, 2);
 			}
 			
 			if(randAtk == 1){
@@ -108,19 +123,48 @@ public class Boss extends Calculos{
 					one = false;
 				}
 				
-				if(goForward){
-					if(bossRect.y > jogo.getTrans().y){
-						bossRect.y -= 500 * Gdx.graphics.getDeltaTime();
+				if(type == 1){
+					if(goForward){
+						if(bossRect.y > jogo.getTrans().y){
+							bossRect.y -= 500 * Gdx.graphics.getDeltaTime();
+						}else{
+							goForward = false;
+						}
 					}else{
-						goForward = false;
+						if(bossRect.y < jogo.HEIGHT - (jogo.bossheight + 10)){
+							bossRect.y += 500 * Gdx.graphics.getDeltaTime();
+						}else{
+							tiroCounter = 0;
+							one = true;
+						}
 					}
-				}else{
-					if(bossRect.y < jogo.HEIGHT - (jogo.bossheight + 10)){
-						bossRect.y += 500 * Gdx.graphics.getDeltaTime();
-					}else{
-						tiroCounter = 0;
-						one = true;
+				}else if(type == 2){
+					if(goForward && counter < 6){
+						if(bossRect.y > jogo.getTrans().y - 50){
+							bossRect.y -= 500 * Gdx.graphics.getDeltaTime();
+						}else{
+							goForward = false;
+							counter++;
+						}
+					}else if(counter < 6){
+						if(bossRect.y < jogo.getTrans().y + 50){
+							bossRect.y += 500 * Gdx.graphics.getDeltaTime();
+						}else{
+							goForward = true;
+							counter++;
+						}
 					}
+					
+					if(counter >= 6){
+						if(bossRect.y < jogo.HEIGHT - (jogo.bossheight + 10)){
+							bossRect.y += 500 * Gdx.graphics.getDeltaTime();
+						}else{
+							tiroCounter = 0;
+							one = true;
+						}
+					}
+				}else if(type == 3){
+					randAtk = 2;
 				}
 			}
 
@@ -143,7 +187,11 @@ public class Boss extends Calculos{
 			}
 			
 		}else{
-			randAtk = MathUtils.random(2);
+			if(type != 3){
+				randAtk = MathUtils.random(2);
+			}else{
+				randAtk = 2;
+			}
 		}
 	}
 	
