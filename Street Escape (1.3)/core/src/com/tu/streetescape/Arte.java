@@ -27,6 +27,9 @@ public class Arte {
 	
 	public Texture logotu;
 	
+	public Texture itens;
+	public TextureRegion[][] itensArray;
+	
 	public Arte(final MainGame jogo){
 		this.jogo = jogo;
 		
@@ -61,12 +64,12 @@ public class Arte {
 		life.add(life2 = new Texture(Gdx.files.internal("Arte/2 Hearts.png")));
 		life.add(life1 = new Texture(Gdx.files.internal("Arte/25 Hearts.png")));
 		life.add(life0 = new Texture(Gdx.files.internal("Arte/3 Hearts.png")));
-		
 
 		trananda = new Texture(Gdx.files.internal("Arte/perandando.png"));
-		
 		transeunte = TextureRegion.split(trananda, 512, 512);
 		
+		itens = new Texture(Gdx.files.internal("Arte/ITENS.png"));
+		itensArray = TextureRegion.split(itens, 512, 512);
 	}
 	
 	public void dispose(){
