@@ -30,6 +30,8 @@ public class Arte {
 	public Texture itens;
 	public TextureRegion[][] itensArray;
 	
+	public Array<TextureRegion[][]> arrayBucks;
+	
 	public Arte(final MainGame jogo){
 		this.jogo = jogo;
 		
@@ -70,6 +72,8 @@ public class Arte {
 		
 		itens = new Texture(Gdx.files.internal("Arte/ITENS.png"));
 		itensArray = TextureRegion.split(itens, 512, 512);
+		
+		arrayBucks = new Array<TextureRegion[][]>();
 	}
 	
 	public void dispose(){

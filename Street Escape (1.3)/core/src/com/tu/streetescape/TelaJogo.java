@@ -419,6 +419,9 @@ public class TelaJogo extends Calculos implements Screen{
 					if(randItem > 6){
 						Rectangle item = new Rectangle(temprect.x, temprect.y, jogo.persowidth/2, jogo.persoheight/2);
 						lifeItem.add(item);
+						
+						artes.arrayBucks.add(artes.itensArray[1][0]);
+						
 						numItem++;
 					}
 					
