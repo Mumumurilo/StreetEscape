@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -363,6 +364,13 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		while(k < numItem){
 			tempItem = lifeItem.get(k);
+			
+			jogo.batch.begin();
+			jogo.batch.draw(artes.arrayBucks.get(k), lifeItem.get(k).x - lifeItem.get(k).width/2,
+					lifeItem.get(k).y - lifeItem.get(k).height/2,
+					lifeItem.get(k).width*2, lifeItem.get(k).height*2);
+			jogo.batch.end();
+			
 			if(transeunte.overlaps(tempItem)){
 				addlife = jogo.getTransLife();
 				addlife += 2;
@@ -370,6 +378,7 @@ public class TelaJogo extends Calculos implements Screen{
 				
 				numItem--;
 				lifeItem.removeIndex(k);
+				artes.arrayBucks.removeIndex(k);
 				
 				if(jogo.isSound()){
 					jogo.transRecoverLife.play();
@@ -388,6 +397,12 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		if(k >= numItem){
 			k = 0;
+		}
+		
+		if(numItem > 0){
+			for(@SuppressWarnings("unused") TextureRegion itensArray : artes.arrayBucks){
+				
+			}
 		}
 		
 		if(jogo.getTransLife() <= 0){
@@ -418,11 +433,9 @@ public class TelaJogo extends Calculos implements Screen{
 					randItem = MathUtils.random(9);
 					if(randItem > 6){
 						Rectangle item = new Rectangle(temprect.x, temprect.y, jogo.persowidth/2, jogo.persoheight/2);
-						lifeItem.add(item);
-						
-						artes.arrayBucks.add(artes.itensArray[1][0]);
-						
+						lifeItem.add(item);						
 						numItem++;
+						artes.arrayBucks.add(artes.itensArray[0][1]);
 					}
 					
 					if(jogo.isSound()){
