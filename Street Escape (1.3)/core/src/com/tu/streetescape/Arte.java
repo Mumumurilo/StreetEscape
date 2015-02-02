@@ -76,6 +76,12 @@ public class Arte {
 		arrayBucks = new Array<TextureRegion>();
 	}
 	
+	public void arteLadoTrans(int lado){
+		if(lado == 1){ //up
+			
+		}
+	}
+	
 	public void dispose(){
 		ALL.dispose();
 		UDR.dispose();

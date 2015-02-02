@@ -386,7 +386,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			
 			if(jogo.isDebug()){
-				jogo.renderer.begin(ShapeType.Filled);
+				jogo.renderer.begin(ShapeType.Line);
 				jogo.renderer.setColor(Color.ORANGE);
 				for(Rectangle life : lifeItem){
 					jogo.renderer.rect(life.x, life.y, life.width, life.height);
