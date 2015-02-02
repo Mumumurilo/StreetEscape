@@ -44,6 +44,8 @@ public class TelaJogo extends Calculos implements Screen{
 	private Rectangle transeunte;
 	private Transeunte trans;
 	private float contTransLife = 0;
+	private int lastFacingSide = 2;
+	private boolean isMoving = false;
 	
 	//Itens
 	private int randItem, numItem = 0, k = 0;
@@ -207,17 +209,49 @@ public class TelaJogo extends Calculos implements Screen{
 		}
 		
 		if(jogo.getTransLife() > 0){
-			if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT) && !ladoColisao.get(0)){ //up
-				transeunte.y += 200 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0) && !ladoColisao.get(1)){ //down
-				transeunte.y -= 200 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0) && !ladoColisao.get(2)){ //left
-				transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
-			}
-			if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH) && !ladoColisao.get(3)){ //right
-				transeunte.x += 200 * Gdx.graphics.getDeltaTime();
+			if(Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+				if(Gdx.input.isKeyPressed(Keys.W) && (transeunte.y + jogo.persoheight <= jogo.HEIGHT) && !ladoColisao.get(0)){ //up
+					transeunte.y += 200 * Gdx.graphics.getDeltaTime();
+					lastFacingSide = 1;
+					isMoving = true;
+					if(!Gdx.input.isKeyPressed(Keys.S)) artes.arteLadoTrans(1, transeunte, true);
+				}
+				if(Gdx.input.isKeyPressed(Keys.S) && (transeunte.y >= 0) && !ladoColisao.get(1)){ //down
+					transeunte.y -= 200 * Gdx.graphics.getDeltaTime();
+					lastFacingSide = 2;
+					isMoving = true;
+					if(!Gdx.input.isKeyPressed(Keys.W)) artes.arteLadoTrans(2, transeunte, true);
+					else artes.arteLadoTrans(2, transeunte, false);
+				}
+				if(Gdx.input.isKeyPressed(Keys.A) && (transeunte.x >= 0) && !ladoColisao.get(2)){ //left
+					transeunte.x -= 200 * Gdx.graphics.getDeltaTime();
+					lastFacingSide = 3;
+					isMoving = true;
+					if(!Gdx.input.isKeyPressed(Keys.D) //&& !Gdx.input.isKeyPressed(Keys.W)
+							&& !Gdx.input.isKeyPressed(Keys.S)) artes.arteLadoTrans(3, transeunte, true);
+				}
+				if(Gdx.input.isKeyPressed(Keys.D) && (transeunte.x + jogo.persowidth <= jogo.WIDTH) && !ladoColisao.get(3)){ //right
+					transeunte.x += 200 * Gdx.graphics.getDeltaTime();
+					lastFacingSide = 4;
+					isMoving = true;
+					if(!Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.W)
+							&& !Gdx.input.isKeyPressed(Keys.S)) artes.arteLadoTrans(4, transeunte, true);
+				}
+			}else isMoving = false;
+
+			if(!Gdx.input.isKeyPressed(Keys.W) && !Gdx.input.isKeyPressed(Keys.S) && !Gdx.input.isKeyPressed(Keys.A)
+					&& !Gdx.input.isKeyPressed(Keys.D)) isMoving = false;
+			
+			for(int w = 0; w < 4; w++)
+			if(lastFacingSide == w + 1 && ladoColisao.get(w)) isMoving = false;
+
+			//Condições para personagem parado
+			if(!isMoving){
+				if(lastFacingSide == 1) artes.arteLadoTrans(1, transeunte, isMoving);
+				if(lastFacingSide == 2) artes.arteLadoTrans(2, transeunte, isMoving);
+				if(lastFacingSide == 3) artes.arteLadoTrans(3, transeunte, isMoving);
+				if(lastFacingSide == 4) artes.arteLadoTrans(4, transeunte, isMoving);
+				
 			}
 			
 			if(mapa.sala[salax][salay].enemy == true || checaSalaBoss()){
