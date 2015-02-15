@@ -19,9 +19,14 @@ public class Arte {
 	public ArrayList<Texture> salas;
 	public ArrayList<Texture> personagem;
 	
-	public TextureRegion[][] transeunte;
-	public Texture trananda;
-	public TextureRegion currentTransFrame;
+	private TextureRegion[][] transeunte;
+	private Texture trananda;
+	private TextureRegion currentTransFrame;
+	
+	private boolean isActing = false;
+	
+	private TextureRegion[][] transAtira;
+	private Texture tranatira;
 	
 	public Array<Texture> life;
 	private Texture life6, life5, life4, life3, life2, life1, life0;
@@ -73,6 +78,9 @@ public class Arte {
 		trananda = new Texture(Gdx.files.internal("Arte/perandando.png"));
 		transeunte = TextureRegion.split(trananda, 512, 512);
 		
+		tranatira = new Texture(Gdx.files.internal("Arte/ATQ MAIN.png"));
+		transAtira = TextureRegion.split(tranatira, 512, 512);
+		
 		itens = new Texture(Gdx.files.internal("Arte/ITENS.png"));
 		itensArray = TextureRegion.split(itens, 512, 512);
 		
@@ -80,6 +88,86 @@ public class Arte {
 	}
 	
 	public void arteLadoTrans(int lado, Rectangle trans, boolean isMoving){
+		if(!isActing){
+			if(frameCounter >= 1 && frameCounter <= 10 && isMoving){
+				if(lado == 1) currentTransFrame = transeunte[1][1]; //up
+				if(lado == 2) currentTransFrame = transeunte[2][1]; //down
+				if(lado == 3) currentTransFrame = transeunte[0][1]; //left
+				if(lado == 4) currentTransFrame = transeunte[0][1]; //right
+				
+			}else if(frameCounter > 10 && frameCounter <= 20 || !isMoving){
+				if(lado == 1) currentTransFrame = transeunte[1][0]; //up
+				if(lado == 2) currentTransFrame = transeunte[2][0]; //down
+				if(lado == 3) currentTransFrame = transeunte[0][0]; //left
+				if(lado == 4) currentTransFrame = transeunte[0][0]; //right
+				
+			}else if(frameCounter > 20 && frameCounter <= 30 && isMoving){
+				if(lado == 1) currentTransFrame = transeunte[1][2]; //up
+				if(lado == 2) currentTransFrame = transeunte[2][2]; //down
+				if(lado == 3) currentTransFrame = transeunte[0][2]; //left
+				if(lado == 4) currentTransFrame = transeunte[0][2]; //right
+			}
+			
+			//Condição de flipar para esquerda
+			if(lado == 3){
+				currentTransFrame.flip(true, false);
+			}
+				
+			jogo.batch.begin();
+			jogo.batch.draw(currentTransFrame, trans.x, trans.y, jogo.persowidth, jogo.persoheight);
+			jogo.batch.end();
+			
+			//Desflipa
+			if(lado == 3){
+				currentTransFrame.flip(true, false);
+			}
+			
+			frameCounter++;
+			
+			if(frameCounter > 30){
+				frameCounter = 0;
+			}
+		}
+	}
+	
+	public void spriteTransAtira(int lado, Rectangle trans){
+		if(frameCounter >= 1 && frameCounter <= 30){
+			if(lado == 1) currentTransFrame = transAtira[2][1]; //up
+			if(lado == 2) currentTransFrame = transAtira[1][2]; //down
+			if(lado == 3) currentTransFrame = transAtira[0][1]; //left
+			if(lado == 4) currentTransFrame = transAtira[0][1]; //right
+			
+		}else if(frameCounter > 15 && frameCounter <= 60){
+			if(lado == 1) currentTransFrame = transAtira[0][2]; //up
+			if(lado == 2) currentTransFrame = transAtira[1][1]; //down
+			if(lado == 3) currentTransFrame = transAtira[0][0]; //left
+			if(lado == 4) currentTransFrame = transAtira[0][0]; //right
+		}
+		
+		//Condição de flipar para esquerda
+		if(lado == 3){
+			currentTransFrame.flip(true, false);
+		}
+			
+		jogo.batch.begin();
+		jogo.batch.draw(currentTransFrame, trans.x, trans.y, jogo.persowidth, jogo.persoheight);
+		jogo.batch.end();
+		
+		//Desflipa
+		if(lado == 3){
+			currentTransFrame.flip(true, false);
+		}
+		
+		frameCounter++;
+		
+		if(frameCounter > 30){
+			System.out.println("TAPASSANO");
+			isActing = false;
+			frameCounter = 0;
+		}
+	}
+	
+	/*public void arteLadoEnemy(int lado, Rectangle enemy, boolean isMoving, int type){
 		if(frameCounter >= 1 && frameCounter <= 10 && isMoving){
 			if(lado == 1) currentTransFrame = transeunte[1][1]; //up
 			if(lado == 2) currentTransFrame = transeunte[2][1]; //down
@@ -118,6 +206,18 @@ public class Arte {
 		if(frameCounter > 30){
 			frameCounter = 0;
 		}
+	}*/
+	
+	public void setFrameCounter(int value){
+		frameCounter = value;
+	}
+	
+	public void setIsActing(boolean value){
+		isActing = value;
+	}
+	
+	public boolean getIsActing(){
+		return isActing;
 	}
 	
 	public void dispose(){

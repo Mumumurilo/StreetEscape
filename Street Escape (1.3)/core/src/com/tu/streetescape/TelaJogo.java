@@ -270,6 +270,9 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(1);
 						trans.tiroValido = false;
 					}
+					artes.setIsActing(true);
+					artes.setFrameCounter(0);
+					artes.spriteTransAtira(1, transeunte);
 				}
 				if(Gdx.input.isKeyJustPressed(Keys.DOWN)){
 					trans.atirar();
@@ -277,6 +280,9 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(2);
 						trans.tiroValido = false;
 					}
+					artes.setIsActing(true);
+					artes.setFrameCounter(0);
+					artes.spriteTransAtira(2, transeunte);
 				}
 				if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
 					trans.atirar();
@@ -284,6 +290,9 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(3);
 						trans.tiroValido = false;
 					}
+					artes.setIsActing(true);
+					artes.setFrameCounter(0);
+					artes.spriteTransAtira(3, transeunte);
 				}
 				if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
 					trans.atirar();
@@ -291,7 +300,11 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(4);
 						trans.tiroValido = false;
 					}
+					artes.setIsActing(true);
+					artes.setFrameCounter(0);
+					artes.spriteTransAtira(4, transeunte);
 				}
+				System.out.println(artes.getIsActing());
 			}
 			
 			for(i = 0; i < 5; i++){
