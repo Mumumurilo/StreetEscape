@@ -131,17 +131,17 @@ public class Arte {
 	}
 	
 	public void spriteTransAtira(int lado, Rectangle trans){
-		if(frameCounter >= 1 && frameCounter <= 30){
-			if(lado == 1) currentTransFrame = transAtira[2][1]; //up
-			if(lado == 2) currentTransFrame = transAtira[1][2]; //down
-			if(lado == 3) currentTransFrame = transAtira[0][1]; //left
-			if(lado == 4) currentTransFrame = transAtira[0][1]; //right
+		if(frameCounter >= 1 && frameCounter <= 7){
+			if(lado == 1) currentTransFrame = transAtira[1][2]; //up
+			if(lado == 2) currentTransFrame = transAtira[2][1]; //down
+			if(lado == 3) currentTransFrame = transAtira[1][0]; //left
+			if(lado == 4) currentTransFrame = transAtira[1][0]; //right
 			
-		}else if(frameCounter > 15 && frameCounter <= 60){
-			if(lado == 1) currentTransFrame = transAtira[0][2]; //up
-			if(lado == 2) currentTransFrame = transAtira[1][1]; //down
-			if(lado == 3) currentTransFrame = transAtira[0][0]; //left
-			if(lado == 4) currentTransFrame = transAtira[0][0]; //right
+		}else if(frameCounter > 7 && frameCounter <= 15){
+			if(lado == 1) currentTransFrame = transAtira[2][0]; //up
+			if(lado == 2) currentTransFrame = transAtira[2][2]; //down
+			if(lado == 3) currentTransFrame = transAtira[1][1]; //left
+			if(lado == 4) currentTransFrame = transAtira[1][1]; //right
 		}
 		
 		//Condição de flipar para esquerda
@@ -160,8 +160,7 @@ public class Arte {
 		
 		frameCounter++;
 		
-		if(frameCounter > 30){
-			System.out.println("TAPASSANO");
+		if(frameCounter > 15){
 			isActing = false;
 			frameCounter = 0;
 		}
