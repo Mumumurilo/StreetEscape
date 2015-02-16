@@ -210,6 +210,7 @@ public class Boss extends Calculos{
 					double translife = jogo.getTransLife() - 2;
 					jogo.setTransLife(translife);
 					jogo.setTransLifeCounter(true);
+					jogo.telajogo.artes.setIsActing(true);
 					
 					if(jogo.isSound()){
 						boolean randDano = MathUtils.randomBoolean();
@@ -237,6 +238,7 @@ public class Boss extends Calculos{
 					double translife = jogo.getTransLife() - 2;
 					jogo.setTransLife(translife);
 					jogo.setTransLifeCounter(true);
+					jogo.telajogo.artes.setIsActing(true);
 					
 					if(jogo.isSound()){
 						boolean randDano = MathUtils.randomBoolean();
@@ -264,6 +266,7 @@ public class Boss extends Calculos{
 					double translife = jogo.getTransLife() - 2;
 					jogo.setTransLife(translife);
 					jogo.setTransLifeCounter(true);
+					jogo.telajogo.artes.setIsActing(true);
 					
 					if(jogo.isSound()){
 						boolean randDano = MathUtils.randomBoolean();

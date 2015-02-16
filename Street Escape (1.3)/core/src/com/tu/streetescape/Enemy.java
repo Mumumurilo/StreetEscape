@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.StateMachine;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -30,6 +31,10 @@ public class Enemy extends Calculos{
 	
 	private Predios build;
 	public Array<Boolean> actualCollision, ladoColisao;
+	
+	public int frameCounter = 0;
+	public TextureRegion currentEnemyFrame;
+	public int lastFacingSide;
 	
 	public Enemy(MainGame jogo, Rectangle enemy, int type) {
 		super(jogo);
@@ -81,24 +86,32 @@ public class Enemy extends Calculos{
 			
 			if(randirectmov == 1 && !ladoColisao.get(0)){ //up
 				enemy.y += 100 * Gdx.graphics.getDeltaTime();
+				jogo.telajogo.artes.arteLadoEnemy(1, enemy, this, true, type);
+				lastFacingSide = 1;
 			}else if(ladoColisao.get(0)){
 				contmov = randtimemov;
 			}
 			
 			if(randirectmov == 2 && !ladoColisao.get(1)){ //down
 				enemy.y -= 100 * Gdx.graphics.getDeltaTime();
+				jogo.telajogo.artes.arteLadoEnemy(2, enemy, this, true, type);
+				lastFacingSide = 2;
 			}else if(ladoColisao.get(1)){
 				contmov = randtimemov;
 			}
 			
 			if(randirectmov == 3 && !ladoColisao.get(2)){ //left
 				enemy.x -= 100 * Gdx.graphics.getDeltaTime();
+				jogo.telajogo.artes.arteLadoEnemy(3, enemy, this, true, type);
+				lastFacingSide = 3;
 			}else if(ladoColisao.get(2)){
 				contmov = randtimemov;
 			}
 			
 			if(randirectmov == 4 && !ladoColisao.get(3)){ //right
 				enemy.x += 100 * Gdx.graphics.getDeltaTime();
+				jogo.telajogo.artes.arteLadoEnemy(4, enemy, this, true, type);
+				lastFacingSide = 4;
 			}else if(ladoColisao.get(3)){
 				contmov = randtimemov;
 			}
@@ -120,6 +133,13 @@ public class Enemy extends Calculos{
 			if(lado == 4){
 				randirectmov = 4;
 			}
+		}
+		
+		if(contmov < randtimemov){
+			if(lastFacingSide == 1) jogo.telajogo.artes.arteLadoEnemy(1, enemy, this, false, type);
+			if(lastFacingSide == 2) jogo.telajogo.artes.arteLadoEnemy(2, enemy, this, false, type);
+			if(lastFacingSide == 3) jogo.telajogo.artes.arteLadoEnemy(3, enemy, this, false, type);
+			if(lastFacingSide == 4) jogo.telajogo.artes.arteLadoEnemy(4, enemy, this, false, type);
 		}
 	}
 	
@@ -178,6 +198,8 @@ public class Enemy extends Calculos{
 				double translife = jogo.getTransLife() - 1;
 				jogo.setTransLife(translife);
 				jogo.setTransLifeCounter(true);
+				
+				jogo.telajogo.artes.setIsActing(true);
 				
 				if(jogo.isSound()){
 					boolean randDano = MathUtils.randomBoolean();

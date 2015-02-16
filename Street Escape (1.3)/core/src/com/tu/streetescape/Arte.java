@@ -23,10 +23,16 @@ public class Arte {
 	private Texture trananda;
 	private TextureRegion currentTransFrame;
 	
-	private boolean isActing = false;
+	private boolean isActing = false, isShooting = false;
 	
 	private TextureRegion[][] transAtira;
 	private Texture tranatira;
+	
+	private TextureRegion[][] transDano;
+	private Texture trandano;
+	
+	private TextureRegion[][] manifAnda;
+	private Texture manifanda;
 	
 	public Array<Texture> life;
 	private Texture life6, life5, life4, life3, life2, life1, life0;
@@ -81,6 +87,12 @@ public class Arte {
 		tranatira = new Texture(Gdx.files.internal("Arte/ATQ MAIN.png"));
 		transAtira = TextureRegion.split(tranatira, 512, 512);
 		
+		trandano = new Texture(Gdx.files.internal("Arte/MAIN DANO.png"));
+		transDano = TextureRegion.split(trandano, 512, 512);
+		
+		manifanda = new Texture(Gdx.files.internal("Arte/MANIF1 WALK.png"));
+		manifAnda = TextureRegion.split(manifanda, 512, 512);
+		
 		itens = new Texture(Gdx.files.internal("Arte/ITENS.png"));
 		itensArray = TextureRegion.split(itens, 512, 512);
 		
@@ -88,7 +100,7 @@ public class Arte {
 	}
 	
 	public void arteLadoTrans(int lado, Rectangle trans, boolean isMoving){
-		if(!isActing){
+		if(!isActing && !isShooting){
 			if(frameCounter >= 1 && frameCounter <= 10 && isMoving){
 				if(lado == 1) currentTransFrame = transeunte[1][1]; //up
 				if(lado == 2) currentTransFrame = transeunte[2][1]; //down
@@ -161,30 +173,16 @@ public class Arte {
 		frameCounter++;
 		
 		if(frameCounter > 15){
-			isActing = false;
+			isShooting = false;
 			frameCounter = 0;
 		}
 	}
 	
-	/*public void arteLadoEnemy(int lado, Rectangle enemy, boolean isMoving, int type){
-		if(frameCounter >= 1 && frameCounter <= 10 && isMoving){
-			if(lado == 1) currentTransFrame = transeunte[1][1]; //up
-			if(lado == 2) currentTransFrame = transeunte[2][1]; //down
-			if(lado == 3) currentTransFrame = transeunte[0][1]; //left
-			if(lado == 4) currentTransFrame = transeunte[0][1]; //right
-			
-		}else if(frameCounter > 10 && frameCounter <= 20 || !isMoving){
-			if(lado == 1) currentTransFrame = transeunte[1][0]; //up
-			if(lado == 2) currentTransFrame = transeunte[2][0]; //down
-			if(lado == 3) currentTransFrame = transeunte[0][0]; //left
-			if(lado == 4) currentTransFrame = transeunte[0][0]; //right
-			
-		}else if(frameCounter > 20 && frameCounter <= 30 && isMoving){
-			if(lado == 1) currentTransFrame = transeunte[1][2]; //up
-			if(lado == 2) currentTransFrame = transeunte[2][2]; //down
-			if(lado == 3) currentTransFrame = transeunte[0][2]; //left
-			if(lado == 4) currentTransFrame = transeunte[0][2]; //right
-		}
+	public void spriteTransDano(Rectangle trans, int lado){
+		if(lado == 1) currentTransFrame = transDano[0][1]; //up
+		if(lado == 2) currentTransFrame = transDano[0][2]; //down
+		if(lado == 3) currentTransFrame = transDano[0][0]; //left
+		if(lado == 4) currentTransFrame = transDano[0][0]; //right
 		
 		//Condição de flipar para esquerda
 		if(lado == 3){
@@ -203,9 +201,51 @@ public class Arte {
 		frameCounter++;
 		
 		if(frameCounter > 30){
+			isActing = false;
 			frameCounter = 0;
 		}
-	}*/
+	}
+	
+	public void arteLadoEnemy(int lado, Rectangle enemyRect, Enemy enemy, boolean isMoving, int type){
+		if(enemy.frameCounter >= 1 && enemy.frameCounter <= 10 && isMoving){
+			if(lado == 1) enemy.currentEnemyFrame = manifAnda[1][1]; //up
+			if(lado == 2) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+			if(lado == 3) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+			if(lado == 4) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+			
+		}else if(enemy.frameCounter > 10 && enemy.frameCounter <= 20 || !isMoving){
+			if(lado == 1) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+			if(lado == 2) enemy.currentEnemyFrame = manifAnda[2][0]; //down
+			if(lado == 3) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+			if(lado == 4) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+			
+		}else if(enemy.frameCounter > 20 && enemy.frameCounter <= 30 && isMoving){
+			if(lado == 1) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+			if(lado == 2) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+			if(lado == 3) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+			if(lado == 4) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+		}
+		
+		//Condição de flipar para esquerda
+		if(lado == 3){
+			enemy.currentEnemyFrame.flip(true, false);
+		}
+			
+		jogo.batch.begin();
+		jogo.batch.draw(enemy.currentEnemyFrame, enemyRect.x, enemyRect.y, jogo.persowidth, jogo.persoheight);
+		jogo.batch.end();
+		
+		//Desflipa
+		if(lado == 3){
+			enemy.currentEnemyFrame.flip(true, false);
+		}
+		
+		enemy.frameCounter++;
+		
+		if(enemy.frameCounter > 30){
+			enemy.frameCounter = 0;
+		}
+	}
 	
 	public void setFrameCounter(int value){
 		frameCounter = value;
@@ -219,6 +259,14 @@ public class Arte {
 		return isActing;
 	}
 	
+	public boolean getIsShooting() {
+		return isShooting;
+	}
+
+	public void setIsShooting(boolean isShooting) {
+		this.isShooting = isShooting;
+	}
+
 	public void dispose(){
 		ALL.dispose();
 		UDR.dispose();
@@ -247,5 +295,10 @@ public class Arte {
 		life2.dispose();
 		life1.dispose();
 		life0.dispose();
+		
+		trananda.dispose();
+		tranatira.dispose();
+		trandano.dispose();
+		manifanda.dispose();		
 	}
 }

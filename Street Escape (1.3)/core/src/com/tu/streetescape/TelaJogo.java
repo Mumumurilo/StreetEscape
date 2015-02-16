@@ -17,7 +17,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private final MainGame jogo;
 	
 	//Classes
-	private Arte artes;
+	public Arte artes;
 	private Settings settings;
 	private OrthographicCamera cam2;
 	
@@ -44,7 +44,8 @@ public class TelaJogo extends Calculos implements Screen{
 	private Rectangle transeunte;
 	private Transeunte trans;
 	private float contTransLife = 0;
-	private int lastFacingSide = 2;
+	private int lastFacingSide = 2, lastShotSide;
+
 	private boolean isMoving = false;
 	
 	//Itens
@@ -260,7 +261,6 @@ public class TelaJogo extends Calculos implements Screen{
 				if(lastFacingSide == 2) artes.arteLadoTrans(2, transeunte, isMoving);
 				if(lastFacingSide == 3) artes.arteLadoTrans(3, transeunte, isMoving);
 				if(lastFacingSide == 4) artes.arteLadoTrans(4, transeunte, isMoving);
-				
 			}
 			
 			if(mapa.sala[salax][salay].enemy == true || checaSalaBoss()){
@@ -270,8 +270,9 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(1);
 						trans.tiroValido = false;
 					}
-					artes.setIsActing(true);
+					artes.setIsShooting(true);
 					artes.setFrameCounter(0);
+					lastShotSide = 1;
 				}
 				if(Gdx.input.isKeyJustPressed(Keys.DOWN)){
 					trans.atirar();
@@ -279,8 +280,9 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(2);
 						trans.tiroValido = false;
 					}
-					artes.setIsActing(true);
+					artes.setIsShooting(true);
 					artes.setFrameCounter(0);
+					lastShotSide = 2;
 				}
 				if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
 					trans.atirar();
@@ -288,8 +290,9 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(3);
 						trans.tiroValido = false;
 					}
-					artes.setIsActing(true);
+					artes.setIsShooting(true);
 					artes.setFrameCounter(0);
+					lastShotSide = 3;
 				}
 				if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
 					trans.atirar();
@@ -297,16 +300,23 @@ public class TelaJogo extends Calculos implements Screen{
 						trans.direcTiros.add(4);
 						trans.tiroValido = false;
 					}
-					artes.setIsActing(true);
+					artes.setIsShooting(true);
 					artes.setFrameCounter(0);
+					lastShotSide = 4;
+				}
+			}
+			
+			if(artes.getIsShooting()){
+				for(int t = 1; t <= 4; t++){
+					if(lastShotSide == t){
+						artes.spriteTransAtira(t, transeunte);
+					}
 				}
 			}
 			
 			if(artes.getIsActing()){
-				for(int t = 1; t <= 4; t++){
-					if(lastFacingSide == t){
-						artes.spriteTransAtira(t, transeunte);
-					}
+				for(int y = 1; y <= 4; y++){
+					if(lastFacingSide == y) artes.spriteTransDano(transeunte, y);
 				}
 			}
 			
@@ -512,6 +522,8 @@ public class TelaJogo extends Calculos implements Screen{
 					jogo.setTransLife(temptranslife);
 					jogo.setTransLifeCounter(true);
 					lastToque = TimeUtils.nanoTime();
+					
+					artes.setIsActing(true);
 					
 					if(jogo.isSound()){
 						boolean randDano = MathUtils.randomBoolean();
@@ -757,6 +769,8 @@ public class TelaJogo extends Calculos implements Screen{
 				temptranslife -= 4;
 				jogo.setTransLife(temptranslife);
 				jogo.setTransLifeCounter(true);
+				
+				artes.setIsActing(true);
 			}
 			
 			if(boss.morto){
@@ -787,6 +801,14 @@ public class TelaJogo extends Calculos implements Screen{
 	//Outros métodos
 	public Rectangle getTrans(){
 		return transeunte;
+	}
+	
+	public int getLastFacingSide() {
+		return lastFacingSide;
+	}
+
+	public int getLastShotSide() {
+		return lastShotSide;
 	}
 
 	@Override
