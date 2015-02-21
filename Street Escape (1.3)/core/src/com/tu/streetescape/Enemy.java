@@ -135,7 +135,7 @@ public class Enemy extends Calculos{
 			}
 		}
 		
-		if(contmov < randtimemov){
+		if(contmov >= randtimemov){
 			if(lastFacingSide == 1) jogo.telajogo.artes.arteLadoEnemy(1, enemy, this, false, type);
 			if(lastFacingSide == 2) jogo.telajogo.artes.arteLadoEnemy(2, enemy, this, false, type);
 			if(lastFacingSide == 3) jogo.telajogo.artes.arteLadoEnemy(3, enemy, this, false, type);

@@ -488,6 +488,24 @@ public class TelaJogo extends Calculos implements Screen{
 				tempenemy = enemy.get(j);
 				temprect = tempenemy.enemy;
 				
+				if(jogo.isDebug() == true){
+					jogo.renderer.begin(ShapeType.Filled);
+					
+					jogo.renderer.setColor(Color.PURPLE);
+					for(Rectangle recta : tempenemy.atk){
+						jogo.renderer.rect(recta.x, recta.y, recta.width, recta.height);
+					}
+					
+					jogo.renderer.setColor(Color.PINK);
+					for(Rectangle rect : trans.tiros){
+						jogo.renderer.rect(rect.x, rect.y, rect.width, rect.height);
+					}
+					
+					jogo.renderer.setColor(Color.BLUE);
+					jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
+					jogo.renderer.end();
+				}
+				
 				tempenemy.machine.update();
 				tempenemy.movAtk();
 				trans.movAtk(temprect, tempenemy, numEnemy);
@@ -536,24 +554,6 @@ public class TelaJogo extends Calculos implements Screen{
 							}
 						}
 					}
-				}
-				
-				if(jogo.isDebug() == true){
-					jogo.renderer.begin(ShapeType.Filled);
-					
-					jogo.renderer.setColor(Color.PURPLE);
-					for(Rectangle recta : tempenemy.atk){
-						jogo.renderer.rect(recta.x, recta.y, recta.width, recta.height);
-					}
-					
-					jogo.renderer.setColor(Color.PINK);
-					for(Rectangle rect : trans.tiros){
-						jogo.renderer.rect(rect.x, rect.y, rect.width, rect.height);
-					}
-					
-					jogo.renderer.setColor(Color.BLUE);
-					jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
-					jogo.renderer.end();
 				}
 				j++;
 			}

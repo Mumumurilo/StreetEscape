@@ -226,18 +226,21 @@ public class Arte {
 			if(lado == 4) enemy.currentEnemyFrame = manifAnda[0][2]; //right
 		}
 		
-		//Condição de flipar para esquerda
-		if(lado == 3){
-			enemy.currentEnemyFrame.flip(true, false);
-		}
+		if(enemy.currentEnemyFrame != null){
+			System.out.println("passa");
+			//Condição de flipar para esquerda
+			if(lado == 3){
+				enemy.currentEnemyFrame.flip(true, false);
+			}
 			
-		jogo.batch.begin();
-		jogo.batch.draw(enemy.currentEnemyFrame, enemyRect.x, enemyRect.y, jogo.persowidth, jogo.persoheight);
-		jogo.batch.end();
-		
-		//Desflipa
-		if(lado == 3){
-			enemy.currentEnemyFrame.flip(true, false);
+			jogo.batch.begin();
+			jogo.batch.draw(enemy.currentEnemyFrame, enemyRect.x, enemyRect.y, jogo.persowidth, jogo.persoheight);
+			jogo.batch.end();
+			
+			//Desflipa
+			if(lado == 3){
+				enemy.currentEnemyFrame.flip(true, false);
+			}
 		}
 		
 		enemy.frameCounter++;
