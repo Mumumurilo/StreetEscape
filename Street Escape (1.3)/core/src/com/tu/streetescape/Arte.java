@@ -34,6 +34,66 @@ public class Arte {
 	private TextureRegion[][] manifAnda;
 	private Texture manifanda;
 	
+	private TextureRegion[][] manif2Anda;
+	private Texture manif2anda;
+	
+	private TextureRegion[][] manifbossAnda;
+	private Texture manifbossanda;
+	
+	private TextureRegion[][] manifAtira;
+	private Texture manifatira;
+	
+	private TextureRegion[][] manif2Atira;
+	private Texture manif2atira;
+	
+	private TextureRegion[][] manifbossAtira;
+	private Texture manifbossatira;
+	
+	private TextureRegion[][] manifDano;
+	private Texture manifdano;
+	
+	private TextureRegion[][] manif2Dano;
+	private Texture manif2dano;
+
+	private TextureRegion[][] manifbossDano;
+	private Texture manifbossdano;
+	
+	private TextureRegion[][] poliAnda;
+	private Texture polianda;
+	
+	private TextureRegion[][] polibossAnda;
+	private Texture polibossanda;
+	
+	private TextureRegion[][] poliAtira;
+	private Texture poliatira;
+	
+	private TextureRegion[][] polibossAtira;
+	private Texture polibossatira;
+	
+	private TextureRegion[][] poliDano;
+	private Texture polidano;
+	
+	private TextureRegion[][] polibossDano;
+	private Texture polibossdano;
+	
+	private TextureRegion[][] nintenAnda;
+	private Texture nintenanda;
+	
+	private TextureRegion[][] nintenbossAnda;
+	private Texture nintenbossanda;
+	
+	private TextureRegion[][] nintenAtira;
+	private Texture nintenatira;
+	
+	private TextureRegion[][] nintenbossAtira;
+	private Texture nintenbossatira;
+	
+	private TextureRegion[][] nintenDano;
+	private Texture nintendano;
+	
+	private TextureRegion[][] nintenbossDano;
+	private Texture nintenbossdano;
+	
 	public Array<Texture> life;
 	private Texture life6, life5, life4, life3, life2, life1, life0;
 	
@@ -92,6 +152,12 @@ public class Arte {
 		
 		manifanda = new Texture(Gdx.files.internal("Arte/MANIF1 WALK.png"));
 		manifAnda = TextureRegion.split(manifanda, 512, 512);
+		
+		polianda = new Texture(Gdx.files.internal("Arte/POLI1 WALK.png"));
+		poliAnda = TextureRegion.split(manifanda, 512, 512);
+		
+		nintenanda = new Texture(Gdx.files.internal("Arte/NINTEN1 WALK.png"));
+		nintenAnda = TextureRegion.split(manifanda, 512, 512);
 		
 		itens = new Texture(Gdx.files.internal("Arte/ITENS.png"));
 		itensArray = TextureRegion.split(itens, 512, 512);
@@ -207,23 +273,97 @@ public class Arte {
 	}
 	
 	public void arteLadoEnemy(int lado, Rectangle enemyRect, Enemy enemy, boolean isMoving, int type){
+		/*Atentar aos tipos de inimigos:
+		 * 1 - Manifestante 
+		 * 2 - Policial
+		 * 3 - Nontendista
+		 * 4 - Hipster
+		 * 5 - Boss dos Manifestantes
+		 * 6 - Boss dos Policiais
+		 * 7 - Boss dos Nontendistas
+		 */
+		
+		//HEY! Continuar daqui, ir fazendo os próximos em base desse!!!!--------------------------------------------------------------------------------------------------------------------------
 		if(enemy.frameCounter >= 1 && enemy.frameCounter <= 10 && isMoving){
-			if(lado == 1) enemy.currentEnemyFrame = manifAnda[1][1]; //up
-			if(lado == 2) enemy.currentEnemyFrame = manifAnda[2][1]; //down
-			if(lado == 3) enemy.currentEnemyFrame = manifAnda[0][1]; //left
-			if(lado == 4) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+			if(lado == 1){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[1][1]; //up
+				if(type == 2) enemy.currentEnemyFrame = poliAnda[1][1]; //up
+				if(type == 3) enemy.currentEnemyFrame = nintenAnda[1][1]; //up
+				if(type == 4) enemy.currentEnemyFrame = manif2Anda[1][1]; //up
+				if(type == 5) enemy.currentEnemyFrame = manifbossAnda[1][1]; //up
+				if(type == 6) enemy.currentEnemyFrame = polibossAnda[1][1]; //up
+				if(type == 7) enemy.currentEnemyFrame = nintenbossAnda[1][1]; //up
+			}
+			if(lado == 2){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+			}
+			if(lado == 3){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+			}
+			if(lado == 4){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+			}
 			
 		}else if(enemy.frameCounter > 10 && enemy.frameCounter <= 20 || !isMoving){
-			if(lado == 1) enemy.currentEnemyFrame = manifAnda[1][0]; //up
-			if(lado == 2) enemy.currentEnemyFrame = manifAnda[2][0]; //down
-			if(lado == 3) enemy.currentEnemyFrame = manifAnda[0][0]; //left
-			if(lado == 4) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+			if(lado == 1){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+			}
+			if(lado == 2){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[2][0]; //down
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[2][0]; //down
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[2][0]; //down
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+			}
+			if(lado == 3){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+			}
+			if(lado == 4){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+			}
 			
 		}else if(enemy.frameCounter > 20 && enemy.frameCounter <= 30 && isMoving){
-			if(lado == 1) enemy.currentEnemyFrame = manifAnda[1][2]; //up
-			if(lado == 2) enemy.currentEnemyFrame = manifAnda[2][2]; //down
-			if(lado == 3) enemy.currentEnemyFrame = manifAnda[0][2]; //left
-			if(lado == 4) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+			if(lado == 1){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+			}
+			if(lado == 2){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+			}
+			if(lado == 3){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+			}
+			if(lado == 4){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+				if(type == 4) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+			}
 		}
 		
 		if(enemy.currentEnemyFrame != null){
@@ -246,6 +386,96 @@ public class Arte {
 		
 		if(enemy.frameCounter > 30){
 			enemy.frameCounter = 0;
+		}
+	}
+	
+	public void spriteEnemyAtira(int lado, Rectangle enemyRect, Enemy enemy, int type){
+		if(enemy.frameCounter >= 1 && enemy.frameCounter <= 10){
+			if(lado == 1){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[1][1]; //up
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[1][1]; //up
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[1][1]; //up
+			}
+			if(lado == 2){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[2][1]; //down
+			}
+			if(lado == 3){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][1]; //left
+			}
+			if(lado == 4){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][1]; //right
+			}
+			
+		}else if(enemy.frameCounter > 10 && enemy.frameCounter <= 20){
+			if(lado == 1){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[1][0]; //up
+			}
+			if(lado == 2){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[2][0]; //down
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[2][0]; //down
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[2][0]; //down
+			}
+			if(lado == 3){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][0]; //left
+			}
+			if(lado == 4){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][0]; //right
+			}
+			
+		}else if(enemy.frameCounter > 20 && enemy.frameCounter <= 30){
+			if(lado == 1){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[1][2]; //up
+			}
+			if(lado == 2){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[2][2]; //down
+			}
+			if(lado == 3){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][2]; //left
+			}
+			if(lado == 4){
+				if(type == 1) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+				if(type == 2) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+				if(type == 3) enemy.currentEnemyFrame = manifAnda[0][2]; //right
+			}
+		}
+		
+		//Condição de flipar para esquerda
+		if(lado == 3){
+			currentTransFrame.flip(true, false);
+		}
+			
+		jogo.batch.begin();
+		jogo.batch.draw(currentTransFrame, enemyRect.x, enemyRect.y, jogo.persowidth, jogo.persoheight);
+		jogo.batch.end();
+		
+		//Desflipa
+		if(lado == 3){
+			currentTransFrame.flip(true, false);
+		}
+		
+		frameCounter++;
+		
+		if(frameCounter > 15){
+			isShooting = false;
+			frameCounter = 0;
 		}
 	}
 	
