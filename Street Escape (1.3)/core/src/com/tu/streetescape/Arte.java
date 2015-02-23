@@ -227,7 +227,6 @@ public class Arte {
 		}
 		
 		if(enemy.currentEnemyFrame != null){
-			System.out.println("passa");
 			//Condição de flipar para esquerda
 			if(lado == 3){
 				enemy.currentEnemyFrame.flip(true, false);

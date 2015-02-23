@@ -238,6 +238,22 @@ public class Enemy extends Calculos{
 				enemy.y -= (float) ((100 * Gdx.graphics.getDeltaTime()) * Math.cos(anguloParaSeguirTrans));
 			}
 		}
+		
+		System.out.println(anguloParaSeguirTrans);
+		if(anguloParaSeguirTrans >= 2.25 || anguloParaSeguirTrans <= -2.25){ //Up
+			jogo.telajogo.artes.arteLadoEnemy(1, enemy, this, true, type);
+			lastFacingSide = 1;
+			System.out.println("passa");
+		}else if(anguloParaSeguirTrans <= 0.75 && anguloParaSeguirTrans >= -0.75){ //Down
+			jogo.telajogo.artes.arteLadoEnemy(2, enemy, this, true, type);
+			lastFacingSide = 2;
+		}else if(anguloParaSeguirTrans > 0.75 && anguloParaSeguirTrans < 2.25){ //Left
+			jogo.telajogo.artes.arteLadoEnemy(3, enemy, this, true, type);
+			lastFacingSide = 3;
+		}else if(anguloParaSeguirTrans < -0.75 && anguloParaSeguirTrans > -2.25){ //Right
+			jogo.telajogo.artes.arteLadoEnemy(4, enemy, this, true, type);
+			lastFacingSide = 4;
+		}
 	}
 	
 	public int getType(){
