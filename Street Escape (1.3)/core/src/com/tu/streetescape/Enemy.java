@@ -35,6 +35,7 @@ public class Enemy extends Calculos{
 	public int frameCounter = 0;
 	public TextureRegion currentEnemyFrame;
 	public int lastFacingSide;
+	public boolean isActing = false, isShooting = false;
 	
 	public Enemy(MainGame jogo, Rectangle enemy, int type) {
 		super(jogo);
