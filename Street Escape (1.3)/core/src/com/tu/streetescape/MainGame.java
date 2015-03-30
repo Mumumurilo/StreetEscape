@@ -57,6 +57,7 @@ public class MainGame extends Game {
 	public Sound transDano1, transDano2, transMorre, transAtira, transRecoverLife;
 	public Sound enemDano, enemMorre, enemTiro;
 	public Sound enemNDano, enemNMorre;
+	public Sound hipstDano, hipstMorre;
 	public Sound bossDano1, bossDano2, bossTiro1, bossTiro2, bossMorre;
 	
 	@Override

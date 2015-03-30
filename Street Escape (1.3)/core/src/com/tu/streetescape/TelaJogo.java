@@ -34,6 +34,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private Rectangle temprect;
 	private Enemy tempenemy;
 	private float lastToque;
+	private int randHipster;
 	
 	//Boss
 	private Boss boss;
@@ -92,6 +93,8 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.enemTiro = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy tiro.mp3"));
 		jogo.enemNDano = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy N emo dano.mp3"));
 		jogo.enemNMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy N emo morre.mp3"));
+		jogo.hipstDano = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy girl dano.mp3;"));
+		jogo.hipstMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy girl morre.mp3"));
 		jogo.transDano1 = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans dano 1.mp3"));
 		jogo.transDano2 = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans dano 2.mp3"));
 		jogo.transMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans morre.mp3"));
@@ -526,7 +529,7 @@ public class TelaJogo extends Calculos implements Screen{
 					}
 					
 					if(jogo.isSound()){
-						if(tempenemy.getType() == 3){
+						if(tempenemy.getType() == 3){//---------------------------------------------------------------------------------
 							jogo.enemNMorre.play();
 						}else{
 							jogo.enemMorre.play();
@@ -672,7 +675,11 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			
 			if(mapa.getNumFase() == 1){
-				Enemy mal = new Enemy(jogo, mau, 1);
+				randHipster = MathUtils.random(1, 4);
+				if(randHipster == 2) randHipster = 1;
+				if(randHipster == 3) randHipster = 4;
+				
+				Enemy mal = new Enemy(jogo, mau, randHipster);
 				enemy.add(mal);
 			}else if(mapa.getNumFase() == 2){
 				Enemy mal = new Enemy(jogo, mau, MathUtils.random(1, 2));
@@ -740,7 +747,7 @@ public class TelaJogo extends Calculos implements Screen{
 				
 				jogo.renderer.setColor(Color.MAROON);
 				
-				if(boss.type == 1){
+				if(boss.type == 1 || boss.type == 4){
 					for(Rectangle down : boss.tirodown){
 						jogo.renderer.rect(down.x, down.y, down.width, down.height);
 					}
@@ -761,7 +768,7 @@ public class TelaJogo extends Calculos implements Screen{
 			}
 			
 			boss.machine.update();
-			if(boss.type == 1) boss.movAtk();
+			if(boss.type == 1 || boss.type == 4) boss.movAtk();
 			trans.movAtk(bossRect, boss);
 			
 			if(bossRect.overlaps(transeunte) && !jogo.getTransLifeCounter()){
