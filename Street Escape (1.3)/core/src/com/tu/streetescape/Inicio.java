@@ -92,7 +92,7 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n    Transeunte is a simple citizen that wanted to\n" +
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n    Transeunte is a simple citizen that wanted to\n" +
 					"    take a walk at the biggest avenue of the " +
 					"city.\n       However, when he left the subway... He\n" +
 					"      discovered that a big manifestation was\n" +
@@ -113,7 +113,7 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n When he tried to go back to subway he saw that\n" +
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n\n When he tried to go back to subway he saw that\n" +
 					"                              it had just closed!\n" +
 					" Besides that, the people on the street started to\n" +
 					"                           hurt him! AND NOW!?", 10, jogo.HEIGHT - 10);
@@ -133,7 +133,7 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\nTranseunte needs to find the closest and opened\n" +
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n\nTranseunte needs to find the closest and opened\n" +
 					"                                    station ASAP!\n" +
 					"                                   Or he will DIE!", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
@@ -152,7 +152,7 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.drawMultiLine(jogo.batch, "\n\n\n\n\n                                      Yes... DIE!!!\n\n" +
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n\n\n                                      Yes... DIE!!!\n\n" +
 					"                                        Controls:\n" +
 					"              Walk: W-S-A-D | Shoot: Arrow Keys", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();

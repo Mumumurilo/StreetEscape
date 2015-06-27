@@ -29,6 +29,8 @@ public class Enemy extends Calculos{
 	public Array<Rectangle> atk;
 	private Array<Double> angles;
 	
+	public boolean newAtk = false;
+	
 	private Predios build;
 	public Array<Boolean> actualCollision, ladoColisao;
 	
@@ -162,6 +164,7 @@ public class Enemy extends Calculos{
 			if(type == 1 || type == 4){ //Bombas de vinagre
 				Rectangle rect = new Rectangle(enemy.x + jogo.persowidth/2, enemy.y + jogo.persoheight/2, jogo.persowidth/3, jogo.persoheight/3);
 				atk.add(rect);
+				newAtk = true;
 				if(jogo.isSound()){
 					jogo.enemTiro.play();
 				}

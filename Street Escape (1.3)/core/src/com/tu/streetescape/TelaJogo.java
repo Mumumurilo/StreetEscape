@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -48,6 +48,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private int lastFacingSide = 2, lastShotSide;
 
 	private boolean isMoving = false;
+	private Rectangle tempTransShot;
 	
 	//Itens
 	private int randItem, numItem = 0, k = 0;
@@ -93,7 +94,7 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.enemTiro = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy tiro.mp3"));
 		jogo.enemNDano = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy N emo dano.mp3"));
 		jogo.enemNMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy N emo morre.mp3"));
-		jogo.hipstDano = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy girl dano.mp3;"));
+		jogo.hipstDano = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy girl dano.mp3"));
 		jogo.hipstMorre = Gdx.audio.newSound(Gdx.files.internal("Sons/Enemy girl morre.mp3"));
 		jogo.transDano1 = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans dano 1.mp3"));
 		jogo.transDano2 = Gdx.audio.newSound(Gdx.files.internal("Sons/Trans dano 2.mp3"));
@@ -471,12 +472,6 @@ public class TelaJogo extends Calculos implements Screen{
 			k = 0;
 		}
 		
-		if(numItem > 0){
-			for(@SuppressWarnings("unused") TextureRegion itensArray : artes.arrayBucks){
-				
-			}
-		}
-		
 		if(jogo.getTransLife() <= 0){
 			transeunte.setPosition(1000, 680);
 		}
@@ -508,6 +503,29 @@ public class TelaJogo extends Calculos implements Screen{
 					jogo.renderer.rect(temprect.getX(), temprect.getY(), jogo.persowidth, jogo.persoheight);
 					jogo.renderer.end();
 				}
+				/*
+				for(int i = 0; i < trans.numTiros; i++){
+					if(trans.tiros.size > 0){
+						tempTransShot = trans.tiros.get(i);
+						
+						jogo.batch.begin();
+						jogo.batch.draw(artes.arrayTransShots.get(i), tempTransShot.x, tempTransShot.y,
+								tempTransShot.width*2, tempTransShot.height*2);
+						jogo.batch.end();
+					
+						if(temprect.overlaps(trans.tiros.get(i)) || (tempTransShot.x > jogo.WIDTH || tempTransShot.x <= 0 || 
+								tempTransShot.y >= jogo.HEIGHT || tempTransShot.y <= 0)){
+							artes.arrayTransShots.removeIndex(i);
+							trans.numTiros--;
+						}
+					}
+				}*/
+				
+				if(trans.newAtk){
+					artes.arrayTransShots.add(artes.itensArray[0][2]);
+					trans.numTiros++;
+					trans.newAtk = false;
+				}
 				
 				tempenemy.machine.update();
 				tempenemy.movAtk();
@@ -531,9 +549,10 @@ public class TelaJogo extends Calculos implements Screen{
 					if(jogo.isSound()){
 						if(tempenemy.getType() == 3){//---------------------------------------------------------------------------------
 							jogo.enemNMorre.play();
-						}else{
+						}else if(tempenemy.getType() == 4){
+							jogo.hipstMorre.play();
+						}else
 							jogo.enemMorre.play();
-						}
 					}
 				}
 				
@@ -791,9 +810,9 @@ public class TelaJogo extends Calculos implements Screen{
 				jogo.batch.begin();
 				jogo.gameoverfont.setColor(Color.GREEN);
 				if(mapa.getNumFase() < 3){
-					jogo.gameoverfont.drawMultiLine(jogo.batch, "     You Won!\nTry Next Stage!", 79, jogo.HEIGHT/2 + 100);
+					jogo.gameoverfont.draw(jogo.batch, "     You Won!\nTry Next Stage!", 79, jogo.HEIGHT/2 + 100);
 				}else{
-					jogo.gameoverfont.drawMultiLine(jogo.batch, "You Won!", jogo.WIDTH/2 - 200, jogo.HEIGHT/2 + 20);
+					jogo.gameoverfont.draw(jogo.batch, "You Won!", jogo.WIDTH/2 - 200, jogo.HEIGHT/2 + 20);
 				}
 				jogo.batch.end();
 				
@@ -865,6 +884,9 @@ public class TelaJogo extends Calculos implements Screen{
 		jogo.bossTiro1.dispose();
 		jogo.bossTiro2.dispose();
 		jogo.bossMorre.dispose();
+		jogo.hipstDano.dispose();
+		jogo.hipstMorre.dispose();
+		jogo.transRecoverLife.dispose();
 	}
 
 }

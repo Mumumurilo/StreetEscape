@@ -22,6 +22,9 @@ public class Transeunte extends Calculos{
 	public Texture trananda;
 	public TextureRegion currentFrame;
 	
+	public boolean newAtk = false;
+	public int numTiros = 0;
+	
 	public Transeunte(MainGame jogo) {
 		super(jogo);
 		
@@ -44,6 +47,8 @@ public class Transeunte extends Calculos{
 			}else{
 				tiros.add(tipoTiros.get(2));
 			}
+			
+			newAtk = true;
 			
 			tipoTiros.removeRange(0, 2);
 			tiroValido = true;
@@ -84,9 +89,10 @@ public class Transeunte extends Calculos{
 				if(jogo.isSound() && enem.life > 1){
 					if(enem.getType() == 3){
 						jogo.enemNDano.play();
-					}else{
+					}else if(enem.getType() == 4){
+						jogo.hipstDano.play();
+					}else
 						jogo.enemDano.play();
-					}
 				}
 			}
 			

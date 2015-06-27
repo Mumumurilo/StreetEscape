@@ -103,6 +103,7 @@ public class Arte {
 	public TextureRegion[][] itensArray;
 	
 	public Array<TextureRegion> arrayBucks;
+	public Array<TextureRegion> arrayTransShots;
 	
 	private int frameCounter = 1;
 	
@@ -217,6 +218,7 @@ public class Arte {
 		itensArray = TextureRegion.split(itens, 512, 512);
 		
 		arrayBucks = new Array<TextureRegion>();
+		arrayTransShots = new Array<TextureRegion>();
 	}
 	
 	public void arteLadoTrans(int lado, Rectangle trans, boolean isMoving){
