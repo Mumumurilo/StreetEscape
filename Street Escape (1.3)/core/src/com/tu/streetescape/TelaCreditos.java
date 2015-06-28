@@ -11,6 +11,11 @@ public class TelaCreditos implements Screen{
 	private Settings settings;
 	
 	private Texture background;
+	private Texture loadingimg;
+	
+	//Contador de loading
+	private boolean loading = false;
+	private float somaLoading = 0;
 	
 	public TelaCreditos(final MainGame jogo){
 		this.jogo = jogo;
@@ -28,6 +33,9 @@ public class TelaCreditos implements Screen{
 		
 		//bg
 		background = new Texture(Gdx.files.internal("credits.png"));
+		
+		//loading
+		loadingimg = new Texture(Gdx.files.internal("loading.png"));
 		
 		//Config
 		settings = new Settings(jogo);
@@ -50,10 +58,22 @@ public class TelaCreditos implements Screen{
 		
 		settings.configButtons(jogo.temacreditos);
 		
+		if(loading){
+			somaLoading += Gdx.graphics.getDeltaTime();
+			
+			jogo.batch.begin();
+			jogo.batch.draw(loadingimg, 0, 0, jogo.WIDTH, jogo.HEIGHT);
+			jogo.batch.end();
+			
+			if(somaLoading > 0.1){
+				jogo.reset = true;
+				jogo.temacreditos.dispose();
+				jogo.create();
+			}
+		}
+		
 		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.SPACE)){
-			jogo.reset = true;
-			jogo.temacreditos.dispose();
-			jogo.create();
+			loading = true;
 		}
 	}
 
@@ -90,6 +110,7 @@ public class TelaCreditos implements Screen{
 	@Override
 	public void dispose() {
 		background.dispose();
+		loadingimg.dispose();
 		
 	}
 

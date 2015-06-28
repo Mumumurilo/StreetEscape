@@ -19,6 +19,10 @@ public class Inicio implements Screen{
 	//Contador de press space
 	private float somaSpace = 0;
 	
+	//Contador de loading
+	private boolean loading = false;
+	private float somaLoading = 0;
+	
 	public Inicio(final MainGame jogo){ //Construtor. Serve para instanciar os elementos das telas
 		this.jogo = jogo;
 		
@@ -65,6 +69,19 @@ public class Inicio implements Screen{
 			}
 		}
 		
+		if(loading){
+			somaLoading += Gdx.graphics.getDeltaTime();
+			
+			jogo.batch.begin();
+			jogo.batch.draw(artes.loading, 0, 0, jogo.WIDTH, jogo.HEIGHT);
+			jogo.batch.end();
+			
+			if(somaLoading > 0.1){
+				jogo.telajogo = new TelaJogo(jogo);
+				jogo.setScreen(jogo.telajogo);
+			}
+		}
+		
 		if(somaLogo <= 0){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
@@ -87,16 +104,16 @@ public class Inicio implements Screen{
 			}
 			
 			//Desenho do forninho
-			jogo.batch.begin();
-			jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
-			
-			jogo.GUIFont.draw(jogo.batch, "Press SPACE to play!", 240, 100);
-			jogo.batch.end();
-			
-			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
-				jogo.telajogo = new TelaJogo(jogo);
+			if(!loading){
+				jogo.batch.begin();
+				jogo.batch.draw(artes.forninho, 0, 0, jogo.WIDTH, jogo.HEIGHT);
 				
-				jogo.setScreen(jogo.telajogo);
+				jogo.GUIFont.draw(jogo.batch, "Press SPACE to play!", 240, 100);
+				jogo.batch.end();
+			}
+			
+			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){
+				loading = true;
 			}
 		}
 		

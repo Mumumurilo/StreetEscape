@@ -14,6 +14,7 @@ public class Arte {
 	//Declaração das imagens e artes utilizadas no jogo
 	public Texture forninho;
 	public Texture menu2;
+	public Texture loading;
 	
 	private Texture ALL, UDR, UDL, LRD, LRU, RD, RU, LD, LU, UD, LR, R, D, L, U;
 	public ArrayList<Texture> salas;
@@ -113,6 +114,7 @@ public class Arte {
 		forninho = new Texture(Gdx.files.internal("menu.png"));
 		logotu = new Texture(Gdx.files.internal("Arte/TU Logo.png"));
 		menu2 = new Texture(Gdx.files.internal("menu2.png"));
+		loading = new Texture(Gdx.files.internal("loading.png"));
 		
 		salas = new ArrayList<Texture>();
 		//D = 1000, U = 100, L = 10, R = 1
@@ -701,6 +703,7 @@ public class Arte {
 		forninho.dispose();
 		logotu.dispose();
 		menu2.dispose();
+		loading.dispose();
 		
 		life6.dispose();
 		life5.dispose();
@@ -713,6 +716,26 @@ public class Arte {
 		trananda.dispose();
 		tranatira.dispose();
 		trandano.dispose();
-		manifanda.dispose();		
+		manifanda.dispose();
+		manifatira.dispose();
+		manifdano.dispose();
+		nintenanda.dispose();
+		nintenatira.dispose();
+		nintendano.dispose();
+		manif2anda.dispose();
+		manif2atira.dispose();
+		manif2dano.dispose();
+		polianda.dispose();
+		poliatira.dispose();
+		polidano.dispose();
+		manifbossanda.dispose();
+		manifbossatira.dispose();
+		manifbossdano.dispose();
+		nintenbossanda.dispose();
+		nintenbossatira.dispose();
+		nintenbossdano.dispose();
+		polibossanda.dispose();
+		polibossatira.dispose();
+		polibossdano.dispose();
 	}
 }
