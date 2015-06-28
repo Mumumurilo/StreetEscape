@@ -47,6 +47,24 @@ public class Inicio implements Screen{
 			somaLogo = 0;
 		}
 		
+		if(jogo.isDebug()){ //Debug para ir direto nas telas de história sem precisar esperar
+			if(Gdx.input.isKeyPressed(Keys.NUM_1)){
+				somaLogo = 0; 
+			}
+			if(Gdx.input.isKeyPressed(Keys.NUM_2)){
+				somaLogo = 17; 
+			}
+			if(Gdx.input.isKeyPressed(Keys.NUM_3)){
+				somaLogo = 33; 
+			}
+			if(Gdx.input.isKeyPressed(Keys.NUM_4)){
+				somaLogo = 49; 
+			}
+			if(Gdx.input.isKeyPressed(Keys.NUM_5)){
+				somaLogo = 65; 
+			}
+		}
+		
 		if(somaLogo <= 0){
 			somaLogo += Gdx.graphics.getDeltaTime();
 			
@@ -60,9 +78,9 @@ public class Inicio implements Screen{
 			somaSpace += Gdx.graphics.getDeltaTime();
 			
 			if(somaSpace >= 0 && somaSpace < 0.5){
-				jogo.GUIFont.setColor(Color.DARK_GRAY);
+				jogo.GUIFont.setColor(Color.WHITE);
 			}else if(somaSpace >= 0.5 && somaSpace < 1){
-				jogo.GUIFont.setColor(Color.BLACK);
+				jogo.GUIFont.setColor(Color.DARK_GRAY);
 			}
 			if(somaSpace >= 1){
 				somaSpace = 0;
@@ -88,15 +106,15 @@ public class Inicio implements Screen{
 			Gdx.gl.glClearColor(0, 0, 0, 0);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			
-			jogo.GUIFont.setColor(Color.DARK_GRAY);
+			jogo.GUIFont.setColor(Color.WHITE);
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.draw(jogo.batch, "\n\n\n    Transeunte is a simple citizen that wanted to\n" +
-					"    take a walk at the biggest avenue of the " +
-					"city.\n       However, when he left the subway... He\n" +
-					"      discovered that a big manifestation was\n" +
-					"                                    happening!\n\n", 10, jogo.HEIGHT - 10);
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n   Transeunte is a simple citizen that wanted to\n" +
+					"   take a walk at the biggest avenue of the " +
+					"city.\n         However, when he left the subway... He\n" +
+					"        discovered that a big manifestation was\n" +
+					"                                                happening!\n\n", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
@@ -113,10 +131,10 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.draw(jogo.batch, "\n\n\n\n When he tried to go back to subway he saw that\n" +
-					"                              it had just closed!\n" +
-					" Besides that, the people on the street started to\n" +
-					"                           hurt him! AND NOW!?", 10, jogo.HEIGHT - 10);
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n\n      When he tried to go back to subway he saw\n" +
+					"                                 that it had just closed!\n" +
+					"  Besides that, the people on the street started\n" +
+					"                                 to hurt him! AND NOW!?", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
@@ -133,9 +151,9 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.draw(jogo.batch, "\n\n\n\nTranseunte needs to find the closest and opened\n" +
-					"                                    station ASAP!\n" +
-					"                                   Or he will DIE!", 10, jogo.HEIGHT - 10);
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n\n          Transeunte needs to find the closest and\n" +
+					"                                      opened station ASAP!\n" +
+					"                                             Or he will DIE!", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	
@@ -152,9 +170,9 @@ public class Inicio implements Screen{
 			jogo.batch.begin();
 			jogo.batch.draw(artes.menu2, 0, 0);
 			
-			jogo.GUIFont.draw(jogo.batch, "\n\n\n\n\n                                      Yes... DIE!!!\n\n" +
-					"                                        Controls:\n" +
-					"              Walk: W-S-A-D | Shoot: Arrow Keys", 10, jogo.HEIGHT - 10);
+			jogo.GUIFont.draw(jogo.batch, "\n\n\n\n\n                                                  Yes... DIE!!!\n\n" +
+					"                                                    Controls:\n" +
+					"                   Walk: W-S-A-D | Shoot: Arrow Keys", 10, jogo.HEIGHT - 10);
 			jogo.batch.end();
 			
 			if(Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isTouched()){	

@@ -67,7 +67,7 @@ public class MainGame extends Game {
 		camera = new OrthographicCamera();
 		renderer = new ShapeRenderer();
 		transeunte = new Transeunte(this);
-		GUIFont = new BitmapFont(Gdx.files.internal("Fontes/GUIFont.fnt"));
+		GUIFont = new BitmapFont(Gdx.files.internal("Fontes/GUIFont2.fnt"));
 		gameoverfont = new BitmapFont(Gdx.files.internal("Fontes/gameover.fnt"));
 		
 		//Telas
