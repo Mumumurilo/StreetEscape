@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+//import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -48,7 +48,7 @@ public class TelaJogo extends Calculos implements Screen{
 	private int lastFacingSide = 2, lastShotSide;
 
 	private boolean isMoving = false;
-	private Rectangle tempTransShot;
+	//private Rectangle tempTransShot;
 	
 	//Itens
 	private int randItem, numItem = 0, k = 0;
