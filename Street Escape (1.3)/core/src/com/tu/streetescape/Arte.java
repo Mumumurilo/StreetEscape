@@ -111,9 +111,9 @@ public class Arte {
 	public Arte(final MainGame jogo){
 		this.jogo = jogo;
 		
-		forninho = new Texture(Gdx.files.internal("menu.png"));
+		forninho = new Texture(Gdx.files.internal("Menu.png"));
 		logotu = new Texture(Gdx.files.internal("Arte/TU Logo.png"));
-		menu2 = new Texture(Gdx.files.internal("menu2.png"));
+		menu2 = new Texture(Gdx.files.internal("Menu2.png"));
 		loading = new Texture(Gdx.files.internal("loading.png"));
 		
 		salas = new ArrayList<Texture>();
