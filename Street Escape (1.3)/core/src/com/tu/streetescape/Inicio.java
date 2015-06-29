@@ -36,7 +36,7 @@ public class Inicio implements Screen{
 		settings = new Settings(jogo);
 		
 		//Declaração de elementos
-		jogo.temamenu = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 3.mp3"));
+		jogo.temamenu = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 3.ogg"));
 		jogo.temamenu.setLooping(true);
 		if(jogo.isMusic()){
 			jogo.temamenu.play();

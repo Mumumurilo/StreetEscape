@@ -147,14 +147,14 @@ public class TelaJogo extends Calculos implements Screen{
 		
 		transeunte = new Rectangle(380, 200, jogo.persowidth, jogo.persoheight);
 		
-		jogo.temajogo = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 2.mp3"));
+		jogo.temajogo = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 2.ogg"));
 		jogo.temajogo.setLooping(true);
 		if(jogo.isMusic()){
 			jogo.temajogo.play();
 		}
 		
-		jogo.temaboss1 = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 4-1.mp3"));
-		jogo.temaboss2 = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 4-2.mp3"));
+		jogo.temaboss1 = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 4-1.ogg"));
+		jogo.temaboss2 = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 4-2.ogg"));
 		jogo.temaboss2.setLooping(true);
 	}
 

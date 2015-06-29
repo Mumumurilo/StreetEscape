@@ -41,7 +41,7 @@ public class TelaCreditos implements Screen{
 		settings = new Settings(jogo);
 		
 		//Música
-		jogo.temacreditos = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 1.mp3"));
+		jogo.temacreditos = Gdx.audio.newMusic(Gdx.files.internal("Musica/StreetEscape 1.ogg"));
 		jogo.temacreditos.setLooping(true);
 		if(jogo.isMusic()){
 			jogo.temacreditos.play();
